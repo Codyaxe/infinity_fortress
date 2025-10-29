@@ -1,3 +1,4 @@
+
 public class Game {
     public static void main(String[] args) {
         Game game = new Game();
@@ -14,7 +15,8 @@ public class Game {
     }
 
     public void printtype(String s, long duration) {
-        // A new thread that detects enter will be included here!
+        // A new thread that detects if the enter key is pressed here!
+
         for (int i = 0; i < s.length(); i++) {
             System.out.print(s.charAt(i));
             try {
@@ -23,5 +25,7 @@ public class Game {
                 e.printStackTrace();
             }
         }
+
+        System.out.println();
     }
 }
