@@ -17,6 +17,8 @@ public class Game {
     public void printtype(String s, long duration) {
         // A new thread that detects if the enter key is pressed is included here!
 
+        // Might have to use keyboard event listerner library
+
         for (int i = 0; i < s.length(); i++) {
             System.out.print(s.charAt(i));
             try {
