@@ -182,7 +182,6 @@ public class KeyListenerThread extends Thread {
 
         while (running) {
             try {
-                // No ArrayList allocation needed
                 for (int i = 0; i < trackedKeyCount; i++) {
                     int keyCode = trackedKeys[i];
                     short keyState = User32.INSTANCE.GetAsyncKeyState(keyCode);
@@ -207,7 +206,6 @@ public class KeyListenerThread extends Thread {
     }
 
     private void notifyKeyPressed(int keyCode) {
-        // CopyOnWriteArrayList doesn't need manual copying
         for (KeyEventListener listener : listeners) {
             try {
                 listener.onKeyPressed(keyCode);

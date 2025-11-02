@@ -40,7 +40,7 @@ public class App {
     public void printType(String s, long duration) {
         /*
          * Here is the general gist on how to start a keyboard event listener:
-         * Start a keyboard listener thread.
+         * Declare a keyboard listener thread.
          * Track a key using the trackKey method
          * Define a particular flag
          * Implement a KeyEventListener using anonymous classes
@@ -49,7 +49,7 @@ public class App {
          * Close the thread
          */
 
-        // Dec;are the key listener thread
+        // Declare the key listener thread
         KeyListenerThread keyListener = new KeyListenerThread();
 
         // Track a the "Enter Key"
