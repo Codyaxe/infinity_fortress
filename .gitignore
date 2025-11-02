@@ -1,0 +1,22 @@
+# Maven target directory
+/target/
+
+# VS Code settings
+/.vscode/
+
+# Logs
+*.log
+
+# Compiled class files
+*.class
+
+# Generated sources
+/generated-sources/
+
+# Maven status files
+/maven-status/
+
+# Java-specific files
+*.jar
+*.war
+*.ear
