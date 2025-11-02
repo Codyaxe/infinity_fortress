@@ -52,7 +52,7 @@ public class App {
         // Declare the key listener thread
         KeyListenerThread keyListener = new KeyListenerThread();
 
-        // Track a the "Enter Key"
+        // Track the "Enter Key"
         keyListener.trackKey(KeyListenerThread.VK_RETURN);
 
         // Create a flag to track if skip was requested, use Atomic Boolean.
