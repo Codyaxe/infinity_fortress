@@ -1,4 +1,6 @@
-/*For keyboard listening event purposes.*/
+/*For keyboard listening event purposes. 
+You might need to read the code in this.*/
+
 package com.infinityfortress.utils;
 
 import com.sun.jna.platform.win32.User32;
