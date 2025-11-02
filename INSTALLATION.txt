@@ -1,0 +1,23 @@
+Install Apache Maven from: https://maven.apache.org/download.cgi
+
+Install apache-maven-3.9.11-bin.zip
+
+Extract it to your desired folder. It is recommended to put it in your program files folder.
+
+Add /bin to your "SYSTEM" PATH environmental variable
+
+To ensure it is detected, use this command in your terminal: mvn -version
+
+Download Extension Pack for Java in VSC.
+
+Download Maven for Java in VSC.
+
+
+Download Extension Pack for Java in VSC.
+
+
+
+
+Maven requires Java to run. Make sure you have a JDK installed (at least JDK 11, preferably 24)
+
+Set JAVA_HOME system variable to your JDK path.
