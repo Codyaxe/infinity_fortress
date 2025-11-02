@@ -13,8 +13,6 @@ Download Extension Pack for Java in VSC.
 Download Maven for Java in VSC.
 
 
-Download Extension Pack for Java in VSC.
-
 
 
 
