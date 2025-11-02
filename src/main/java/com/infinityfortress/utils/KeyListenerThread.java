@@ -99,8 +99,9 @@ public class KeyListenerThread extends Thread {
     }
 
     public synchronized void trackKey(int keyCode) {
-        if (keyCode < 0 || keyCode >= 256)
+        if (keyCode < 0 || keyCode >= 256) {
             return;
+        }
 
         // Check if already tracked
         for (int i = 0; i < trackedKeyCount; i++) {
@@ -131,14 +132,20 @@ public class KeyListenerThread extends Thread {
     }
 
     public void trackAllStandardKeys() {
-        for (int i = VK_A; i <= VK_Z; i++)
+        for (int i = VK_A; i <= VK_Z; i++) {
             trackKey(i);
-        for (int i = VK_0; i <= VK_9; i++)
+        }
+
+        for (int i = VK_0; i <= VK_9; i++) {
             trackKey(i);
+        }
+
         trackKeys(VK_RETURN, VK_ESCAPE, VK_SPACE, VK_LEFT, VK_UP, VK_RIGHT, VK_DOWN,
                 VK_SHIFT, VK_CONTROL, VK_ALT);
-        for (int i = VK_F1; i <= VK_F12; i++)
+        for (int i = VK_F1; i <= VK_F12; i++) {
             trackKey(i);
+        }
+
     }
 
     public void setPollDelay(int delayMs) {
@@ -146,8 +153,10 @@ public class KeyListenerThread extends Thread {
     }
 
     public boolean isKeyPressed(int keyCode) {
-        if (keyCode < 0 || keyCode >= 256)
+        if (keyCode < 0 || keyCode >= 256) {
             return false;
+        }
+
         return keyStates[keyCode];
     }
 
