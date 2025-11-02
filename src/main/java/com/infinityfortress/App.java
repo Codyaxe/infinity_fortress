@@ -49,7 +49,7 @@ public class App {
          * Close the thread
          */
 
-        // Start the key listener thread
+        // Dec;are the key listener thread
         KeyListenerThread keyListener = new KeyListenerThread();
 
         // Track a the "Enter Key"
