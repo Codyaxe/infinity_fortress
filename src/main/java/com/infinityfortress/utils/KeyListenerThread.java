@@ -1,24 +1,19 @@
-/*Hi! This is a universal key event listener thread. It lets the program detect any form of keypresses*/
-
 package com.infinityfortress.utils;
 
 import com.sun.jna.platform.win32.User32;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class KeyListenerThread extends Thread {
     private volatile boolean running = true;
     private volatile boolean ready = false;
-    private final List<KeyEventListener> listeners = new ArrayList<>();
-    private final Set<Integer> trackedKeys = new HashSet<>();
-    private final Map<Integer, Boolean> keyStates = new HashMap<>();
+    private final CopyOnWriteArrayList<KeyEventListener> listeners = new CopyOnWriteArrayList<>();
+
+    // Array to track keys and key states
+    private int[] trackedKeys = new int[256]; // Max virtual key codes
+    private boolean[] keyStates = new boolean[256];
+    private int trackedKeyCount = 0;
     private int pollDelayMs = 50;
 
-    // GetAsyncKeyState return value indicating key is pressed
     private static final short KEY_PRESSED = (short) 0x8000;
 
     // Virtual Key Codes - Common keys
@@ -33,7 +28,6 @@ public class KeyListenerThread extends Thread {
     public static final int VK_CONTROL = 0x11;
     public static final int VK_ALT = 0x12;
 
-    // Letter keys (A-Z)
     public static final int VK_A = 0x41;
     public static final int VK_B = 0x42;
     public static final int VK_C = 0x43;
@@ -61,7 +55,6 @@ public class KeyListenerThread extends Thread {
     public static final int VK_Y = 0x59;
     public static final int VK_Z = 0x5A;
 
-    // Number keys (0-9)
     public static final int VK_0 = 0x30;
     public static final int VK_1 = 0x31;
     public static final int VK_2 = 0x32;
@@ -73,7 +66,6 @@ public class KeyListenerThread extends Thread {
     public static final int VK_8 = 0x38;
     public static final int VK_9 = 0x39;
 
-    // Function keys (F1-F12)
     public static final int VK_F1 = 0x70;
     public static final int VK_F2 = 0x71;
     public static final int VK_F3 = 0x72;
@@ -87,22 +79,9 @@ public class KeyListenerThread extends Thread {
     public static final int VK_F11 = 0x7A;
     public static final int VK_F12 = 0x7B;
 
-    /**
-     * Interface for handling key events
-     */
     public interface KeyEventListener {
-        /**
-         * Called when a tracked key is pressed
-         * 
-         * @param keyCode The virtual key code of the pressed key
-         */
         void onKeyPressed(int keyCode);
 
-        /**
-         * Called when a tracked key is released
-         * 
-         * @param keyCode The virtual key code of the released key
-         */
         void onKeyReleased(int keyCode);
     }
 
@@ -110,123 +89,76 @@ public class KeyListenerThread extends Thread {
         setDaemon(true);
     }
 
-    /**
-     * Add a key event listener
-     * 
-     * @param listener The listener to add
-     */
     public void addKeyEventListener(KeyEventListener listener) {
-        synchronized (listeners) {
-            listeners.add(listener);
-        }
+        listeners.add(listener);
     }
 
-    /**
-     * Remove a key event listener
-     * 
-     * @param listener The listener to remove
-     */
     public void removeKeyEventListener(KeyEventListener listener) {
-        synchronized (listeners) {
-            listeners.remove(listener);
-        }
+        listeners.remove(listener);
     }
 
-    /**
-     * Add a key to track
-     * 
-     * @param keyCode The virtual key code to track
-     */
-    public void trackKey(int keyCode) {
-        synchronized (trackedKeys) {
-            trackedKeys.add(keyCode);
-            keyStates.put(keyCode, false);
+    public synchronized void trackKey(int keyCode) {
+        if (keyCode < 0 || keyCode >= 256)
+            return;
+
+        // Check if already tracked
+        for (int i = 0; i < trackedKeyCount; i++) {
+            if (trackedKeys[i] == keyCode)
+                return;
         }
+
+        trackedKeys[trackedKeyCount++] = keyCode;
+        keyStates[keyCode] = false;
     }
 
-    /**
-     * Add multiple keys to track
-     * 
-     * @param keyCodes The virtual key codes to track
-     */
     public void trackKeys(int... keyCodes) {
-        synchronized (trackedKeys) {
-            for (int keyCode : keyCodes) {
-                trackedKeys.add(keyCode);
-                keyStates.put(keyCode, false);
+        for (int keyCode : keyCodes) {
+            trackKey(keyCode);
+        }
+    }
+
+    public synchronized void untrackKey(int keyCode) {
+        for (int i = 0; i < trackedKeyCount; i++) {
+            if (trackedKeys[i] == keyCode) {
+                // Shift remaining keys
+                System.arraycopy(trackedKeys, i + 1, trackedKeys, i, trackedKeyCount - i - 1);
+                trackedKeyCount--;
+                keyStates[keyCode] = false;
+                return;
             }
         }
     }
 
-    /**
-     * Remove a key from tracking
-     * 
-     * @param keyCode The virtual key code to stop tracking
-     */
-    public void untrackKey(int keyCode) {
-        synchronized (trackedKeys) {
-            trackedKeys.remove(keyCode);
-            keyStates.remove(keyCode);
-        }
-    }
-
-    /**
-     * Track all standard keys (A-Z, 0-9, common special keys)
-     */
     public void trackAllStandardKeys() {
-        synchronized (trackedKeys) {
-            // Track all letters
-            for (int i = VK_A; i <= VK_Z; i++) {
-                trackedKeys.add(i);
-                keyStates.put(i, false);
-            }
-            // Track all numbers
-            for (int i = VK_0; i <= VK_9; i++) {
-                trackedKeys.add(i);
-                keyStates.put(i, false);
-            }
-            // Track common special keys
-            trackKeys(VK_RETURN, VK_ESCAPE, VK_SPACE, VK_LEFT, VK_UP, VK_RIGHT, VK_DOWN,
-                    VK_SHIFT, VK_CONTROL, VK_ALT);
-            // Track function keys
-            for (int i = VK_F1; i <= VK_F12; i++) {
-                trackedKeys.add(i);
-                keyStates.put(i, false);
-            }
-        }
+        for (int i = VK_A; i <= VK_Z; i++)
+            trackKey(i);
+        for (int i = VK_0; i <= VK_9; i++)
+            trackKey(i);
+        trackKeys(VK_RETURN, VK_ESCAPE, VK_SPACE, VK_LEFT, VK_UP, VK_RIGHT, VK_DOWN,
+                VK_SHIFT, VK_CONTROL, VK_ALT);
+        for (int i = VK_F1; i <= VK_F12; i++)
+            trackKey(i);
     }
 
-    /**
-     * Set the polling delay in milliseconds
-     * 
-     * @param delayMs Delay between key state checks (default: 50ms)
-     */
     public void setPollDelay(int delayMs) {
         this.pollDelayMs = Math.max(1, delayMs);
     }
 
-    /**
-     * Check if a key is currently pressed
-     * 
-     * @param keyCode The virtual key code to check
-     * @return true if the key is pressed, false otherwise
-     */
     public boolean isKeyPressed(int keyCode) {
-        synchronized (keyStates) {
-            return keyStates.getOrDefault(keyCode, false);
-        }
+        if (keyCode < 0 || keyCode >= 256)
+            return false;
+        return keyStates[keyCode];
     }
 
     @Override
     public void run() {
         // Clear any previous key states
-        synchronized (trackedKeys) {
-            for (int keyCode : trackedKeys) {
-                User32.INSTANCE.GetAsyncKeyState(keyCode);
+        synchronized (this) {
+            for (int i = 0; i < trackedKeyCount; i++) {
+                User32.INSTANCE.GetAsyncKeyState(trackedKeys[i]);
             }
         }
 
-        // Add a small delay to avoid detecting keys from starting the program
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
@@ -234,43 +166,26 @@ public class KeyListenerThread extends Thread {
             return;
         }
 
-        // Signal that the listener is ready
         ready = true;
 
         while (running) {
             try {
-                List<Integer> keysToCheck;
-                synchronized (trackedKeys) {
-                    keysToCheck = new ArrayList<>(trackedKeys);
-                }
-
-                // Check each tracked key
-                for (int keyCode : keysToCheck) {
+                // No ArrayList allocation needed
+                for (int i = 0; i < trackedKeyCount; i++) {
+                    int keyCode = trackedKeys[i];
                     short keyState = User32.INSTANCE.GetAsyncKeyState(keyCode);
                     boolean isPressed = (keyState & KEY_PRESSED) != 0;
+                    boolean previousState = keyStates[keyCode];
 
-                    Boolean previousState;
-                    synchronized (keyStates) {
-                        previousState = keyStates.get(keyCode);
-                    }
-
-                    // Detect state changes
                     if (isPressed && !previousState) {
-                        // Key was just pressed
-                        synchronized (keyStates) {
-                            keyStates.put(keyCode, true);
-                        }
+                        keyStates[keyCode] = true;
                         notifyKeyPressed(keyCode);
                     } else if (!isPressed && previousState) {
-                        // Key was just released
-                        synchronized (keyStates) {
-                            keyStates.put(keyCode, false);
-                        }
+                        keyStates[keyCode] = false;
                         notifyKeyReleased(keyCode);
                     }
                 }
 
-                // To avoid busy waiting
                 Thread.sleep(pollDelayMs);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -280,11 +195,8 @@ public class KeyListenerThread extends Thread {
     }
 
     private void notifyKeyPressed(int keyCode) {
-        List<KeyEventListener> listenersCopy;
-        synchronized (listeners) {
-            listenersCopy = new ArrayList<>(listeners);
-        }
-        for (KeyEventListener listener : listenersCopy) {
+        // CopyOnWriteArrayList doesn't need manual copying
+        for (KeyEventListener listener : listeners) {
             try {
                 listener.onKeyPressed(keyCode);
             } catch (Exception e) {
@@ -294,15 +206,10 @@ public class KeyListenerThread extends Thread {
     }
 
     private void notifyKeyReleased(int keyCode) {
-        List<KeyEventListener> listenersCopy;
-        synchronized (listeners) {
-            listenersCopy = new ArrayList<>(listeners);
-        }
-        for (KeyEventListener listener : listenersCopy) {
+        for (KeyEventListener listener : listeners) {
             try {
                 listener.onKeyReleased(keyCode);
             } catch (Exception e) {
-                // Prevent listener exceptions from breaking the thread
                 e.printStackTrace();
             }
         }
@@ -327,12 +234,6 @@ public class KeyListenerThread extends Thread {
         running = false;
     }
 
-    /**
-     * Get a name for a key code
-     * 
-     * @param keyCode The virtual key code
-     * @return The key name
-     */
     public static String getKeyName(int keyCode) {
         if (keyCode >= VK_A && keyCode <= VK_Z) {
             return String.valueOf((char) keyCode);

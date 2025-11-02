@@ -18,8 +18,11 @@ public class App {
         }
 
         Thread t = new Thread(() -> {
-            printtype(
+            printType(
                     "Welcome to the infinity fortress! The game that manifests abominations beyond your imaginations",
+                    50);
+            printType(
+                    "Do you know that you can skip using the enter key? Wow!!!",
                     50);
         });
 
@@ -34,7 +37,7 @@ public class App {
         }
     }
 
-    public void printtype(String s, long duration) {
+    public void printType(String s, long duration) {
         /*
          * Here is the general gist on how to start a keyboard event listener:
          * Start a keyboard listener thread.
@@ -72,7 +75,7 @@ public class App {
 
         keyListener.start();
 
-        // Synchronization purpose, waits for the thread to get ready use this if
+        // Synchronization purpose, waits for the thread to get ready. Use this if
         // the keyListener is immediately required
         keyListener.waitUntilReady();
 
