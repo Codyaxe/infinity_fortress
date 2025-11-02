@@ -1,6 +1,14 @@
-# Infinity Fortress
+# 🏰Infinity Fortress
 
 Infinity Fortress is a console-based turn-based game with gacha elements.
+
+## System Requirements
+
+- OS: Windows 7 or higher (32-bit or 64-bit)
+- Processor: Any modern CPU (Pentium 4 or newer)
+- Memory: 512 MB RAM
+- Storage: 100 MB available space
+- Input: Keyboard
 
 ## Prerequisites
 
@@ -29,7 +37,7 @@ Ensure you have the following installed on your system:
 
 ## Running the Game
 
-1. Navigate to the `target` directory:
+1. Use a terminal and navigate to the `target` directory:
    ```bash
    cd target
    ```
@@ -48,10 +56,3 @@ Ensure you have the following installed on your system:
    ```bash
     run.bat
    ```
-
-## Testing
-
-To run the tests, use the following command:
-```bash
-mvn test
-```
