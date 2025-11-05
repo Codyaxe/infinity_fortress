@@ -14,7 +14,7 @@ Infinity Fortress is a console-based turn-based game with gacha elements.
 
 Ensure you have the following installed on your system:
 
-- Java Development Kit (JDK) 24 or higher (tested with Java 24)
+- Java Development Kit (JDK) 21 or higher (tested with Java 21 and 24)
 - Apache Maven
 - A terminal or command prompt
 

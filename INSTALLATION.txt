@@ -16,6 +16,6 @@ Download Maven for Java in VSC.
 
 
 
-Maven requires Java to run. Make sure you have a JDK installed (at least JDK 11, preferably 24)
+Maven requires Java to run. Make sure you have a JDK installed (at least JDK 11, preferably 21 or higher)
 
 Set JAVA_HOME system variable to your JDK path.

@@ -1,7 +1,6 @@
 package com.infinityfortress;
 
 import com.sun.jna.Platform;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import com.infinityfortress.utils.KeyListenerThread;
 
