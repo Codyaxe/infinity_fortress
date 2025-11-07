@@ -1,5 +1,10 @@
 package com.infinityfortress.roles;
 
-public class Rogue {
+import com.infinityfortress.actions.StealAction;
 
+public class Rogue extends AbstractRole {
+    public Rogue() {
+        super();
+        actions.addLast(new StealAction());
+    }
 }

@@ -1,5 +1,10 @@
 package com.infinityfortress.roles;
 
-public class Archer {
+import com.infinityfortress.actions.RangeAction;
 
+public class Archer extends AbstractRole {
+    public Archer() {
+        super();
+        actions.addLast(new RangeAction());
+    }
 }

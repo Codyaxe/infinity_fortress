@@ -14,12 +14,11 @@ public class SubAction implements Action {
         return TargetingType.CHOOSE_SUBACTION;
     };
 
-    public Action[] getAllSubActions() {
-        return subActions.toArray(new Action[0]);
+    public ArrayList<Action> getAllSubActions() {
+        return new ArrayList<>(subActions);
     };
 
-    // Say your character levels up or learns a new skill, you can use add
-    // subaction.
+    // Say your character levels up or learns a new skill, you can use addSubaction.
     public void addSubAction(Action action) {
         subActions.add(action);
     }
@@ -28,6 +27,7 @@ public class SubAction implements Action {
         subActions.remove(action);
     }
 
+    // For name-based finding
     public Action getSubAction(String name) {
         for (Action action : subActions) {
             if (action.getName().equals(name)) {

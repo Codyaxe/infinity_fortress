@@ -1,5 +1,10 @@
 package com.infinityfortress.roles;
 
-public class Cleric {
+import com.infinityfortress.actions.BuffAction;
 
+public class Cleric extends AbstractRole {
+    public Cleric() {
+        super();
+        actions.addLast(new BuffAction());
+    }
 }

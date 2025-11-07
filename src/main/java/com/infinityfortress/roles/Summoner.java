@@ -1,5 +1,10 @@
 package com.infinityfortress.roles;
 
-public class Summoner {
+import com.infinityfortress.actions.SummonAction;
 
+public class Summoner extends AbstractRole {
+    public Summoner() {
+        super();
+        actions.addLast(new SummonAction());
+    }
 }

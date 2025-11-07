@@ -1,5 +1,10 @@
 package com.infinityfortress.roles;
 
-public class Warlock {
+import com.infinityfortress.actions.DebuffAction;
 
+public class Warlock extends AbstractRole {
+    public Warlock() {
+        super();
+        actions.addLast(new DebuffAction());
+    }
 }

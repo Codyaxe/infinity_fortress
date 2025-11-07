@@ -1,5 +1,7 @@
 package com.infinityfortress.races;
 
-public class Spiritborn {
+public class Spiritborn extends AbstractRace {
+    public Spiritborn() {
 
+    }
 }

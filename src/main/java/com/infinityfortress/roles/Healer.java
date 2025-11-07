@@ -1,5 +1,10 @@
 package com.infinityfortress.roles;
 
-public class Healer {
+import com.infinityfortress.actions.HealAction;
 
+public class Healer extends AbstractRole {
+    public Healer() {
+        super();
+        actions.addLast(new HealAction());
+    }
 }

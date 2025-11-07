@@ -1,5 +1,7 @@
 package com.infinityfortress.races;
 
-public class Beastkin {
+public class Beastkin extends AbstractRace {
+    public Beastkin() {
 
+    }
 }

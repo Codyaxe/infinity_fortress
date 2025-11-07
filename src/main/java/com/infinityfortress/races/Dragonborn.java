@@ -1,5 +1,7 @@
 package com.infinityfortress.races;
 
-public class Dragonborn {
+public class Dragonborn extends AbstractRace {
+    public Dragonborn() {
 
+    }
 }

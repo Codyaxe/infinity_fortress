@@ -1,5 +1,10 @@
 package com.infinityfortress.roles;
 
-public class Mage {
+import com.infinityfortress.actions.CastAction;
 
+public class Mage extends AbstractRole {
+    public Mage() {
+        super();
+        actions.addLast(new CastAction());
+    }
 }

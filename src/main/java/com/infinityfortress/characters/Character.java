@@ -18,6 +18,8 @@ public class Character {
     private Race race;
 
     // Default Constructor
+    // Role and Race class will have default values which will extend the base
+    // attributes. For now placeholder values are included.
     public Character(Role c, Race r) {
         this.health = 10;
         this.mana = 10;

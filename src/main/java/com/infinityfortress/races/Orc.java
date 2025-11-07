@@ -1,5 +1,7 @@
 package com.infinityfortress.races;
 
-public class Orc {
+public class Orc extends AbstractRace {
+    public Orc() {
 
+    }
 }
