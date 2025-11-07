@@ -1,5 +1,5 @@
 package com.infinityfortress.characters;
 
-public interface Characters {
+public class Characters {
 
 }
