@@ -18,6 +18,8 @@ public class SubAction implements Action {
         return subActions.toArray(new Action[0]);
     };
 
+    // Say your character levels up or learns a new skill, you can use add
+    // subaction.
     public void addSubAction(Action action) {
         subActions.add(action);
     }
@@ -27,12 +29,15 @@ public class SubAction implements Action {
     }
 
     public Action getSubAction(String name) {
-        return subActions.stream()
-                .filter(action -> action.getName().equals(name))
-                .findFirst()
-                .orElse(null);
+        for (Action action : subActions) {
+            if (action.getName().equals(name)) {
+                return action;
+            }
+        }
+        return null;
     }
 
+    // For positional-based finding
     public Action getSubAction(int index) {
         if (index >= 0 && index < subActions.size()) {
             return subActions.get(index);
@@ -41,8 +46,12 @@ public class SubAction implements Action {
     }
 
     public boolean hasSubAction(String name) {
-        return subActions.stream()
-                .anyMatch(action -> action.getName().equals(name));
+        for (Action action : subActions) {
+            if (action.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void clearSubActions() {
