@@ -1,4 +1,4 @@
-package com.infinityfortress.classes;
+package com.infinityfortress.roles;
 
 public class Rogue {
 
