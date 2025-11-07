@@ -1,0 +1,59 @@
+package com.infinityfortress.actions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SubAction implements Action {
+    protected final List<Action> subActions = new ArrayList<>();
+
+    public String getName() {
+        return "Sub Actions";
+    };
+
+    public TargetingType getTargetingType() {
+        return TargetingType.CHOOSE_SUBACTION;
+    };
+
+    public Action[] getAllSubActions() {
+        return subActions.toArray(new Action[0]);
+    };
+
+    public void addSubAction(Action action) {
+        subActions.add(action);
+    }
+
+    public void removeSubAction(Action action) {
+        subActions.remove(action);
+    }
+
+    public Action getSubAction(String name) {
+        return subActions.stream()
+                .filter(action -> action.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Action getSubAction(int index) {
+        if (index >= 0 && index < subActions.size()) {
+            return subActions.get(index);
+        }
+        return null;
+    }
+
+    public boolean hasSubAction(String name) {
+        return subActions.stream()
+                .anyMatch(action -> action.getName().equals(name));
+    }
+
+    public void clearSubActions() {
+        subActions.clear();
+    }
+
+    public int getSubActionCount() {
+        return subActions.size();
+    }
+
+    public void execute(Character user, Character target) {
+        System.out.println("Why are you executing a generic sub action?");
+    };
+}

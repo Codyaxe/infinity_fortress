@@ -1,9 +1,9 @@
 package com.infinityfortress.actions.block;
 
-import com.infinityfortress.actions.Actions;
+import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.TargetingType;
 
-public class ProtectAll implements Actions {
+public class ProtectAll implements Action {
     public String getName() {
         return "Protect All";
     }
@@ -11,14 +11,6 @@ public class ProtectAll implements Actions {
     public TargetingType getTargetingType() {
         return TargetingType.ALL_ALLIES;
     }
-
-    public boolean hasSubActions() {
-        return false;
-    };
-
-    public Actions[] getSubActions() {
-        return new Actions[0];
-    };
 
     public void execute(Character user, Character target) {
         // If the target gets attacked, the user gets attacked instead.

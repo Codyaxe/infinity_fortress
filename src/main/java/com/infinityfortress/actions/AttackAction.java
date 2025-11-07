@@ -1,6 +1,6 @@
 package com.infinityfortress.actions;
 
-public class AttackAction implements Actions {
+public class AttackAction implements Action {
     public String getName() {
         return "Attack";
     }
@@ -13,11 +13,11 @@ public class AttackAction implements Actions {
         return false;
     };
 
-    public Actions[] getSubActions() {
-        return new Actions[0];
+    public Action[] getSubActions() {
+        return new Action[0];
     };
 
     public void execute(Character user, Character target) {
-        // Deal normal damage to an attacker
+        // Deal normal damage to a target
     };
 }

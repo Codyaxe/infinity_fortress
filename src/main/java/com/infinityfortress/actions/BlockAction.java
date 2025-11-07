@@ -4,29 +4,15 @@ import com.infinityfortress.actions.block.ProtectAll;
 import com.infinityfortress.actions.block.ProtectOne;
 import com.infinityfortress.actions.block.ProtectShit;
 
-public class BlockAction implements Actions {
+public class BlockAction extends SubAction {
+
+    public BlockAction() {
+        addSubAction(new ProtectOne());
+        addSubAction(new ProtectAll());
+        addSubAction(new ProtectShit());
+    }
 
     public String getName() {
         return "Block";
     }
-
-    public TargetingType getTargetingType() {
-        return TargetingType.CHOOSE_SUBACTION;
-    }
-
-    public boolean hasSubActions() {
-        return false;
-    };
-
-    public Actions[] getSubActions() {
-        return new Actions[] {
-                new ProtectOne(),
-                new ProtectAll(),
-                new ProtectShit()
-        };
-    };
-
-    public void execute(Character user, Character target) {
-        // None
-    };
 }
