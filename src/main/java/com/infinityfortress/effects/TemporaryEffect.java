@@ -1,16 +1,22 @@
 package com.infinityfortress.effects;
 
+import com.infinityfortress.characters.NCharacter;
+
 public class TemporaryEffect implements Effects {
+    protected NCharacter target;
     private int duration;
     private int strength;
 
-    public TemporaryEffect(int d) {
+    public TemporaryEffect(int d, NCharacter t) {
         this.duration = d;
+        this.target = t;
     }
 
     public String getName() {
         return "Generic Name";
     }
+
+    // Duration Access Methods
 
     public void setDuration(int d) {
         this.duration = d;
@@ -24,6 +30,8 @@ public class TemporaryEffect implements Effects {
         duration--;
     }
 
+    // Strength Access Methods
+
     public void setStrength(int s) {
         this.strength = s;
     }
@@ -31,6 +39,8 @@ public class TemporaryEffect implements Effects {
     public int getStrength() {
         return strength;
     }
+
+    // Effect Override
 
     public void apply() {
         System.out.println("Generic Effect Applied!");
