@@ -1,7 +1,7 @@
 package com.infinityfortress.characters;
 
-import com.infinityfortress.classes.CharacterClass;
 import com.infinityfortress.races.Race;
+import com.infinityfortress.roles.Role;
 
 public class Character {
     private String name;
@@ -14,11 +14,11 @@ public class Character {
     private int critChance;
     private int critStrength;
     private int luck;
-    private CharacterClass characterClass;
+    private Role role;
     private Race race;
 
     // Default Constructor
-    public Character(CharacterClass c, Race r) {
+    public Character(Role c, Race r) {
         this.health = 10;
         this.mana = 10;
         this.exp = 0;
@@ -28,7 +28,7 @@ public class Character {
         this.critChance = 10;
         this.critStrength = 2;
         this.luck = 2;
-        this.characterClass = c;
+        this.role = c;
         this.race = r;
     }
 
