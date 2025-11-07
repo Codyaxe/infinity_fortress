@@ -14,7 +14,7 @@ public class ProtectAll implements Action {
     }
 
     public void execute(NCharacter user, NCharacter target) {
-        // If the target gets attacked, the user gets attacked instead.
-        // Battle System will use "for all" characters for this function
+        ProtectOne protectOne = new ProtectOne();
+        protectOne.execute(user, target);
     };
 }
