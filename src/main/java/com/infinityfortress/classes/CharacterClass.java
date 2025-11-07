@@ -1,5 +1,5 @@
 package com.infinityfortress.classes;
 
-public interface Class {
+public interface CharacterClasses {
     void action();
 }
