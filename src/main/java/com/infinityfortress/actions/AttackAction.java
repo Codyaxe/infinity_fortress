@@ -1,5 +1,7 @@
 package com.infinityfortress.actions;
 
+import com.infinityfortress.characters.NCharacter;
+
 public class AttackAction implements Action {
     public String getName() {
         return "Attack";
@@ -17,7 +19,7 @@ public class AttackAction implements Action {
         return new Action[0];
     };
 
-    public void execute(Character user, Character target) {
+    public void execute(NCharacter user, NCharacter target) {
         // Deal normal damage to a target
     };
 }

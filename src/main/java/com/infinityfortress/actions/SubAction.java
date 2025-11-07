@@ -2,6 +2,7 @@ package com.infinityfortress.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.infinityfortress.characters.NCharacter;
 
 public class SubAction implements Action {
     protected final List<Action> subActions = new ArrayList<>();
@@ -62,7 +63,7 @@ public class SubAction implements Action {
         return subActions.size();
     }
 
-    public void execute(Character user, Character target) {
+    public void execute(NCharacter user, NCharacter target) {
         System.out.println("Why are you executing a generic sub action?");
     };
 }

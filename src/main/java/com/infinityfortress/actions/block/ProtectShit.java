@@ -2,6 +2,7 @@ package com.infinityfortress.actions.block;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.TargetingType;
+import com.infinityfortress.characters.NCharacter;;
 
 public class ProtectShit implements Action {
     public String getName() {
@@ -12,7 +13,7 @@ public class ProtectShit implements Action {
         return TargetingType.SINGLE_ENEMY;
     }
 
-    public void execute(Character user, Character target) {
+    public void execute(NCharacter user, NCharacter target) {
         // WHY WOULD YOU PROTECT AN ENEMY???
     };
 }

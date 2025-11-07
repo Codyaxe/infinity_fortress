@@ -1,9 +1,12 @@
 package com.infinityfortress.characters;
 
+import java.util.ArrayList;
+
 import com.infinityfortress.races.Race;
 import com.infinityfortress.roles.Role;
+import com.infinityfortress.effects.TemporaryEffect;
 
-public class Character {
+public class NCharacter {
     private String name;
     private int health;
     private int mana;
@@ -16,11 +19,12 @@ public class Character {
     private int luck;
     private Role role;
     private Race race;
+    private ArrayList<TemporaryEffect> condition;
 
     // Default Constructor
     // Role and Race class will have default values which will extend the base
     // attributes. For now placeholder values are included.
-    public Character(Role c, Race r) {
+    public NCharacter(Role c, Race r) {
         this.health = 10;
         this.mana = 10;
         this.exp = 0;
@@ -75,6 +79,14 @@ public class Character {
         return luck;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
     // Setters
     public void setHealth(int health) {
         this.health = health;
@@ -110,6 +122,16 @@ public class Character {
 
     public void setLuck(int luck) {
         this.luck = luck;
+    }
+
+    // Conditions Manipulation
+
+    public void addTemporaryEffect(TemporaryEffect effect) {
+        condition.addLast(effect);
+    }
+
+    public void removeTemporaryEffect(TemporaryEffect effect) {
+        condition.remove(effect);
     }
 
 }
