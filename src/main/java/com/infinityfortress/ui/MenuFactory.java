@@ -9,6 +9,8 @@ public class MenuFactory {
             case "REWARD" -> new RewardMenu();
             case "MAP" -> new MapMenu();
             case "GACHA" -> new GachaMenu();
+            case "STATS" -> new StatsMenu();
+            case "SETUP" -> new SetupMenu();
             default -> throw new IllegalArgumentException("Unknown menu type: " + menuType);
         };
     }

@@ -2,20 +2,38 @@ package com.infinityfortress;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.infinityfortress.ui.Menu;
+import com.infinityfortress.ui.MenuFactory;
 import com.infinityfortress.utils.KeyListenerThread;
 import com.infinityfortress.utils.Utils;
 import com.sun.jna.Platform;
-import com.infinityfortress.ui.Menu;
-import com.infinityfortress.ui.MenuFactory;
 
 public class App {
+    static AtomicBoolean enter = new AtomicBoolean(false);
+    static AtomicBoolean left = new AtomicBoolean(false);
+    static AtomicBoolean right = new AtomicBoolean(false);
+    static AtomicBoolean up = new AtomicBoolean(false);
+    static AtomicBoolean down = new AtomicBoolean(false);
+    static AtomicBoolean isPressed = new AtomicBoolean(false);
+    static AtomicBoolean back = new AtomicBoolean(false);
 
     static final Object lock = new Object();
 
+    public static void main(String[] args) {
+        App game = new App();
+        Utils.clearConsole();
+        Utils.hideCursor();
+        KeyListenerThread listen = game.setupListeners();
+        game.intro();
+        game.gameLoop();
+        listen.stopListener();
+        Utils.showCursor();
+    }
+
     public static void waiting() {
-        synchronized (lock) {
+        synchronized (App.lock) {
             try {
-                lock.wait(); // Wait until a key event occurs
+                App.lock.wait(); // Wait until a key event occurs
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -23,16 +41,9 @@ public class App {
     }
 
     public static void notif() {
-        synchronized (lock) {
-            lock.notify();
+        synchronized (App.lock) {
+            App.lock.notify();
         }
-    }
-
-    public static void main(String[] args) {
-        App game = new App();
-        Utils.clearConsole();
-        game.intro();
-        game.gameLoop();
     }
 
     public void intro() {
@@ -62,34 +73,9 @@ public class App {
     }
 
     public void dialouge(String text, int duration) {
-        KeyListenerThread keyListener = new KeyListenerThread();
-
-        keyListener.trackKey(KeyListenerThread.VK_RETURN);
-
-        AtomicBoolean skipRequested = new AtomicBoolean(false);
-
-        keyListener.addKeyEventListener(new KeyListenerThread.KeyEventListener() {
-            @Override
-            public void onKeyPressed(int keyCode) {
-                if (keyCode == KeyListenerThread.VK_RETURN) {
-                    skipRequested.set(true);
-                    synchronized (lock) {
-                        lock.notify();
-                    }
-                }
-            }
-
-            @Override
-            public void onKeyReleased(int keyCode) {
-            }
-        });
-
-        keyListener.start();
-        keyListener.waitUntilReady();
-
         for (int i = 0; i < text.length(); i++) {
             // Check if skip was requested
-            if (skipRequested.get()) {
+            if (enter.get()) {
                 System.out.print(text.substring(i));
                 break;
             }
@@ -104,142 +90,119 @@ public class App {
         }
         System.out.println("\nPress Enter to continue...");
         waiting();
-        keyListener.stopListener();
-
         System.out.println();
     }
 
-    public void gameLoop() {
-        /*
-         * Here is the general gist on how to start a keyboard event listener:
-         * Declare a keyboard listener thread.
-         * Track a key using the trackKey method
-         * Define a particular flag
-         * Implement a KeyEventListener using anonymous classes
-         * Start the thread
-         * {insert code}
-         * Close the thread
-         */
-
+    public KeyListenerThread setupListeners() {
         // Declare the key listener thread
         KeyListenerThread keyListener = new KeyListenerThread();
-
-        // Track the "Enter Key"
-        keyListener.trackKey(KeyListenerThread.VK_RIGHT);
-        keyListener.trackKey(KeyListenerThread.VK_RETURN);
         keyListener.trackKey(KeyListenerThread.VK_LEFT);
+        keyListener.trackKey(KeyListenerThread.VK_RIGHT);
+        keyListener.trackKey(KeyListenerThread.VK_UP);
+        keyListener.trackKey(KeyListenerThread.VK_DOWN);
+        keyListener.trackKey(KeyListenerThread.VK_RETURN);
         keyListener.trackKey(KeyListenerThread.VK_ESCAPE);
-
-        // Create a flag to track if skip was requested, use Atomic Boolean.
-        AtomicBoolean skipRequested = new AtomicBoolean(false);
-        AtomicBoolean left = new AtomicBoolean(false);
-        AtomicBoolean right = new AtomicBoolean(false);
-        AtomicBoolean isPressed = new AtomicBoolean(false);
-        AtomicBoolean isSettingUp = new AtomicBoolean(true);
-        AtomicBoolean reset = new AtomicBoolean(false);
 
         // Add a new event listener to implement onkeyPressed and onkeyReleased methods
         // using anonymous classes
         keyListener.addKeyEventListener(new KeyListenerThread.KeyEventListener() {
             @Override
             public void onKeyPressed(int keyCode) {
-                // System.out.println("Key Pressed: " + keyCode);
                 if (!isPressed.get()) {
-                    if (isSettingUp.get()) {
-                        if (keyCode == KeyListenerThread.VK_RETURN) {
-                            isSettingUp.set(false);
-                            notif();
-                        }
-                        if (keyCode == KeyListenerThread.VK_ESCAPE) {
-                            notif();
-                        }
-                    } else {
-                        switch (keyCode) {
-                            case KeyListenerThread.VK_RETURN -> {
-                                skipRequested.set(true);
-                            }
-                            case KeyListenerThread.VK_RIGHT -> {
-                                right.set(true);
-                            }
-                            case KeyListenerThread.VK_LEFT -> {
-                                left.set(true);
-                            }
-                        }
-                        notif();
+                    switch (keyCode) {
+                        case KeyListenerThread.VK_RETURN -> enter.set(true);
+                        case KeyListenerThread.VK_RIGHT -> right.set(true);
+                        case KeyListenerThread.VK_LEFT -> left.set(true);
+                        case KeyListenerThread.VK_UP -> up.set(true);
+                        case KeyListenerThread.VK_DOWN -> down.set(true);
+                        case KeyListenerThread.VK_ESCAPE -> back.set(true);
                     }
+                    App.notif();
                     isPressed.set(true);
-
                 }
             }
 
             @Override
             public void onKeyReleased(int keyCode) {
                 isPressed.set(false);
-                if (keyCode == KeyListenerThread.VK_RIGHT) {
-                    right.set(false);
-                }
-                if (keyCode == KeyListenerThread.VK_LEFT) {
-                    left.set(false);
-                }
-                if (keyCode == KeyListenerThread.VK_ESCAPE) {
-                    reset.set(false);
+                switch (keyCode) {
+                    case KeyListenerThread.VK_RETURN -> enter.set(false);
+                    case KeyListenerThread.VK_UP -> up.set(false);
+                    case KeyListenerThread.VK_DOWN -> down.set(false);
+                    case KeyListenerThread.VK_ESCAPE -> back.set(false);
+                    case KeyListenerThread.VK_RIGHT -> right.set(false);
+                    case KeyListenerThread.VK_LEFT -> left.set(false);
                 }
             }
         });
 
         keyListener.start();
         keyListener.waitUntilReady();
+        return keyListener;
+    }
 
-        // simple game state
-        boolean running = true;
-        int prev = 0;
-        int choice = 0;
-        final int frameMillis = 50; // 20 FPS
-
-        Menu mainMenu = MenuFactory.getMenu("BATTLE");
-        Menu setup = MenuFactory.getMenu("MAIN");
-
-        Utils.hideCursor();
+    public void setup() {
         Utils.clearConsole();
-
+        Menu setup = MenuFactory.getMenu("SETUP");
+        setup.display();
+        AtomicBoolean isSettingUp = new AtomicBoolean(true);
         while (isSettingUp.get()) {
-            setup.display();
             waiting();
+            if (enter.get()) isSettingUp.set(false);
             Utils.clearConsole();
         }
+    }
 
-        mainMenu.display(choice);
+    public void gameLoop() {
+      statLoop();
+    }
 
-        while (running) {
+    public void statLoop() {
+        int pick, pPrev, choice, cPrev;
+        pick = pPrev = choice = cPrev = 0;
+
+        Menu statsMenu = MenuFactory.getMenu("STATS");
+
+        // Preview only
+        String[] roles = {
+            "Mage",
+            "Warlock",
+            "Cleric",
+            "Summoner",
+            "Rogue",
+            "Archer",
+            "Healer",
+            "Tank",
+            "Warrior"
+        };
+
+        statsMenu.display(roles[pick], choice);
+
+        while (true) {
             waiting();
 
             if (left.get()) {
-                choice = Math.max(0, choice - 1);
+                pick = Math.max(0, pick - 1);
                 left.set(false);
             }
             if (right.get()) {
-                choice = Math.min(3, choice + 1);
+                pick = Math.min(8, pick + 1);
                 right.set(false);
             }
-
-            // Only repaint if choice actually changed
-            if (choice != prev) {
-                prev = choice;
-                Utils.clearConsole();
-                mainMenu.display(choice);
+            if (up.get()) {
+                choice = Math.max(0, choice - 1);
+                up.set(false);
             }
-
-            // simple fixed-timestep sleep
-            try {
-                Thread.sleep(frameMillis);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                running = false;
+            if (down.get()) {
+                choice = Math.min(2, choice + 1);
+                down.set(false);
+            }
+            // Only repaint if choice actually changed
+            if (choice != cPrev || pick != pPrev) {
+                cPrev = choice;
+                pPrev = pick;
+                statsMenu.display(roles[pick], choice);
             }
         }
-
-        keyListener.stopListener();
-        Utils.showCursor();
-        System.out.println();
     }
 }
