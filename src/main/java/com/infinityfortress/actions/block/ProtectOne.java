@@ -16,15 +16,15 @@ public class ProtectOne implements Action {
 
     public void execute(NCharacter user, NCharacter target) {
 
-        TemporaryEffect protectEffect = new TemporaryEffect() {
+        TemporaryEffect protectEffect = new TemporaryEffect(5, target) {
             @Override
             public void apply() {
-                target.setDefense(target.getDefense() + 50);
+                this.target.setDefense(this.target.getDefense() + 50);
             }
 
             @Override
             public void remove() {
-                target.setDefense(target.getDefense() - 50);
+                this.target.setDefense(this.target.getDefense() - 50);
             }
 
             @Override

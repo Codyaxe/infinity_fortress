@@ -2,7 +2,7 @@ package com.infinityfortress.actions.block;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.TargetingType;
-import com.infinityfortress.characters.NCharacter;;
+import com.infinityfortress.characters.NCharacter;
 
 public class ProtectShit implements Action {
     public String getName() {
@@ -15,5 +15,7 @@ public class ProtectShit implements Action {
 
     public void execute(NCharacter user, NCharacter target) {
         // WHY WOULD YOU PROTECT AN ENEMY???
+        ProtectOne protectOne = new ProtectOne();
+        protectOne.execute(user, target);
     };
 }
