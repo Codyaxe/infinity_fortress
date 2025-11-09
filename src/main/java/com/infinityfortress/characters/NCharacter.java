@@ -25,6 +25,7 @@ public class NCharacter {
     // Role and Race class will have default values which will extend the base
     // attributes. For now placeholder values are included.
     public NCharacter(Role c, Race r) {
+        this.name = r.getName() + " " + c.getName();
         this.health = 10;
         this.mana = 10;
         this.exp = 0;
