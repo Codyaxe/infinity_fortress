@@ -1,5 +1,19 @@
 package com.infinityfortress;
 
-public class Enemy {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
+public class Enemy {
+    ArrayList<Character> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
+
+    public Enemy() {
+        // Generate random number of characters (1-5)
+        Random rand = new Random();
+        int numCharacters = 1 + rand.nextInt(5); // 1-5 characters
+        
+        for (int i = 0; i < numCharacters; i++) {
+            characters.set(i, new Character("Enemy"));
+        }
+    }
 }

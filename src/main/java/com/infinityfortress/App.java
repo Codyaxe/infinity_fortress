@@ -1,48 +1,58 @@
 package com.infinityfortress;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import com.infinityfortress.ui.Menu;
-import com.infinityfortress.ui.MenuFactory;
-import com.infinityfortress.utils.KeyListenerThread;
-import com.infinityfortress.utils.Utils;
+import com.infinityfortress.Character.Type;
+import com.infinityfortress.ui.*;
+import com.infinityfortress.utils.*;
 import com.sun.jna.Platform;
 
 public class App {
-    static AtomicBoolean enter = new AtomicBoolean(false);
-    static AtomicBoolean left = new AtomicBoolean(false);
-    static AtomicBoolean right = new AtomicBoolean(false);
-    static AtomicBoolean up = new AtomicBoolean(false);
-    static AtomicBoolean down = new AtomicBoolean(false);
-    static AtomicBoolean isPressed = new AtomicBoolean(false);
-    static AtomicBoolean back = new AtomicBoolean(false);
 
-    static final Object lock = new Object();
+    AtomicBoolean enter = new AtomicBoolean(false);
+    AtomicBoolean left = new AtomicBoolean(false);
+    AtomicBoolean right = new AtomicBoolean(false);
+    AtomicBoolean up = new AtomicBoolean(false);
+    AtomicBoolean down = new AtomicBoolean(false);
+    AtomicBoolean isPressed = new AtomicBoolean(false);
+    AtomicBoolean back = new AtomicBoolean(false);
+
+    final Object lock = new Object();
+    Player player = new Player();
+    Enemy enemy = new Enemy();
 
     public static void main(String[] args) {
         App game = new App();
+        KeyListenerThread listen = game.setupListeners();
         Utils.clearConsole();
         Utils.hideCursor();
-        KeyListenerThread listen = game.setupListeners();
-        game.intro();
+        // game.intro();
+        game.setup();
         game.gameLoop();
         listen.stopListener();
         Utils.showCursor();
     }
 
-    public static void waiting() {
-        synchronized (App.lock) {
+    public void Test() {
+
+    }
+
+    public void waiting() {
+        synchronized (lock) {
             try {
-                App.lock.wait(); // Wait until a key event occurs
+                lock.wait(); // Wait until a key event occurs
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }
     }
 
-    public static void notif() {
-        synchronized (App.lock) {
-            App.lock.notify();
+    public void notif() {
+        synchronized (lock) {
+            lock.notify();
         }
     }
 
@@ -96,13 +106,14 @@ public class App {
     public KeyListenerThread setupListeners() {
         // Declare the key listener thread
         KeyListenerThread keyListener = new KeyListenerThread();
-        keyListener.trackKey(KeyListenerThread.VK_LEFT);
-        keyListener.trackKey(KeyListenerThread.VK_RIGHT);
-        keyListener.trackKey(KeyListenerThread.VK_UP);
-        keyListener.trackKey(KeyListenerThread.VK_DOWN);
-        keyListener.trackKey(KeyListenerThread.VK_RETURN);
-        keyListener.trackKey(KeyListenerThread.VK_ESCAPE);
-
+        keyListener.trackKeys(
+                KeyListenerThread.VK_LEFT,
+                KeyListenerThread.VK_RIGHT,
+                KeyListenerThread.VK_UP,
+                KeyListenerThread.VK_DOWN,
+                KeyListenerThread.VK_RETURN,
+                KeyListenerThread.VK_ESCAPE
+        );
         // Add a new event listener to implement onkeyPressed and onkeyReleased methods
         // using anonymous classes
         keyListener.addKeyEventListener(new KeyListenerThread.KeyEventListener() {
@@ -110,14 +121,20 @@ public class App {
             public void onKeyPressed(int keyCode) {
                 if (!isPressed.get()) {
                     switch (keyCode) {
-                        case KeyListenerThread.VK_RETURN -> enter.set(true);
-                        case KeyListenerThread.VK_RIGHT -> right.set(true);
-                        case KeyListenerThread.VK_LEFT -> left.set(true);
-                        case KeyListenerThread.VK_UP -> up.set(true);
-                        case KeyListenerThread.VK_DOWN -> down.set(true);
-                        case KeyListenerThread.VK_ESCAPE -> back.set(true);
+                        case KeyListenerThread.VK_RETURN ->
+                            enter.set(true);
+                        case KeyListenerThread.VK_RIGHT ->
+                            right.set(true);
+                        case KeyListenerThread.VK_LEFT ->
+                            left.set(true);
+                        case KeyListenerThread.VK_UP ->
+                            up.set(true);
+                        case KeyListenerThread.VK_DOWN ->
+                            down.set(true);
+                        case KeyListenerThread.VK_ESCAPE ->
+                            back.set(true);
                     }
-                    App.notif();
+                    notif();
                     isPressed.set(true);
                 }
             }
@@ -126,12 +143,18 @@ public class App {
             public void onKeyReleased(int keyCode) {
                 isPressed.set(false);
                 switch (keyCode) {
-                    case KeyListenerThread.VK_RETURN -> enter.set(false);
-                    case KeyListenerThread.VK_UP -> up.set(false);
-                    case KeyListenerThread.VK_DOWN -> down.set(false);
-                    case KeyListenerThread.VK_ESCAPE -> back.set(false);
-                    case KeyListenerThread.VK_RIGHT -> right.set(false);
-                    case KeyListenerThread.VK_LEFT -> left.set(false);
+                    case KeyListenerThread.VK_RETURN ->
+                        enter.set(false);
+                    case KeyListenerThread.VK_UP ->
+                        up.set(false);
+                    case KeyListenerThread.VK_DOWN ->
+                        down.set(false);
+                    case KeyListenerThread.VK_ESCAPE ->
+                        back.set(false);
+                    case KeyListenerThread.VK_RIGHT ->
+                        right.set(false);
+                    case KeyListenerThread.VK_LEFT ->
+                        left.set(false);
                 }
             }
         });
@@ -144,17 +167,78 @@ public class App {
     public void setup() {
         Utils.clearConsole();
         Menu setup = MenuFactory.getMenu("SETUP");
-        setup.display();
         AtomicBoolean isSettingUp = new AtomicBoolean(true);
         while (isSettingUp.get()) {
+            setup.display();
             waiting();
-            if (enter.get()) isSettingUp.set(false);
+            if (enter.get()) {
+                isSettingUp.set(false);
+            }
             Utils.clearConsole();
         }
     }
 
     public void gameLoop() {
-      statLoop();
+        battleLoop();
+    }
+
+    public void print(String text) {
+        System.out.print(text);
+    }
+
+    public void println(String text) {
+        System.out.println(text);
+    }
+
+    public void battleLoop() {
+        int choice, prev;
+        choice = prev = 0;
+
+        // Create Turn Order Array
+        Menu battleMenu = MenuFactory.getMenu("BATTLE");
+        ArrayList<Pair<Character, Integer>> characterList = Stream.concat(
+                player.characters.stream(), enemy.characters.stream())
+                .filter(c -> c != null)
+                .map(c -> new Pair<>(c, c.speed))
+                .collect(Collectors.toCollection(ArrayList::new));
+        ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
+        Character curr=turnQueue.peekCurrChar();
+
+        battleMenu.display(player.characters, enemy.characters,turnQueue.getCurrentQueue(), choice);
+        
+        while (true) {
+          waiting();
+          
+          if (left.get()) {
+            choice = Math.max(0, choice - 1);
+            left.set(false);
+          }
+          if (right.get()) {
+            choice = Math.min(3, choice + 1);
+              right.set(false);
+            }
+            if (enter.get()) {
+              switch(choice) {
+                case 0 -> {
+                }
+                case 1 -> {
+                }
+                case 2 -> {
+                }
+                case 3 -> {
+                }
+              }
+              battleMenu.display(player.characters, enemy.characters,turnQueue.getCurrentQueue(), choice);
+              curr=turnQueue.getCurrCharAndUpdate();
+            }
+            // Only repaint if choice actually changed
+            // curr=turnQueue.peekCurrChar();
+            if (choice != prev || enter.get()) {
+              enter.set(false);
+              prev = choice;
+              battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
+            }
+        }
     }
 
     public void statLoop() {
