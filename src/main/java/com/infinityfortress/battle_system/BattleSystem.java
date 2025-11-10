@@ -21,8 +21,7 @@ public class BattleSystem {
         Menu battleMenu = MenuFactory.getMenu("BATTLE");
 
         // Gather all characters from player and enemy lists, filtering out null values
-        ArrayList<NCharacter> characterList = Stream.concat(
-                player.characters.stream(), enemy.characters.stream())
+        ArrayList<NCharacter> characterList = Stream.concat(player.characters.stream(), enemy.characters.stream())
                 .filter(c -> c != null)
                 .collect(Collectors.toCollection(ArrayList::new));
 
