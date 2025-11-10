@@ -46,7 +46,6 @@ public class NCharacter {
         this.condition = new ArrayList<>();
     }
 
-    // General Constructor - allows setting all character attributes
     public NCharacter(NCharacterType type, int health, int mana, int exp, int defense,
             int strength, int speed, int critStrength, int critChance,
             int luck, Role role, Race race) {
