@@ -1,11 +1,11 @@
 package com.infinityfortress.roles;
 
-import com.infinityfortress.actions.BlockAction;
+import com.infinityfortress.actions.GuardAction;
 
 public class Tank extends AbstractRole {
     public Tank() {
         super();
-        actions.addLast(new BlockAction());
+        actions.addLast(new GuardAction());
     }
 
     public String getName() {
