@@ -2,7 +2,7 @@ package com.infinityfortress;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.infinityfortress.battle_system.BattleSystem;
+import com.infinityfortress.battlesystem.BattleSystem;
 import com.infinityfortress.ui.*;
 import com.infinityfortress.utils.*;
 import com.sun.jna.Platform;

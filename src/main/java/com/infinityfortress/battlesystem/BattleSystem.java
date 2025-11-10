@@ -1,4 +1,4 @@
-package com.infinityfortress.battle_system;
+package com.infinityfortress.battlesystem;
 
 import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
