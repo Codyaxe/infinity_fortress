@@ -1,13 +1,20 @@
 package com.infinityfortress;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.infinityfortress.Character.Type;
-import com.infinityfortress.ui.*;
-import com.infinityfortress.utils.*;
+import com.infinityfortress.ui.ActionUI;
+import com.infinityfortress.ui.BattleTopUI;
+import com.infinityfortress.ui.BattleUI;
+import com.infinityfortress.ui.DecisionUI;
+import com.infinityfortress.ui.SetupMenu;
+import com.infinityfortress.ui.StatsMenu;
+import com.infinityfortress.utils.KeyListenerThread;
+import com.infinityfortress.utils.ModifiedPriorityQueue;
+import com.infinityfortress.utils.Pair;
+import com.infinityfortress.utils.Utils;
 import com.sun.jna.Platform;
 
 public class App {
@@ -131,8 +138,9 @@ public class App {
                             up.set(true);
                         case KeyListenerThread.VK_DOWN ->
                             down.set(true);
-                        case KeyListenerThread.VK_ESCAPE ->
+                        case KeyListenerThread.VK_ESCAPE -> {
                             back.set(true);
+                        }
                     }
                     notif();
                     isPressed.set(true);
@@ -166,7 +174,7 @@ public class App {
 
     public void setup() {
         Utils.clearConsole();
-        Menu setup = MenuFactory.getMenu("SETUP");
+        SetupMenu setup = new SetupMenu();
         AtomicBoolean isSettingUp = new AtomicBoolean(true);
         while (isSettingUp.get()) {
             setup.display();
@@ -191,86 +199,177 @@ public class App {
     }
 
     public void battleLoop() {
-        int choice, prev;
-        choice = prev = 0;
-
         // Create Turn Order Array
-        Menu battleMenu = MenuFactory.getMenu("BATTLE");
         ArrayList<Pair<Character, Integer>> characterList = Stream.concat(
                 player.characters.stream(), enemy.characters.stream())
                 .filter(c -> c != null)
                 .map(c -> new Pair<>(c, c.speed))
                 .collect(Collectors.toCollection(ArrayList::new));
         ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
-        Character curr=turnQueue.peekCurrChar();
+        Character curr = turnQueue.peekCurrChar();
 
-        battleMenu.display(player.characters, enemy.characters,turnQueue.getCurrentQueue(), choice);
-        
         while (true) {
-          waiting();
-          
-          if (left.get()) {
-            choice = Math.max(0, choice - 1);
-            left.set(false);
-          }
-          if (right.get()) {
-            choice = Math.min(3, choice + 1);
-              right.set(false);
-            }
-            if (enter.get()) {
-              switch(choice) {
-                case 0 -> {
+            int choice = 0;
+            BattleTopUI battleTop = new BattleTopUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
+            BattleUI battleUI = new BattleUI(battleTop);
+            while (true) {
+                battleUI.display(choice);
+                waiting();
+                if (left.get()) {
+                    choice = Math.max(0, choice - 1);
+                    left.set(false);
                 }
-                case 1 -> {
+                if (right.get()) {
+                    choice = Math.min(2, choice + 1);
+                    right.set(false);
                 }
-                case 2 -> {
+                if (enter.get()) {
+                    boolean flag = false;
+                    switch (choice) {
+                        case 0 -> {
+                            if (actionLoop(battleTop, curr)) {
+                                curr = turnQueue.getCurrCharAndUpdate();
+                                flag=true;
+                            }
+                        }
+                        case 1 -> {
+                            if (curr.type == Character.Type.ALLY) {
+                                statLoop(curr);
+                            }
+                        }
+                        case 2 -> {
+                            curr = turnQueue.getCurrCharAndUpdate();
+                            enter.set(false);
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag) break;
                 }
-                case 3 -> {
-                }
-              }
-              battleMenu.display(player.characters, enemy.characters,turnQueue.getCurrentQueue(), choice);
-              curr=turnQueue.getCurrCharAndUpdate();
-            }
-            // Only repaint if choice actually changed
-            // curr=turnQueue.peekCurrChar();
-            if (choice != prev || enter.get()) {
-              enter.set(false);
-              prev = choice;
-              battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
             }
         }
     }
 
-    public void statLoop() {
-        int pick, pPrev, choice, cPrev;
-        pick = pPrev = choice = cPrev = 0;
-
-        Menu statsMenu = MenuFactory.getMenu("STATS");
-
-        // Preview only
-        String[] roles = {
-            "Mage",
-            "Warlock",
-            "Cleric",
-            "Summoner",
-            "Rogue",
-            "Archer",
-            "Healer",
-            "Tank",
-            "Warrior"
-        };
-
-        statsMenu.display(roles[pick], choice);
+    public boolean actionLoop(BattleTopUI battleTop, Character curr) {
+        int choice = 0;
+        ActionUI currUI = new ActionUI(battleTop);
 
         while (true) {
+            currUI.display(choice);
             waiting();
 
             if (left.get()) {
-                pick = Math.max(0, pick - 1);
+                choice = Math.max(0, choice - 1);
                 left.set(false);
             }
             if (right.get()) {
-                pick = Math.min(8, pick + 1);
+                choice = Math.min(3, choice + 1);
+                right.set(false);
+            }
+            if (back.get()) {
+                back.set(false);
+                return false;
+            }
+            if (enter.get()) {
+                switch (choice) {
+                    case 0 -> {
+                        if (decisionLoop(battleTop, curr)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean decisionLoop(BattleTopUI battleTop, Character curr) {
+        int choice = 0;
+        DecisionUI currUI = new DecisionUI(battleTop);
+        ArrayList<Character> enemies = enemy.characters.stream().filter(c -> c != null).collect(Collectors.toCollection(ArrayList::new));
+        int maxChoice = enemies.size() - 1;
+        while (true) {
+            currUI.display(enemies, choice);
+            waiting();
+
+            if (right.get()) {
+                if (choice + 3 <= maxChoice) {
+                    choice += 3;
+                }
+                right.set(false);
+            }
+
+            if (left.get()) {
+                if (choice >= 3) {
+                    choice -= 3;
+                }
+                left.set(false);
+            }
+
+            if (down.get()) {
+                if (choice % 3 + 1 < 3 && choice + 1 <= maxChoice) {
+                    choice++;
+                }
+                down.set(false);
+            }
+
+            if (up.get()) {
+                if ((choice % 3) > 0) {
+                    choice--;
+                }
+                up.set(false);
+            }
+
+            if (back.get()) {
+                back.set(false);
+                return false;
+            }
+
+            if (enter.get()) {
+                switch (choice) {
+                    case 0 -> {
+                        // a
+                    }
+                    case 1 -> {
+                        // b
+                    }
+                    case 2 -> {
+                        // c
+                    }
+                    case 3 -> {
+                        // d
+                    }
+                    case 4 -> {
+                        // e
+                    }
+                    case 5 -> {
+                        // x
+                    }
+                }
+                return true;
+            }
+        }
+    }
+
+    public void resultLoop() {
+
+    }
+
+    public void statLoop(Character currCharact) {
+        int choice = 0;
+        ArrayList<Character> characterList = player.characters.stream().filter(c -> c != null).collect(Collectors.toCollection(ArrayList::new));
+        int curr = characterList.indexOf(currCharact);
+        StatsMenu statsMenu = new StatsMenu();
+        Utils.clearConsole();
+        while (true) {
+            statsMenu.display(characterList.get(curr), choice, curr, characterList.size());
+            waiting();
+
+            if (left.get()) {
+                curr = Math.max(0, curr - 1);
+                left.set(false);
+            }
+            if (right.get()) {
+                curr = Math.min(characterList.size() - 1, curr + 1);
                 right.set(false);
             }
             if (up.get()) {
@@ -281,12 +380,17 @@ public class App {
                 choice = Math.min(2, choice + 1);
                 down.set(false);
             }
-            // Only repaint if choice actually changed
-            if (choice != cPrev || pick != pPrev) {
-                cPrev = choice;
-                pPrev = pick;
-                statsMenu.display(roles[pick], choice);
+            if (back.get()) {
+                back.set(false);
+                return;
             }
         }
     }
 }
+
+// 0-32
+// 0-118
+// 3, 25
+// 116, 25
+// 3, 31
+// 116, 31

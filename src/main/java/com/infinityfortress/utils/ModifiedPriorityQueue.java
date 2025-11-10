@@ -52,4 +52,12 @@ public final class ModifiedPriorityQueue {
     public Character peekCurrChar() {
         return this.queue.peek();
     }
+
+    public String showQueue() {
+        StringBuilder sb = new StringBuilder();
+        for (Character c : this.queue) {
+            sb.append(c.race).append(" ").append(c.role).append(" | ");
+        }
+        return sb.toString();
+    }
 }
