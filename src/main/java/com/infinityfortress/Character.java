@@ -13,21 +13,79 @@ public class Character {
     public String role;
     public String race;
     public Type type;
-    public Equipment equipment;
-    public Attack BasicAttack;
-    public Attack SpecialAttack;
+    final private Equipment equipment;
+    final private Attack BasicAttack;
+    final private Attack SpecialAttack;
     public int maxHp;
     public int maxMp;
     public int expCap;
+    public int lvl = 0;
     public int hp;
     public int mp;
+    public int exp = 0;
     public int exp = 0;
     public int defense;
     public int strength;
     public int speed;
     public int critChance;
-    public int critStrength;
+    public int critDamage;
     public int luck;
+
+    public String getWeapon() {
+        return this.equipment.weapon;
+    }
+
+    public String getArmor() {
+        return this.equipment.armor;
+    }
+
+    public String getAccessory1() {
+        return this.equipment.accessory1;
+    }
+
+    public String getAccessory2() {
+        return this.equipment.accessory2;
+    }
+
+    public String getAttackDesc() {
+        return this.BasicAttack.description;
+    }
+
+    public String getAttackDMG() {
+        return "" + this.BasicAttack.damge;
+    }
+
+    public String getAttackCost() {
+        return "" + this.BasicAttack.mpCost;
+    }
+
+    public String getAttackType() {
+        return "" + this.BasicAttack.type;
+    }
+
+    public String getAttackHitCount() {
+        return "" + this.BasicAttack.hitCount;
+    }
+
+    public String getSpecialDesc() {
+        return this.SpecialAttack.description;
+    }
+
+    public String getSpecialDMG() {
+        return "" + this.SpecialAttack.damge;
+    }
+
+    public String getSpecialCost() {
+        return "" + this.SpecialAttack.mpCost;
+    }
+
+    public String getSpecialType() {
+        return "" + this.SpecialAttack.type;
+    }
+
+    public String getSpecialHitCount() {
+        return "" + this.SpecialAttack.hitCount;
+    }
 
     // Equipment arrays for randomization
     private static final String[] WEAPONS = {
@@ -56,6 +114,7 @@ public class Character {
 
     public Character(String type) {
         Random rand = new Random();
+<<<<<<< HEAD
         this.hp = this.maxHp = 50 + rand.nextInt(200); // 50-249
         this.mp = this.maxMp = 30 + rand.nextInt(170); // 30-199
         this.expCap = rand.nextInt(100); // 0-99
@@ -65,6 +124,17 @@ public class Character {
         this.critChance = 5 + rand.nextInt(45); // 5-49
         this.critStrength = 10 + rand.nextInt(40); // 10-49
         this.luck = 1 + rand.nextInt(99); // 1-99
+=======
+        this.hp = this.maxHp = 50 + rand.nextInt(200);     // 50-249
+        this.mp = this.maxMp = 30 + rand.nextInt(170);       // 30-199
+        this.expCap = rand.nextInt(100);             // 0-99
+        this.defense = 10 + rand.nextInt(90);     // 10-99
+        this.strength = 15 + rand.nextInt(85);    // 15-99
+        this.speed = 10 + rand.nextInt(90);       // 10-99
+        this.critChance = 5 + rand.nextInt(45);   // 5-49
+        this.critDamage = 10 + rand.nextInt(40); // 10-49
+        this.luck = 1 + rand.nextInt(99);         // 1-99
+>>>>>>> 51d72730d22d823c83c78de5f00c53deed00ffe2
 
         this.type = type.equals("Ally") ? Type.ALLY : Type.ENEMY;
         // Randomized role and race (ignore parameters, randomize instead)
@@ -83,19 +153,39 @@ public class Character {
         }
 
         this.equipment = new Equipment(randomWeapon, randomArmor, randomAcc1, randomAcc2);
-        this.BasicAttack = new Attack("Basic Attack", "A standard attack dealing normal damage.");
-        this.SpecialAttack = new Attack("Special Attack", "A powerful attack dealing increased damage.");
+        this.BasicAttack = new Attack("A standard attack dealing normal damage.");
+        this.SpecialAttack = new Attack("A powerful attack dealing increased damage.");
+
     }
 }
 
 class Attack {
 
-    String name;
+    public enum SkillType {
+        Damage, Heal, Buff, Debuff, Block
+    };
+
+    public enum HitType {
+        Single, Split, Multi, All,
+    };
+
+    int damge;
+    int mpCost;
+    SkillType type;
+    HitType hitCount;
+
     String description;
 
-    Attack(String n, String d) {
-        this.name = n;
+    Attack(String d) {
         this.description = d;
+        Random rand = new Random();
+        this.damge = (1 + rand.nextInt(20));
+        this.mpCost = (1 + rand.nextInt(20));
+        SkillType[] types = SkillType.values();
+        this.type = types[rand.nextInt(types.length)];
+
+        HitType[] hits = HitType.values();
+        this.hitCount = hits[rand.nextInt(hits.length)];
     }
 }
 

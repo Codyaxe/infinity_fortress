@@ -6,6 +6,17 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.effects.TemporaryEffect;
 
 public class ProtectOne implements Action {
+
+    private int hitCount;
+
+    public ProtectOne() {
+        this.hitCount = 1;
+    }
+
+    public int getHitCount() {
+        return hitCount;
+    }
+
     public String getName() {
         return "Protect One";
     }

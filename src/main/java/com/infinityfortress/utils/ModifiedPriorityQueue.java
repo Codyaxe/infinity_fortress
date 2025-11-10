@@ -55,4 +55,12 @@ public final class ModifiedPriorityQueue {
   public NCharacter peekCurrChar() {
     return this.queue.peek();
   }
+
+  public String showQueue() {
+    StringBuilder sb = new StringBuilder();
+    for (NCharacter c : this.queue) {
+      sb.append(c.getRole().getName()).append(" ").append(c.getRole().getName()).append(" | ");
+    }
+    return sb.toString();
+  }
 }

@@ -5,6 +5,17 @@ import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
 
 public class ProtectShit implements Action {
+
+    private int hitCount;
+
+    public ProtectShit() {
+        this.hitCount = 1;
+    }
+
+    public int getHitCount() {
+        return hitCount;
+    }
+
     public String getName() {
         return "Protect Shit";
     }

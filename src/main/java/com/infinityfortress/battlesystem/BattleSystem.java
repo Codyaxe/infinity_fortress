@@ -4,10 +4,8 @@ import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.ui.*;
-import com.infinityfortress.actions.*;
 import com.infinityfortress.utils.*;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,12 +13,17 @@ public class BattleSystem {
 
     Player player = new Player();
     Enemy enemy = new Enemy();
+    DecisionSystem decisionSystem;
+    StatSystem statSystem;
+    ActionSystem actionSystem;
 
     public void start() {
-        int choice, prev;
-        choice = prev = 0;
+        int choice = 0;
 
-        Menu battleMenu = MenuFactory.getMenu("BATTLE");
+        // Initialization, decisionsystem and actionsystem must access player and enemy.
+        decisionSystem = new DecisionSystem(player, enemy);
+        statSystem = new StatSystem(player);
+        actionSystem = new ActionSystem(decisionSystem);
 
         // Gather all characters from player and enemy lists, filtering out null values
         ArrayList<NCharacter> characterList = Stream.concat(player.characters.stream(), enemy.characters.stream())
@@ -28,81 +31,107 @@ public class BattleSystem {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
-
         NCharacter currentCharacter = turnQueue.peekCurrChar();
 
-        battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
-
         while (true) {
-            InputHandler.waitForInput();
+            BattleTopUI battleTop = new BattleTopUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
+            BattleUI battleUI = new BattleUI(battleTop);
 
-            if (InputHandler.left.get()) {
-                choice = Math.max(0, choice - 1);
-                InputHandler.left.set(false);
-            }
-            if (InputHandler.right.get()) {
-                choice = Math.min(3, choice + 1);
-                InputHandler.right.set(false);
-            }
+            boolean turnComplete = false;
+            while (!turnComplete) {
+                battleUI.display(choice);
+                InputHandler.waitForInput();
 
-            if (InputHandler.enter.get()) {
-                switch (choice) {
-                    case 0 -> {
-                        ArrayList<Action> actions = currentCharacter.getRole().getActions();
-                        if (!actions.isEmpty()) {
-                            // We can use find by string name or index :>
-                            Optional<Action> selectedAction = actions.stream()
-                                    .filter(a -> a.getName().equals("Attack"))
-                                    .findFirst();
+                if (InputHandler.left.get()) {
+                    choice = Math.max(0, choice - 1);
+                    InputHandler.left.set(false);
+                }
+                if (InputHandler.right.get()) {
+                    choice = Math.min(3, choice + 1);
+                    InputHandler.right.set(false);
+                }
 
-                            /*
-                             * SINGLE_ENEMY,
-                             * SINGLE_ALLY,
-                             * ALL_ENEMIES,
-                             * ALL_ALLIES,
-                             * SELF,
-                             * CHOOSE_SUBACTION,
-                             * RANDOM,
-                             * NONE
-                             */
-                            NCharacter chosenCharacter = null;
-                            if (selectedAction.isPresent()) {
-                                Action action = selectedAction.get();
-                                TargetingType target = action.getTargetingType();
-                                if (target == TargetingType.SINGLE_ENEMY) {
-                                    // Choose an enemy UI
-                                    // Implementation here soon
-                                    // chosenCharacter == targetCharacter;
-                                    if (chosenCharacter != null) {
-                                        action.execute(currentCharacter, chosenCharacter);
-                                    } else {
-                                        System.out.println("Invalid character target Error!");
-                                    }
-                                }
-                                System.out.println("Action cannot be found. Error!");
-                            }
+                if (InputHandler.enter.get()) {
+                    boolean actionSuccessful = false;
+                    switch (choice) {
+                        case 0 -> {
+                            // Use ActionSystem to handle character's current action list.
+                            actionSuccessful = actionSystem.start(battleTop, currentCharacter);
+                        }
+                        case 1 -> {
+                            // Special/Stats - could show character info or special abilities
+                            actionSuccessful = true;
+                        }
+                        case 2 -> {
+                            // Block/Defend
+                            actionSuccessful = true;
+                        }
+                        case 3 -> {
+                            // Rest/Skip turn
+                            actionSuccessful = true;
                         }
                     }
-                    case 1 -> {
-                        // Special
-                        // Additional checks for targetingTypes
-                    }
-                    case 2 -> {
-                        // Block
-                    }
-                    case 3 -> {
-                        // Rest
+
+                    if (actionSuccessful) {
+                        currentCharacter = turnQueue.getCurrCharAndUpdate();
+                        InputHandler.enter.set(false);
+                        turnComplete = true;
                     }
                 }
-                battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
-                currentCharacter = turnQueue.getCurrCharAndUpdate();
-            }
-            // Only repaint if choice actually changed
-            if (choice != prev || InputHandler.enter.get()) {
-                InputHandler.enter.set(false);
-                prev = choice;
-                battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
             }
         }
     }
 }
+
+// public void battleLoop() {
+// // Create Turn Order Array
+// ArrayList<Pair<Character, Integer>> characterList = Stream.concat(
+// player.characters.stream(), enemy.characters.stream())
+// .filter(c -> c != null)
+// .map(c -> new Pair<>(c, c.speed))
+// .collect(Collectors.toCollection(ArrayList::new));
+// ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
+// Character curr = turnQueue.peekCurrChar();
+
+// while (true) {
+// int choice = 0;
+// BattleTopUI battleTop = new BattleTopUI(player.characters, enemy.characters,
+// turnQueue.getCurrentQueue());
+// BattleUI battleUI = new BattleUI(battleTop);
+// while (true) {
+// battleUI.display(choice);
+// waiting();
+// if (left.get()) {
+// choice = Math.max(0, choice - 1);
+// left.set(false);
+// }
+// if (right.get()) {
+// choice = Math.min(2, choice + 1);
+// right.set(false);
+// }
+// if (enter.get()) {
+// boolean flag = false;
+// switch (choice) {
+// case 0 -> {
+// if (actionLoop(battleTop, curr)) {
+// curr = turnQueue.getCurrCharAndUpdate();
+// flag=true;
+// }
+// }
+// case 1 -> {
+// if (curr.type == Character.Type.ALLY) {
+// statLoop(curr);
+// }
+// }
+// case 2 -> {
+// curr = turnQueue.getCurrCharAndUpdate();
+// enter.set(false);
+// flag = true;
+// break;
+// }
+// }
+// if (flag) break;
+// }
+// }
+// }
+// }

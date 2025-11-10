@@ -1,39 +1,40 @@
 package com.infinityfortress.battlesystem;
 
-import com.infinityfortress.ui.*;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import com.infinityfortress.Player;
+import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.ui.StatsMenu;
 import com.infinityfortress.utils.*;
 
 public class StatSystem {
-    public void start() {
-        int pick, pPrev, choice, cPrev;
-        pick = pPrev = choice = cPrev = 0;
+    private final Player player;
 
-        Menu statsMenu = MenuFactory.getMenu("STATS");
+    public StatSystem(Player player) {
+        this.player = player;
+    }
 
-        // Preview only
-        String[] roles = {
-                "Mage",
-                "Warlock",
-                "Cleric",
-                "Summoner",
-                "Rogue",
-                "Archer",
-                "Healer",
-                "Tank",
-                "Warrior"
-        };
+    public void start(NCharacter currCharact) {
+        int choice = 0;
 
-        statsMenu.display(roles[pick], choice);
+        ArrayList<NCharacter> characterList = player.characters.stream().filter(c -> c != null)
+                .collect(Collectors.toCollection(ArrayList::new));
 
+        int curr = characterList.indexOf(currCharact);
+        StatsMenu statsMenu = new StatsMenu();
+        Utils.clearConsole();
         while (true) {
+            statsMenu.display(characterList.get(curr), choice, curr,
+                    characterList.size());
             InputHandler.waitForInput();
 
             if (InputHandler.left.get()) {
-                pick = Math.max(0, pick - 1);
+                curr = Math.max(0, curr - 1);
                 InputHandler.left.set(false);
             }
             if (InputHandler.right.get()) {
-                pick = Math.min(8, pick + 1);
+                curr = Math.min(characterList.size() - 1, curr + 1);
                 InputHandler.right.set(false);
             }
             if (InputHandler.up.get()) {
@@ -44,12 +45,9 @@ public class StatSystem {
                 choice = Math.min(2, choice + 1);
                 InputHandler.down.set(false);
             }
-
-            // Only repaint if choice actually changed
-            if (choice != cPrev || pick != pPrev) {
-                cPrev = choice;
-                pPrev = pick;
-                statsMenu.display(roles[pick], choice);
+            if (InputHandler.back.get()) {
+                InputHandler.back.set(false);
+                return;
             }
         }
     }

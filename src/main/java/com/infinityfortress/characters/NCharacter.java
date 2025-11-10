@@ -2,6 +2,7 @@ package com.infinityfortress.characters;
 
 import java.util.ArrayList;
 
+import com.infinityfortress.actions.Action;
 import com.infinityfortress.races.Race;
 import com.infinityfortress.roles.Role;
 import com.infinityfortress.effects.TemporaryEffect;
@@ -14,6 +15,7 @@ public class NCharacter {
     private int maxMana;
     private int mana;
     private int exp;
+    private int lvl = 0;
     private int defense;
     private int strength;
     private int speed;
@@ -56,6 +58,7 @@ public class NCharacter {
         this.maxMana = mana;
         this.mana = mana;
         this.exp = exp;
+        this.lvl = exp;
         this.defense = defense;
         this.strength = strength;
         this.speed = speed;
@@ -95,6 +98,10 @@ public class NCharacter {
 
     public int getExp() {
         return exp;
+    }
+
+    public int getLvl() {
+        return lvl;
     }
 
     public int getDefense() {
@@ -159,6 +166,10 @@ public class NCharacter {
         this.exp = exp;
     }
 
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
     public void setDefense(int defense) {
         this.defense = defense;
     }
@@ -195,6 +206,41 @@ public class NCharacter {
 
     public void removeTemporaryEffect(TemporaryEffect effect) {
         condition.remove(effect);
+    }
+
+    // Action Helper Methods for UI
+
+    public Action getBasicAction() {
+        ArrayList<Action> actions = role.getActions();
+        return actions.isEmpty() ? null : actions.get(0);
+    }
+
+    public Action getSpecialAction() {
+        ArrayList<Action> actions = role.getActions();
+        return actions.size() > 1 ? actions.get(1) : null;
+    }
+
+    public Action getActionByName(String actionName) {
+        return role.getActions().stream()
+                .filter(action -> action.getName().equals(actionName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Action getActionByIndex(int index) {
+        ArrayList<Action> actions = role.getActions();
+        if (index >= 0 && index < actions.size()) {
+            return actions.get(index);
+        }
+        return null;
+    }
+
+    public ArrayList<Action> getAllActions() {
+        return role.getActions();
+    }
+
+    public int getActionCount() {
+        return role.getActions().size();
     }
 
 }

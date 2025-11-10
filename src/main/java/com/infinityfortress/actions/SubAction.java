@@ -6,10 +6,19 @@ import com.infinityfortress.characters.NCharacter;
 
 public class SubAction implements Action {
     protected final List<Action> subActions = new ArrayList<>();
+    private int hitCount;
+
+    public SubAction() {
+        this.hitCount = 0;
+    }
 
     public String getName() {
         return "Sub Actions";
     };
+
+    public int getHitCount() {
+        return hitCount;
+    }
 
     public TargetingType getTargetingType() {
         return TargetingType.CHOOSE_SUBACTION;

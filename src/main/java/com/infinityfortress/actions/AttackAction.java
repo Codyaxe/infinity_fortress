@@ -3,6 +3,16 @@ package com.infinityfortress.actions;
 import com.infinityfortress.characters.NCharacter;
 
 public class AttackAction implements Action {
+    private int hitCount;
+
+    public AttackAction() {
+        this.hitCount = 1;
+    }
+
+    public int getHitCount() {
+        return hitCount;
+    }
+
     public String getName() {
         return "Attack";
     }
