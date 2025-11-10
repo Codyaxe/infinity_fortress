@@ -1,7 +1,7 @@
 package com.infinityfortress.equipments.armors;
 
 public class AbstractArmor implements Armor {
-    public AbstractWeapon() {
+    public AbstractArmor() {
     };
 
     public String getName() {

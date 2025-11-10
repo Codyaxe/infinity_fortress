@@ -4,4 +4,6 @@ public interface Accessory {
     String getName();
 
     String getType();
+
+    String getDescription();
 }

@@ -4,8 +4,10 @@ import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.ui.*;
+import com.infinityfortress.actions.*;
 import com.infinityfortress.utils.*;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -46,12 +48,50 @@ public class BattleSystem {
             if (InputHandler.enter.get()) {
                 switch (choice) {
                     case 0 -> {
+                        ArrayList<Action> actions = currentCharacter.getRole().getActions();
+                        if (!actions.isEmpty()) {
+                            // We can use find by string name or index :>
+                            Optional<Action> selectedAction = actions.stream()
+                                    .filter(a -> a.getName().equals("Attack"))
+                                    .findFirst();
+
+                            /*
+                             * SINGLE_ENEMY,
+                             * SINGLE_ALLY,
+                             * ALL_ENEMIES,
+                             * ALL_ALLIES,
+                             * SELF,
+                             * CHOOSE_SUBACTION,
+                             * RANDOM,
+                             * NONE
+                             */
+                            NCharacter chosenCharacter = null;
+                            if (selectedAction.isPresent()) {
+                                Action action = selectedAction.get();
+                                TargetingType target = action.getTargetingType();
+                                if (target == TargetingType.SINGLE_ENEMY) {
+                                    // Choose an enemy UI
+                                    // Implementation here soon
+                                    // chosenCharacter == targetCharacter;
+                                    if (chosenCharacter != null) {
+                                        action.execute(currentCharacter, chosenCharacter);
+                                    } else {
+                                        System.out.println("Invalid character target Error!");
+                                    }
+                                }
+                                System.out.println("Action cannot be found. Error!");
+                            }
+                        }
                     }
                     case 1 -> {
+                        // Special
+                        // Additional checks for targetingTypes
                     }
                     case 2 -> {
+                        // Block
                     }
                     case 3 -> {
+                        // Rest
                     }
                 }
                 battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);

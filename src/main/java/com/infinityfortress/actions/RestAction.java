@@ -1,12 +1,12 @@
 package com.infinityfortress.actions;
 
-public class BlockAction {
+public class RestAction {
 
-    public BlockAction() {
+    public RestAction() {
 
     }
 
     public String getName() {
-        return "Block";
+        return "Rest";
     }
 }

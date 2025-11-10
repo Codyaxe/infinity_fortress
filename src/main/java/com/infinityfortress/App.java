@@ -9,9 +9,6 @@ import com.sun.jna.Platform;
 
 public class App {
 
-    Player player = new Player();
-    Enemy enemy = new Enemy();
-
     public static void main(String[] args) {
         App game = new App();
         InputHandler.setupKeyListener();

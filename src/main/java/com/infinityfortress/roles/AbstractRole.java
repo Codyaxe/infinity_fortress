@@ -11,7 +11,11 @@ public class AbstractRole implements Role {
         actions.addLast(new AttackAction());
     }
 
-    public String getName(){
+    public String getName() {
         return "Abstract Role";
+    }
+
+    public ArrayList<Action> getActions(){ 
+        return actions;
     }
 }
