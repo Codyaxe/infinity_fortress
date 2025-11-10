@@ -7,4 +7,8 @@ public class Cleric extends AbstractRole {
         super();
         actions.addLast(new BuffAction());
     }
+
+    public String getName() {
+        return "Cleric";
+    }
 }

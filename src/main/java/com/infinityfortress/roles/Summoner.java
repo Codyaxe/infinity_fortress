@@ -7,4 +7,8 @@ public class Summoner extends AbstractRole {
         super();
         actions.addLast(new SummonAction());
     }
+
+    public String getName() {
+        return "Summoner";
+    }
 }

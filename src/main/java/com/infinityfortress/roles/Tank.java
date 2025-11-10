@@ -7,4 +7,8 @@ public class Tank extends AbstractRole {
         super();
         actions.addLast(new BlockAction());
     }
+
+    public String getName() {
+        return "Tank";
+    }
 }

@@ -8,7 +8,10 @@ import com.infinityfortress.effects.TemporaryEffect;
 
 public class NCharacter {
     private String name;
+    private NCharacterType type;
+    private int maxHealth;
     private int health;
+    private int maxMana;
     private int mana;
     private int exp;
     private int defense;
@@ -20,12 +23,14 @@ public class NCharacter {
     private Role role;
     private Race race;
     private ArrayList<TemporaryEffect> condition;
+    private boolean isEmpty;
 
     // Default Constructor
     // Role and Race class will have default values which will extend the base
     // attributes. For now placeholder values are included.
     public NCharacter(Role c, Race r) {
         this.name = r.getName() + " " + c.getName();
+        this.type = NCharacterType.ALLY;
         this.health = 10;
         this.mana = 10;
         this.exp = 0;
@@ -34,9 +39,34 @@ public class NCharacter {
         this.speed = 10;
         this.critChance = 10;
         this.critStrength = 2;
+        this.isEmpty = false;
         this.luck = 2;
         this.role = c;
         this.race = r;
+        this.condition = new ArrayList<>();
+    }
+
+    // General Constructor - allows setting all character attributes
+    public NCharacter(NCharacterType type, int health, int mana, int exp, int defense,
+            int strength, int speed, int critStrength, int critChance,
+            int luck, Role role, Race race) {
+        this.name = race.getName() + " " + role.getName();
+        this.type = type;
+        this.maxHealth = health;
+        this.health = health;
+        this.maxMana = mana;
+        this.mana = mana;
+        this.exp = exp;
+        this.defense = defense;
+        this.strength = strength;
+        this.speed = speed;
+        this.critChance = critChance;
+        this.critStrength = critStrength;
+        this.luck = luck;
+        this.role = role;
+        this.race = race;
+        this.isEmpty = false;
+        this.condition = new ArrayList<>();
     }
 
     // Getters
@@ -44,8 +74,20 @@ public class NCharacter {
         return name;
     }
 
+    public NCharacterType getType() {
+        return type;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
     public int getHealth() {
         return health;
+    }
+
+    public int getMaxMana() {
+        return maxMana;
     }
 
     public int getMana() {
@@ -88,9 +130,26 @@ public class NCharacter {
         return race;
     }
 
+    public boolean isEmpty() {
+        return isEmpty;
+    }
+
     // Setters
+
+    public void setType(NCharacterType type) {
+        this.type = type;
+    }
+
+    public void setMaxHealth(int health) {
+        this.maxHealth = health;
+    }
+
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public void setMaxMana(int mana) {
+        this.maxMana = mana;
     }
 
     public void setMana(int mana) {
@@ -123,6 +182,10 @@ public class NCharacter {
 
     public void setLuck(int luck) {
         this.luck = luck;
+    }
+
+    public void setIsEmpty(boolean x) {
+        this.isEmpty = x;
     }
 
     // Conditions Manipulation

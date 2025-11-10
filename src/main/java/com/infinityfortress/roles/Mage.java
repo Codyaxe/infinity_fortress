@@ -7,4 +7,8 @@ public class Mage extends AbstractRole {
         super();
         actions.addLast(new CastAction());
     }
+
+    public String getName() {
+        return "Mage";
+    }
 }

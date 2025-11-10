@@ -7,4 +7,8 @@ public class Warlock extends AbstractRole {
         super();
         actions.addLast(new DebuffAction());
     }
+
+    public String getName() {
+        return "Warlock";
+    }
 }

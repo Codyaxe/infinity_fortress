@@ -7,4 +7,8 @@ public class Archer extends AbstractRole {
         super();
         actions.addLast(new RangeAction());
     }
+
+    public String getName() {
+        return "Archer";
+    }
 }

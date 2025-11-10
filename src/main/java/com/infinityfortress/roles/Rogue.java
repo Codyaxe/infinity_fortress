@@ -7,4 +7,8 @@ public class Rogue extends AbstractRole {
         super();
         actions.addLast(new StealAction());
     }
+
+    public String getName() {
+        return "Rogue";
+    }
 }

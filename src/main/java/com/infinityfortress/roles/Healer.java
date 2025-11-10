@@ -7,4 +7,8 @@ public class Healer extends AbstractRole {
         super();
         actions.addLast(new HealAction());
     }
+
+    public String getName() {
+        return "Healer";
+    }
 }

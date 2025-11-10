@@ -1,65 +1,69 @@
 package com.infinityfortress.battle_system;
 
+import com.infinityfortress.Enemy;
+import com.infinityfortress.Player;
+import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.ui.*;
+import com.infinityfortress.utils.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.infinityfortress.ui.Menu;
-
 public class BattleSystem {
 
-    public void start(){
-        //Display BattleMenu choice is given
+    Player player = new Player();
+    Enemy enemy = new Enemy();
 
-        //Battle Loop
- int choice, prev;
+    public void start() {
+        int choice, prev;
         choice = prev = 0;
 
-        // Create Turn Order Array
         Menu battleMenu = MenuFactory.getMenu("BATTLE");
-        ArrayList<Pair<Character, Integer>> characterList = Stream.concat(
+
+        // Gather all characters from player and enemy lists, filtering out null values
+        ArrayList<NCharacter> characterList = Stream.concat(
                 player.characters.stream(), enemy.characters.stream())
                 .filter(c -> c != null)
-                .map(c -> new Pair<>(c, c.speed))
                 .collect(Collectors.toCollection(ArrayList::new));
-        ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
-        Character curr=turnQueue.peekCurrChar();
 
-        battleMenu.display(player.characters, enemy.characters,turnQueue.getCurrentQueue(), choice);
-        
+        ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
+
+        NCharacter currentCharacter = turnQueue.peekCurrChar();
+
+        battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
+
         while (true) {
-          waiting();
-          
-          if (left.get()) {
-            choice = Math.max(0, choice - 1);
-            left.set(false);
-          }
-          if (right.get()) {
-            choice = Math.min(3, choice + 1);
-              right.set(false);
+            InputHandler.waitForInput();
+
+            if (InputHandler.left.get()) {
+                choice = Math.max(0, choice - 1);
+                InputHandler.left.set(false);
             }
-            if (enter.get()) {
-              switch(choice) {
-                case 0 -> {
+            if (InputHandler.right.get()) {
+                choice = Math.min(3, choice + 1);
+                InputHandler.right.set(false);
+            }
+
+            if (InputHandler.enter.get()) {
+                switch (choice) {
+                    case 0 -> {
+                    }
+                    case 1 -> {
+                    }
+                    case 2 -> {
+                    }
+                    case 3 -> {
+                    }
                 }
-                case 1 -> {
-                }
-                case 2 -> {
-                }
-                case 3 -> {
-                }
-              }
-              battleMenu.display(player.characters, enemy.characters,turnQueue.getCurrentQueue(), choice);
-              curr=turnQueue.getCurrCharAndUpdate();
+                battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
+                currentCharacter = turnQueue.getCurrCharAndUpdate();
             }
             // Only repaint if choice actually changed
-            // curr=turnQueue.peekCurrChar();
-            if (choice != prev || enter.get()) {
-              enter.set(false);
-              prev = choice;
-              battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
+            if (choice != prev || InputHandler.enter.get()) {
+                InputHandler.enter.set(false);
+                prev = choice;
+                battleMenu.display(player.characters, enemy.characters, turnQueue.getCurrentQueue(), choice);
             }
         }
-    }
     }
 }

@@ -7,4 +7,8 @@ public class Warrior extends AbstractRole {
         super();
         actions.addLast(new PowerAction());
     }
+
+    public String getName() {
+        return "Warrior";
+    }
 }
