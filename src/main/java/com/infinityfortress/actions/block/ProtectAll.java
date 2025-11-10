@@ -8,17 +8,33 @@ public class ProtectAll implements Action {
 
     private int hitCount;
 
+    public String getName() {
+        return "Protect All";
+    }
+
     public ProtectAll() {
-        this.hitCount = 1;
+        this.hitCount = 0;
     }
 
     public int getHitCount() {
         return hitCount;
     }
 
-    public String getName() {
-        return "Protect All";
-    }
+    public int getManaCost() {
+        return 0;
+    };
+
+    public int getBaseDamage() {
+        return 0;
+    };
+
+    public String getActionType() {
+        return "Protection";
+    };
+
+    public String getDescription() {
+        return "Just a Protection";
+    };
 
     public TargetingType getTargetingType() {
         return TargetingType.ALL_ALLIES;

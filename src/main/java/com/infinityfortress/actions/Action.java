@@ -7,23 +7,16 @@ public interface Action {
 
     int getHitCount();
 
+    int getManaCost();
+
+    int getBaseDamage();
+
+    String getActionType();
+
+    String getDescription();
+
     TargetingType getTargetingType();
 
     void execute(NCharacter user, NCharacter target);
 
-    default String getDescription() {
-        return "No description available";
-    }
-
-    default int getManaCost() {
-        return 0;
-    }
-
-    default int getBaseDamage() {
-        return 0;
-    }
-
-    default String getActionType() {
-        return "Action";
-    }
 }

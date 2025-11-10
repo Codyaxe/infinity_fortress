@@ -20,6 +20,22 @@ public class SubAction implements Action {
         return hitCount;
     }
 
+    public int getManaCost() {
+        return 0;
+    };
+
+    public int getBaseDamage() {
+        return 0;
+    };
+
+    public String getActionType() {
+        return "NONE";
+    };
+
+    public String getDescription() {
+        return "A SUBACTION";
+    };
+
     public TargetingType getTargetingType() {
         return TargetingType.CHOOSE_SUBACTION;
     };

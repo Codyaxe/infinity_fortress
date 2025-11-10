@@ -15,13 +15,13 @@ public class StatSystem {
         this.player = player;
     }
 
-    public void start(NCharacter currCharact) {
+    public void start(NCharacter currentCharacter) {
         int choice = 0;
 
         ArrayList<NCharacter> characterList = player.characters.stream().filter(c -> c != null)
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        int curr = characterList.indexOf(currCharact);
+        int curr = characterList.indexOf(currentCharacter);
         StatsMenu statsMenu = new StatsMenu();
         Utils.clearConsole();
         while (true) {

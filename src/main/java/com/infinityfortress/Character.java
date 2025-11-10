@@ -23,7 +23,6 @@ public class Character {
     public int hp;
     public int mp;
     public int exp = 0;
-    public int exp = 0;
     public int defense;
     public int strength;
     public int speed;
@@ -114,7 +113,6 @@ public class Character {
 
     public Character(String type) {
         Random rand = new Random();
-<<<<<<< HEAD
         this.hp = this.maxHp = 50 + rand.nextInt(200); // 50-249
         this.mp = this.maxMp = 30 + rand.nextInt(170); // 30-199
         this.expCap = rand.nextInt(100); // 0-99
@@ -122,19 +120,8 @@ public class Character {
         this.strength = 15 + rand.nextInt(85); // 15-99
         this.speed = 10 + rand.nextInt(90); // 10-99
         this.critChance = 5 + rand.nextInt(45); // 5-49
-        this.critStrength = 10 + rand.nextInt(40); // 10-49
-        this.luck = 1 + rand.nextInt(99); // 1-99
-=======
-        this.hp = this.maxHp = 50 + rand.nextInt(200);     // 50-249
-        this.mp = this.maxMp = 30 + rand.nextInt(170);       // 30-199
-        this.expCap = rand.nextInt(100);             // 0-99
-        this.defense = 10 + rand.nextInt(90);     // 10-99
-        this.strength = 15 + rand.nextInt(85);    // 15-99
-        this.speed = 10 + rand.nextInt(90);       // 10-99
-        this.critChance = 5 + rand.nextInt(45);   // 5-49
         this.critDamage = 10 + rand.nextInt(40); // 10-49
-        this.luck = 1 + rand.nextInt(99);         // 1-99
->>>>>>> 51d72730d22d823c83c78de5f00c53deed00ffe2
+        this.luck = 1 + rand.nextInt(99); // 1-99
 
         this.type = type.equals("Ally") ? Type.ALLY : Type.ENEMY;
         // Randomized role and race (ignore parameters, randomize instead)

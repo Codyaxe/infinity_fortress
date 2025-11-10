@@ -153,7 +153,12 @@ public class StatsMenu {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j].equals("art")) {
-                    frame.append(Utils.center(art[i - 5], gridHeader[j]));
+                    int artIndex = i - 5;
+                    if (artIndex >= 0 && artIndex < art.length) {
+                        frame.append(Utils.center(art[artIndex], gridHeader[j]));
+                    } else {
+                        frame.append(Utils.center(" ", gridHeader[j]));
+                    }
                 } else if (grid[i][j].contains("Race")) {
                     frame.append(Utils.leftAlign(" Race: " + curr.getRace().getName(), gridHeader[j]));
                 } else if (grid[i][j].contains("Role")) {
@@ -189,13 +194,19 @@ public class StatsMenu {
         for (int i = 0; i < descGrid.length; i++) {
             for (int j = 0; j < descGrid[i].length; j++) {
                 if (descGrid[i][j].equals("art")) {
-                    frame.append(Utils.center(art[i + 11], descHeader[j]));
+                    int artIndex = i + 11;
+                    if (artIndex >= 0 && artIndex < art.length) {
+                        frame.append(Utils.center(art[artIndex], descHeader[j]));
+                    } else {
+                        frame.append(Utils.center(" ", descHeader[j]));
+                    }
                 } else if (descGrid[i][j].length() > 1) {
                     frame.append(Utils.center(descGrid[i][j], descHeader[j]));
                 } else {
                     frame.append(descGrid[i][j].repeat(descHeader[j]));
                 }
             }
+            frame.append("\n");
         }
 
         int[] selectionHeader = { 1, 117, 1 };

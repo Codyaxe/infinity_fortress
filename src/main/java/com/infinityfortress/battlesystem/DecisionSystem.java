@@ -24,6 +24,7 @@ public class DecisionSystem {
     public boolean start(BattleTopUI battleTop, NCharacter curr, Action selectedAction) {
         TargetingType targetType = selectedAction.getTargetingType();
 
+        // Refactoring this is likely
         switch (targetType) {
             case SINGLE_ENEMY -> {
                 // Show enemy selection UI
@@ -32,7 +33,7 @@ public class DecisionSystem {
                     System.out.println("No valid targets available!");
                     return false;
                 }
-                NCharacter target = selectTarget(battleTop, enemies, "Choose enemy target:");
+                NCharacter target = selectTarget(battleTop, enemies);
                 if (target != null) {
                     selectedAction.execute(curr, target);
                     return true;
@@ -46,7 +47,7 @@ public class DecisionSystem {
                     System.out.println("No valid ally targets available!");
                     return false;
                 }
-                NCharacter target = selectTarget(battleTop, allies, "Choose ally target:");
+                NCharacter target = selectTarget(battleTop, allies);
                 if (target != null) {
                     selectedAction.execute(curr, target);
                     return true;
@@ -76,7 +77,6 @@ public class DecisionSystem {
                 return true;
             }
             case RANDOM -> {
-                // Randomly select target from appropriate pool
                 ArrayList<NCharacter> possibleTargets = getAliveEnemies(curr);
                 if (!possibleTargets.isEmpty()) {
                     int randomIndex = (int) (Math.random() * possibleTargets.size());
@@ -87,7 +87,6 @@ public class DecisionSystem {
             }
             case CHOOSE_SUBACTION -> {
                 // Implement subactions
-                System.out.println("Sub-action selection not yet implemented");
                 return false;
             }
             default -> {
@@ -97,7 +96,9 @@ public class DecisionSystem {
         }
     }
 
-    // Helper method to get alive enemies based on current character's type
+    // Helper method to get alive enemies based on current character's type. If it's
+    // a player's turn, send enemy's pool. If it's an enemy's turn, send ally's
+    // pool.
     private ArrayList<NCharacter> getAliveEnemies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
             return enemy.characters.stream()
@@ -110,7 +111,9 @@ public class DecisionSystem {
         }
     }
 
-    // Helper method to get alive allies based on current character's type
+    // Helper method to get alive allies based on current character's type. If it's
+    // a player's turn, send ally's pool. If it's an enemy's turn, send enemy's
+    // pool.
     private ArrayList<NCharacter> getAliveAllies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
             return player.characters.stream()
@@ -124,12 +127,10 @@ public class DecisionSystem {
     }
 
     // Target selection UI
-    private NCharacter selectTarget(BattleTopUI battleTop, ArrayList<NCharacter> targets, String prompt) {
+    private NCharacter selectTarget(BattleTopUI battleTop, ArrayList<NCharacter> targets) {
         int choice = 0;
         DecisionUI currUI = new DecisionUI(battleTop);
         int maxChoice = targets.size() - 1;
-
-        System.out.println(prompt);
 
         while (true) {
             currUI.display(targets, choice);
@@ -165,12 +166,12 @@ public class DecisionSystem {
 
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
-                return null; // Selection cancelled
+                return null;
             }
 
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
-                return targets.get(choice); // Return selected target
+                return targets.get(choice);
             }
         }
     }

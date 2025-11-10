@@ -47,7 +47,7 @@ public class BattleSystem {
                     InputHandler.left.set(false);
                 }
                 if (InputHandler.right.get()) {
-                    choice = Math.min(3, choice + 1);
+                    choice = Math.min(2, choice + 1);
                     InputHandler.right.set(false);
                 }
 
@@ -55,20 +55,16 @@ public class BattleSystem {
                     boolean actionSuccessful = false;
                     switch (choice) {
                         case 0 -> {
-                            // Use ActionSystem to handle character's current action list.
+                            // Action
                             actionSuccessful = actionSystem.start(battleTop, currentCharacter);
                         }
                         case 1 -> {
-                            // Special/Stats - could show character info or special abilities
-                            actionSuccessful = true;
+                            // Stat
+                            statSystem.start(currentCharacter);
                         }
                         case 2 -> {
-                            // Block/Defend
-                            actionSuccessful = true;
-                        }
-                        case 3 -> {
-                            // Rest/Skip turn
-                            actionSuccessful = true;
+                            // Equipment
+                            actionSuccessful = false;
                         }
                     }
 

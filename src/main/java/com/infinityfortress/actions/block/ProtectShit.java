@@ -8,17 +8,33 @@ public class ProtectShit implements Action {
 
     private int hitCount;
 
+    public String getName() {
+        return "Protect Shit";
+    }
+
     public ProtectShit() {
-        this.hitCount = 1;
+        this.hitCount = 0;
     }
 
     public int getHitCount() {
         return hitCount;
     }
 
-    public String getName() {
-        return "Protect Shit";
-    }
+    public int getManaCost() {
+        return 0;
+    };
+
+    public int getBaseDamage() {
+        return 0;
+    };
+
+    public String getActionType() {
+        return "Protection";
+    };
+
+    public String getDescription() {
+        return "Shitty Protection";
+    };
 
     public TargetingType getTargetingType() {
         return TargetingType.SINGLE_ENEMY;

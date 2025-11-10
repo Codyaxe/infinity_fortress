@@ -5,6 +5,10 @@ import com.infinityfortress.characters.NCharacter;
 public class AttackAction implements Action {
     private int hitCount;
 
+    public String getName() {
+        return "Attack";
+    }
+
     public AttackAction() {
         this.hitCount = 1;
     }
@@ -13,9 +17,21 @@ public class AttackAction implements Action {
         return hitCount;
     }
 
-    public String getName() {
-        return "Attack";
-    }
+    public int getManaCost() {
+        return 0;
+    };
+
+    public int getBaseDamage() {
+        return 0;
+    };
+
+    public String getActionType() {
+        return "Generic";
+    };
+
+    public String getDescription() {
+        return "Generic Description";
+    };
 
     public TargetingType getTargetingType() {
         return TargetingType.SINGLE_ENEMY;

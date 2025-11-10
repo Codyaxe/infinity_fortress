@@ -1,17 +1,11 @@
 package com.infinityfortress.ui;
 
-/**
- * Common interface for UI components that need access to battle top UI
- */
 public interface BattleUIComponent {
-    /**
-     * Get the battle top UI reference
-     */
+    // Use Composition to get the top UI instead of inheritance.
     BattleTopUI getBattleTopUI();
 
-    /**
-     * Build a frame with the common structure
-     */
+    // Build a frame with the common structure
+
     default String buildFrame(String[][] optionGrid, int[] optionHeader) {
         StringBuilder frame = new StringBuilder(getBattleTopUI().topUI.toString());
 

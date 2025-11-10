@@ -47,7 +47,7 @@ public class ActionUI implements BattleUIComponent {
                 { 19, 23 }
         };
 
-        // Add selection indicators
+        // Selection indicators
         optionGrid[2][options[choice][0]] = "┌";
         optionGrid[3][options[choice][0]] = "│";
         optionGrid[4][options[choice][0]] = "└";

@@ -9,17 +9,33 @@ public class ProtectOne implements Action {
 
     private int hitCount;
 
+    public String getName() {
+        return "Protect One";
+    }
+
     public ProtectOne() {
-        this.hitCount = 1;
+        this.hitCount = 0;
     }
 
     public int getHitCount() {
         return hitCount;
     }
 
-    public String getName() {
-        return "Protect One";
-    }
+    public int getManaCost() {
+        return 0;
+    };
+
+    public int getBaseDamage() {
+        return 0;
+    };
+
+    public String getActionType() {
+        return "Protection";
+    };
+
+    public String getDescription() {
+        return "Just a Protection";
+    };
 
     public TargetingType getTargetingType() {
         return TargetingType.SINGLE_ALLY;
