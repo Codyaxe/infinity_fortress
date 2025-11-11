@@ -5,8 +5,63 @@ import com.infinityfortress.utils.Utils;
 
 public class StatsMenu {
 
-    void check(int num) {
-        System.out.println(num);
+    String[] BasicSection(Character curr) {
+      String[] skillGrid = new String[11];
+      int size=34;
+      skillGrid[0] = Utils.spaceBetween(
+        Utils.spaceBetween("Damage: ", curr.getAttackDMG(), (int)size/3),
+        Utils.spaceBetween("MP Cost: ", curr.getAttackCost(), (int)size/3),
+        size
+        );
+      skillGrid[1] = Utils.spaceBetween("Skill Type: ", curr.getAttackType(), size);
+      skillGrid[2] = Utils.spaceBetween("Hit Type: ", curr.getAttackHitCount(), size);
+      skillGrid[3] = Utils.spaceBetween("Success Rate: ", "100%", size);
+      skillGrid[4] = " ".repeat(size);
+      skillGrid[5] = Utils.leftAlign("Description: ", size);
+
+      String[] temp = Utils.createTextGrid(5, size, curr.getAttackDesc());
+      for (int i = 0; i < 5; i++) skillGrid[6 + i] = Utils.leftAlign(temp[i], size);
+
+      return skillGrid;
+    }
+
+    String[] SpecialSection(Character curr) {
+      String[] skillGrid = new String[11];
+      int size=34;
+      skillGrid[0] = Utils.spaceBetween(
+        Utils.spaceBetween("Damage: ", curr.getSpecialDMG(), (int)size/3),
+        Utils.spaceBetween("MP Cost: ", curr.getSpecialCost(), (int)size/3),
+        size
+      );
+      skillGrid[1] = Utils.spaceBetween("Skill Type: ", curr.getSpecialType(), size);
+      skillGrid[2] = Utils.spaceBetween("Hit Type: ", curr.getSpecialHitCount(), size);
+      skillGrid[3] = Utils.spaceBetween("Success Rate: ", "100%", size);
+      skillGrid[4] = " ".repeat(size);
+      skillGrid[5] = Utils.leftAlign("Description: ", size);
+
+      String[] temp = Utils.createTextGrid(5, size, curr.getSpecialDesc());
+      for (int i = 0; i < 5; i++) skillGrid[6 + i] = Utils.leftAlign(temp[i], size);
+
+      return skillGrid;
+    }
+    
+    String[] equipmentSection(Character curr) {
+      String[] equipGrid = new String[11];
+      int size=34;
+      
+      equipGrid[0] = Utils.leftAlign("Weapon: ", size);
+      equipGrid[1] = Utils.leftAlign(curr.getWeapon(), size);
+      equipGrid[2] = " ".repeat(size);
+      equipGrid[3] = Utils.leftAlign("Armor: ", size);
+      equipGrid[4] = Utils.leftAlign(curr.getArmor(), size);
+      equipGrid[5] = " ".repeat(size);
+      equipGrid[6] = Utils.leftAlign("Accessory 1: ", size);
+      equipGrid[7] = Utils.leftAlign(curr.getAccessory1(), size);
+      equipGrid[8] = " ".repeat(size);
+      equipGrid[9] = Utils.leftAlign("Accessory 2: ", size);
+      equipGrid[10]= Utils.leftAlign(curr.getAccessory2(), size);
+
+      return equipGrid;
     }
 
     public void display(Character curr, int choice, int selected, int size) {
@@ -17,149 +72,95 @@ public class StatsMenu {
 
         // Spaghetti code ahead, proceed with caution
         int[] gridHeader = {1, 4, 1, 48, 1, 1, 1, 4, 22, 4, 22, 4, 1, 4, 1};
-        int[] descHeader = {1, 4, 1, 48, 1, 1, 1, 1, 1, 15, 1, 1, 1, 1, 34, 1, 1, 4, 1};
         String[][] grid = {
-            {"┌", "─", "─", "─", "─", "─", "─", "─", "─", "─", "─", "─", "─", "─", "┐"},
-            {"│", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "│"},
-            {"│", " ", "┌", "─", "┐", " ", "┌", "─", "─", "─", "─", "─", "┐", " ", "│"},
-            {"│", " ", "│", "Race: ", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
-            {"│", " ", "│", "Role", "│", " ", "│", " ", "LVL", " ", "EXP", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", "HP", " ", "SPD", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", "MP", " ", "LUCK", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", "STR", " ", "CRIT CHANCE", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", "DEF", " ", "CRIT DAMAGE", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "└", "─", "─", "─", "─", "─", "┘", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", " ", " ", " ", " ", " ", " ", " ", " ", "│"}
+          {"┌", "─", "─", "─", "─", "─", "─", "─", "─", "─", "─", "─", "─", "─", "┐"},
+          {"│", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "│"},
+          {"│", " ", "┌", "─", "┐", " ", "┌", "─", "─", "─", "─", "─", "┐", " ", "│"},
+          {"│", " ", "│", "A", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
+          {"│", " ", "│", "B", "│", " ", "│", " ", "L", " ", "E", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", "H", " ", "s", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", "M", " ", "l", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", "S", " ", "c", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", "D", " ", "C", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", " ", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "└", "─", "─", "─", "─", "─", "┘", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", " ", " ", " ", " ", " ", " ", " ", " ", "│"}
         };
 
-        String[][] descGrid = {                                                                       //2, 14
-            {"│", " ", "│", "art", "│", " ", "┌", "─", "─",       "─",       "─", "─", "┬", "─",      "─",      "─", "┐", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ",       " ",       " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ",       " ",       " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ", "BASIC SKILL",   " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ",       " ",       " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ",       " ",       " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ", "SPECIAL SKILL", " ", " ", "│", " ",      Utils.leftAlign("Description: ", descHeader[14]),      " ", "│", " ", "│"},
-
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ",       " ",       " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ",       " ",       " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ", "EQUIPMENT",     " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ",       " ",       " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "│", "art", "│", " ", "│", " ", " ",       " ",       " ", " ", "│", " ",      " ",      " ", "│", " ", "│"},
-            {"│", " ", "└", "─",   "┘", " ", "└", "─", "─",       "─",       "─", "─", "┴", "─",      "─",      "─", "┘", " ", "│"}
+        int[] descHeader = {1, 4, 1, 48, 1, 1, 1, 1, 17, 1, 1, 1, 34, 1, 1, 4, 1};
+        String[][] descGrid = {
+          {"│", " ", "│", "a", "│", " ", "┌", "─", "─", "─", "┬", "─", "─", "─", "┐", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", "B", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", "S", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", "E", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "│", "a", "│", " ", "│", " ", " ", " ", "│", " ", "i", " ", "│", " ", "│"},
+          {"│", " ", "└", "─", "┘", " ", "└", "─", "─", "─", "┴", "─", "─", "─", "┘", " ", "│"}
         };
 
-        switch (choice) {
-          case 0 -> {
-            descGrid[1][14] = Utils.spaceBetween("Skill Type: ", curr.getAttackType(), descHeader[14]);
-            descGrid[2][14] = Utils.spaceBetween("Hit Type: ", curr.getAttackHitCount(), descHeader[14]);
-            descGrid[3][14] = Utils.spaceBetween("Damage: ", curr.getAttackDMG(), descHeader[14]);
-            descGrid[4][14] = Utils.spaceBetween("MP Cost: ", curr.getAttackCost(), descHeader[14]);
-            String[] temp = Utils.createTextGrid(5, descHeader[14], curr.getAttackDesc());
-            for (int i = 0; i < 5; i++) {
-                descGrid[7 + i][14] = Utils.leftAlign(temp[i], descHeader[14]);
-            }
-          }
-          case 1 -> {
-            descGrid[1][14] = Utils.spaceBetween("Skill Type: ", curr.getSpecialType(), descHeader[14]);
-            descGrid[2][14] = Utils.spaceBetween("Hit Type: ", curr.getSpecialHitCount(), descHeader[14]);
-            descGrid[3][14] = Utils.spaceBetween("Damage: ", curr.getSpecialDMG(), descHeader[14]);
-            descGrid[4][14] = Utils.spaceBetween("MP Cost: ", curr.getSpecialCost(), descHeader[14]);
-            String[] temp = Utils.createTextGrid(5, descHeader[14], curr.getSpecialDesc());
-            for (int i = 0; i < 5; i++) {
-                descGrid[7 + i][14] = Utils.leftAlign(temp[i], descHeader[14]);
-            }
-          }
-        }
-
+        String[] infoSection = switch (choice) {
+          case 0 ->  BasicSection(curr);
+          case 1 ->  SpecialSection(curr);
+          case 2 ->  equipmentSection(curr);
+          default -> new String[11];
+        };
 
         int[][][] options = {
-            {
-                {2, 8},
-                {3, 8},
-                {4, 8},
-                {2, 10},
-                {3, 10},
-                {4, 10}
-            },
-            {
-                {5, 8},
-                {6, 8},
-                {7, 8},
-                {5, 10},
-                {6, 10},
-                {7, 10}
-            },
-            {
-                {8, 8},
-                {9, 8},
-                {10, 8},
-                {8, 10},
-                {9, 10},
-                {10, 10}
-            }
+          { {2, 7}, {3, 7}, {4, 7},  {2, 9}, {3, 9}, {4, 9}  },
+          { {5, 7}, {6, 7}, {7, 7},  {5, 9}, {6, 9}, {7, 9}  },
+          { {7, 7}, {9, 7}, {9, 7}, {7, 9}, {9, 9}, {9, 9} }
         };
 
-        descGrid[options[choice][0][0]][options[choice][0][1]] = "┌";
-        descGrid[options[choice][1][0]][options[choice][1][1]] = "│";
-        descGrid[options[choice][2][0]][options[choice][2][1]] = "└";
-        descGrid[options[choice][3][0]][options[choice][3][1]] = "┐";
-        descGrid[options[choice][4][0]][options[choice][4][1]] = "│";
-        descGrid[options[choice][5][0]][options[choice][5][1]] = "┘";
+        String[] selectionMarkers = {"┌", "│", "└", "┐", "│", "┘"};
+        for (int i=0; i<selectionMarkers.length; i++) descGrid[options[choice][i][0]][options[choice][i][1]] = selectionMarkers[i];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
-                if (grid[i][j].equals("art")) {
-                    frame.append(Utils.center(art[i - 5], gridHeader[j]));
-                } else if (grid[i][j].contains("Race")) {
-                    frame.append(Utils.leftAlign(" Race: " + curr.race, gridHeader[j]));
-                } else if (grid[i][j].contains("Role")) {
-                    frame.append(Utils.leftAlign(" Role: " + curr.role, gridHeader[j]));
-                } else if (grid[i][j].contains("LVL")) {
-                    frame.append(Utils.spaceBetween("LVL ", "" + curr.lvl, gridHeader[j]));
-                } else if (grid[i][j].contains("EXP")) {
-                    frame.append(Utils.spaceBetween("EXP ", "" + curr.exp, gridHeader[j]));
-                } else if (grid[i][j].contains("HP")) {
-                    frame.append(Utils.spaceBetween("HP ", "" + curr.maxHp, gridHeader[j]));
-                } else if (grid[i][j].contains("MP")) {
-                    frame.append(Utils.spaceBetween("MP ", "" + curr.maxMp, gridHeader[j]));
-                } else if (grid[i][j].contains("STR")) {
-                    frame.append(Utils.spaceBetween("STR ", "" + curr.strength, gridHeader[j]));
-                } else if (grid[i][j].contains("DEF")) {
-                    frame.append(Utils.spaceBetween("DEF ", "" + curr.defense, gridHeader[j]));
-                } else if (grid[i][j].contains("SPD")) {
-                    frame.append(Utils.spaceBetween("SPD ", "" + curr.speed, gridHeader[j]));
-                } else if (grid[i][j].contains("LUCK")) {
-                    frame.append(Utils.spaceBetween("LUCK ", "" + curr.luck, gridHeader[j]));
-                } else if (grid[i][j].contains("CRIT CHANCE")) {
-                    frame.append(Utils.spaceBetween("CRIT CHANCE ", "" + curr.critChance, gridHeader[j]));
-                } else if (grid[i][j].contains("CRIT DAMAGE")) {
-                    frame.append(Utils.spaceBetween("CRIT DAMAGE ", "" + curr.critDamage, gridHeader[j]));
-                } else if (grid[i][j].length() > 1) {
-                    frame.append(Utils.center(grid[i][j], gridHeader[j]));
-                } else {
-                    frame.append(grid[i][j].
-                            repeat(gridHeader[j]));
+                switch (grid[i][j]) {
+                    case "a" -> frame.append(Utils.center(art[i - 5], gridHeader[j]));
+                    case "A" -> frame.append(Utils.leftAlign(" Race: " + curr.race, gridHeader[j]));
+                    case "B" -> frame.append(Utils.leftAlign(" Role: " + curr.role, gridHeader[j]));
+                    case "L" -> frame.append(Utils.spaceBetween("LVL ", "" + curr.lvl, gridHeader[j]));
+                    case "E" -> frame.append(Utils.spaceBetween("EXP ", "" + curr.exp, gridHeader[j]));
+                    case "H" -> frame.append(Utils.spaceBetween("HP ", "" + curr.maxHp, gridHeader[j]));
+                    case "M" -> frame.append(Utils.spaceBetween("MP ", "" + curr.maxMp, gridHeader[j]));
+                    case "S" -> frame.append(Utils.spaceBetween("STR ", "" + curr.strength, gridHeader[j]));
+                    case "D" -> frame.append(Utils.spaceBetween("DEF ", "" + curr.defense, gridHeader[j]));
+                    case "s" -> frame.append(Utils.spaceBetween("SPD ", "" + curr.speed, gridHeader[j]));
+                    case "l" -> frame.append(Utils.spaceBetween("LUCK ", "" + curr.luck, gridHeader[j]));
+                    case "c" -> frame.append(Utils.spaceBetween("CRIT CHANCE ", "" + curr.critChance, gridHeader[j]));
+                    case "C" -> frame.append(Utils.spaceBetween("CRIT DAMAGE ", "" + curr.critDamage, gridHeader[j]));
+                    default  -> {
+                      if (grid[i][j].length() > 1) frame.append(grid[i][j]);
+                      else frame.append(grid[i][j].repeat(gridHeader[j]));
+                    }
                 }
             }
             frame.append("\n");
         }
+
         for (int i = 0; i < descGrid.length; i++) {
             for (int j = 0; j < descGrid[i].length; j++) {
-                if (descGrid[i][j].equals("art")) {
-                    frame.append(Utils.center(art[i + 11], descHeader[j]));
-                } else if (descGrid[i][j].length() > 1) {
-                    frame.append(Utils.center(descGrid[i][j], descHeader[j]));
-                } else {
-                    frame.append(descGrid[i][j].repeat(descHeader[j]));
+                switch (descGrid[i][j]) {
+                    case "a" -> frame.append(Utils.center(art[i + 11], descHeader[j]));
+                    case "B" -> frame.append(Utils.center(" BASIC SKILL ", descHeader[j]));
+                    case "S" -> frame.append(Utils.center(" SPECIAL SKILL ", descHeader[j]));
+                    case "E" -> frame.append(Utils.center(" EQUIPMENT ", descHeader[j]));
+                    case "i" -> frame.append(infoSection[i - 1]);
+                    default  -> frame.append(descGrid[i][j].repeat(descHeader[j]));
                 }
             }
+            frame.append("\n");
         }
 
         int[] selectionHeader = {1, 117, 1};
@@ -171,35 +172,22 @@ public class StatsMenu {
         };
 
         for (int a = 0; a < 3; a++) {
-            String selection = "";
+            String row = "";
             for (int i = 0; i < size; i++) {
-                if (i == selected) {
-                    if (a == 2) {
-                        selection += "  ____  "; 
-                    }else {
-                        selection += "        ";
-                    }
-                } else {
-                    selection += "  ####  ";
-                }
+              if (i == selected) row += (a==2? "  ____  " : "        ");
+              else row += "  ####  ";
             }
-            selectionGrid[a][1] = selection;
+            selectionGrid[a][1] = row;
         }
 
         for (int i = 0; i < selectionGrid.length; i++) {
             for (int j = 0; j < selectionGrid[i].length; j++) {
-                if (selectionGrid[i][j].length() > 1) {
-                    frame.append(Utils.center(selectionGrid[i][j], selectionHeader[j]));
-                } else {
-                    frame.append(selectionGrid[i][j].repeat(selectionHeader[j]));
-                }
+                if (selectionGrid[i][j].length() > 1) frame.append(Utils.center(selectionGrid[i][j], selectionHeader[j]));
+                else frame.append(selectionGrid[i][j].repeat(selectionHeader[j]));
             }
-            if (i != selectionGrid.length - 1) {
-                frame.append("\n");
-            }
+            if (i != selectionGrid.length - 1) frame.append("\n");
         }
 
         System.out.print(frame.toString());
-        System.out.flush();
     }
 }
