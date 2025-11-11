@@ -24,7 +24,7 @@ public class DecisionSystem {
     public boolean start(BattleTopUI battleTop, NCharacter curr, Action selectedAction) {
         TargetingType targetType = selectedAction.getTargetingType();
 
-        // Refactoring this is likely
+        // Checks which the ability targets
         switch (targetType) {
             case SINGLE_ENEMY -> {
                 // Show enemy selection UI
@@ -86,9 +86,43 @@ public class DecisionSystem {
                 return false;
             }
             case CHOOSE_SUBACTION -> {
-                // Implement subactions
-                // decision.start() recursion
-                return false;
+
+                int choice = 0;
+                int maxChoice = selectedAction.getAllSubActions().size() - 1;
+
+                if (maxChoice == -1) {
+                    System.out.println("What? The Subactions are empty????");
+                    return false;
+                }
+                // UI For Subaction will be implemented here
+
+                while (true) {
+                    // UI For Subaction will be implemented here
+                    InputHandler.waitForInput();
+
+                    // UI For Subaction will be implemented here
+
+                    if (InputHandler.left.get()) {
+                        choice = Math.max(0, choice - 1);
+                        InputHandler.left.set(false);
+                    }
+                    if (InputHandler.right.get()) {
+                        choice = Math.min(maxChoice, choice + 1);
+                        InputHandler.right.set(false);
+                    }
+                    if (InputHandler.back.get()) {
+                        InputHandler.back.set(false);
+                        return false;
+                    }
+                    if (InputHandler.enter.get()) {
+                        Action selectedSubAction = selectedAction.getAllSubActions().get(choice);
+
+                        if (start(battleTop, curr, selectedSubAction)) {
+                            return true;
+                        }
+                        InputHandler.enter.set(false);
+                    }
+                }
             }
             default -> {
                 System.out.println("Unknown targeting type: " + targetType);

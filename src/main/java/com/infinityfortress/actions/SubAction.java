@@ -40,6 +40,7 @@ public class SubAction implements Action {
         return TargetingType.CHOOSE_SUBACTION;
     };
 
+    @Override
     public ArrayList<Action> getAllSubActions() {
         return new ArrayList<>(subActions);
     };
