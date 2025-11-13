@@ -29,8 +29,12 @@ public class AttackAction implements Action {
         return "Generic";
     };
 
-    public String getDescription() {
-        return "Generic Description";
+    public String getStatDescription() {
+        return "Generic Stat Description";
+    };
+
+    public String getBattleDescription() {
+        return "Generic Battle Description";
     };
 
     public TargetingType getTargetingType() {

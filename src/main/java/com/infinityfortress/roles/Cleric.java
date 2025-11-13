@@ -5,7 +5,7 @@ import com.infinityfortress.actions.BuffAction;
 public class Cleric extends AbstractRole {
     public Cleric() {
         super();
-        actions.addLast(new BuffAction());
+        actions.add(1, new BuffAction());
     }
 
     public String getName() {

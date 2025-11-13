@@ -33,8 +33,12 @@ public class ProtectOne implements Action {
         return "Protection";
     };
 
-    public String getDescription() {
-        return "Just a Protection";
+    public String getStatDescription() {
+        return "Just a Protection. Fill me STAT";
+    };
+
+    public String getBattleDescription() {
+        return "Just a Protection. Fill me BATTLE";
     };
 
     public TargetingType getTargetingType() {

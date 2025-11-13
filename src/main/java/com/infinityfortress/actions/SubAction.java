@@ -32,7 +32,11 @@ public class SubAction implements Action {
         return "NONE";
     };
 
-    public String getDescription() {
+    public String getStatDescription() {
+        return "A SUBACTION";
+    };
+
+    public String getBattleDescription() {
         return "A SUBACTION";
     };
 

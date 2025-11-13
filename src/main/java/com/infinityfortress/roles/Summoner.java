@@ -5,7 +5,7 @@ import com.infinityfortress.actions.SummonAction;
 public class Summoner extends AbstractRole {
     public Summoner() {
         super();
-        actions.addLast(new SummonAction());
+        actions.add(1, new SummonAction());
     }
 
     public String getName() {

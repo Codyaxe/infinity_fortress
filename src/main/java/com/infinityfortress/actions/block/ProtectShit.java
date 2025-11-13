@@ -32,8 +32,12 @@ public class ProtectShit implements Action {
         return "Protection";
     };
 
-    public String getDescription() {
+    public String getStatDescription() {
         return "Shitty Protection";
+    };
+
+    public String getBattleDescription() {
+        return "This shitty protection spell will shit the X";
     };
 
     public TargetingType getTargetingType() {

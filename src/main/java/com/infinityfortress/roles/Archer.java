@@ -5,7 +5,7 @@ import com.infinityfortress.actions.RangeAction;
 public class Archer extends AbstractRole {
     public Archer() {
         super();
-        actions.addLast(new RangeAction());
+        actions.add(1, new RangeAction());
     }
 
     public String getName() {

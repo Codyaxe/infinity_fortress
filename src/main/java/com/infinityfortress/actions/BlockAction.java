@@ -1,6 +1,6 @@
 package com.infinityfortress.actions;
 
-public class BlockAction {
+public class BlockAction extends SubAction {
 
     public BlockAction() {
 

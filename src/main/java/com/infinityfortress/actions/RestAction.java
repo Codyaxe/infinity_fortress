@@ -1,6 +1,6 @@
 package com.infinityfortress.actions;
 
-public class RestAction {
+public class RestAction extends SubAction {
 
     public RestAction() {
 

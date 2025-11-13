@@ -5,7 +5,7 @@ import com.infinityfortress.actions.CastAction;
 public class Mage extends AbstractRole {
     public Mage() {
         super();
-        actions.addLast(new CastAction());
+        actions.add(1, new CastAction());
     }
 
     public String getName() {

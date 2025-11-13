@@ -15,7 +15,9 @@ public interface Action {
 
     String getActionType();
 
-    String getDescription();
+    String getStatDescription();
+
+    String getBattleDescription();
 
     TargetingType getTargetingType();
 
