@@ -2,18 +2,25 @@ package com.infinityfortress;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+// import java.util.Random;
+import com.infinityfortress.characters.*;
 
 public class Player {
-    ArrayList<Character> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
+    public ArrayList<NCharacter> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
 
     public Player() {
         // Generate random number of characters (1-5)
-        Random rand = new Random();
-        int numCharacters = 1 + rand.nextInt(5); // 1-5 characters
-        
-        for (int i = 0; i < numCharacters; i++) {
-            characters.set(i, new Character("Ally"));
-        } 
+
+        // Random rand = new Random();
+        // int numCharacters = 1 + rand.nextInt(5); // 1-5 characters
+
+        NCharacterFactory factory = new NCharacterFactory();
+
+        characters.set(0, factory.createHumanWarrior(NCharacterType.ALLY));
+        characters.set(1, factory.createHumanRogue(NCharacterType.ALLY));
+        characters.set(2, null);
+        characters.set(3, factory.createNephilimMage(NCharacterType.ALLY));
+        characters.set(4, factory.createNephilimCleric(NCharacterType.ALLY));
+
     }
 }

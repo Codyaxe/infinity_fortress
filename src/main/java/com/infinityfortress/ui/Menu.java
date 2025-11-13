@@ -1,14 +1,14 @@
 package com.infinityfortress.ui;
 
-import com.infinityfortress.utils.Utils;
 import java.util.*;
-import com.infinityfortress.Character;
+import com.infinityfortress.characters.*;;
 
 public interface Menu {
 
     void display();
 
-    default void display(ArrayList<Character> player, ArrayList<Character> enemy, ArrayList<String> turnOrder, int choice) {
+    default void display(ArrayList<NCharacter> player, ArrayList<NCharacter> enemy, ArrayList<String> turnOrder,
+            int choice) {
     }
 
     default void display(String role, int choice) {
@@ -18,40 +18,37 @@ public interface Menu {
     }
 }
 
-
-
 class MainMenu implements Menu {
 
     @Override
     public void display() {
         System.out.print("Main Menu");
-        //code
+        // code
     }
 }
 
-//120 characters wide 117 usable
-//30 characters tall 26 usable
-// ┌ ─ ┐ │ └ ┘ ├ ┤ ┬ ┴ ┼  
-
+// 120 characters wide 117 usable
+// 30 characters tall 26 usable
+// ┌ ─ ┐ │ └ ┘ ├ ┤ ┬ ┴ ┼
 
 class ItemsMenu implements Menu {
 
     public void display() {
-        //code
+        // code
     }
 }
 
 class MapMenu implements Menu {
 
     public void display() {
-        //code
+        // code
     }
 }
 
 class RewardMenu implements Menu {
 
     public void display() {
-        //code
+        // code
     }
 }
 
@@ -60,4 +57,3 @@ class GachaMenu implements Menu {
     public void display() {
     }
 }
-

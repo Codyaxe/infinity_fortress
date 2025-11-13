@@ -45,18 +45,18 @@ public class Utils {
     public static String[] createTextGrid(int rows, int cols, String text) {
         String[] words = text.split("\\s+");
         String[] grid = new String[rows];
-        
+
         int wordIndex = 0;
         for (int row = 0; row < rows && wordIndex < words.length; row++) {
             StringBuilder currentRow = new StringBuilder();
-            
+
             // Add words to current row until column limit is reached
             while (wordIndex < words.length) {
                 String word = words[wordIndex];
-                
+
                 // Check if adding this word would exceed column limit
                 String testLine = currentRow.length() == 0 ? word : currentRow + " " + word;
-                
+
                 if (testLine.length() <= cols) {
                     // Word fits, add it
                     if (currentRow.length() > 0) {
@@ -69,18 +69,18 @@ public class Utils {
                     break;
                 }
             }
-            
+
             grid[row] = currentRow.toString();
         }
-        
+
         // Fill remaining rows with empty strings
         for (int row = 0; row < rows; row++) {
             if (grid[row] == null) {
                 grid[row] = " ";
             }
         }
-        
+
         return grid;
     }
-    
+
 }

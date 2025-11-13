@@ -1,6 +1,7 @@
 package com.infinityfortress.ui;
 
-import com.infinityfortress.Character;
+import com.infinityfortress.actions.Action;
+import com.infinityfortress.characters.*;
 import com.infinityfortress.utils.Utils;
 
 public class StatsMenu {
@@ -64,11 +65,11 @@ public class StatsMenu {
       return equipGrid;
     }
 
-    public void display(Character curr, int choice, int selected, int size) {
+    public void display(NCharacter curr, int choice, int selected, int size) {
         StringBuilder frame = new StringBuilder();
         frame.append("\033[H");
         CharacterArt newArt = new CharacterArt();
-        String[] art = newArt.art(curr.role);
+        String[] art = newArt.art(curr.getRole().getName());
 
         // Spaghetti code ahead, proceed with caution
         int[] gridHeader = {1, 4, 1, 48, 1, 1, 1, 4, 22, 4, 22, 4, 1, 4, 1};
@@ -161,14 +162,15 @@ public class StatsMenu {
                 }
             }
             frame.append("\n");
+            frame.append("\n");
         }
 
-        int[] selectionHeader = {1, 117, 1};
+        int[] selectionHeader = { 1, 117, 1 };
         String[][] selectionGrid = {
-            {"│", " ", "│"},
-            {"│", " ", "│"},
-            {"│", " ", "│"},
-            {"└", "─", "┘"}
+                { "│", " ", "│" },
+                { "│", " ", "│" },
+                { "│", " ", "│" },
+                { "└", "─", "┘" }
         };
 
         for (int a = 0; a < 3; a++) {

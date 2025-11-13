@@ -1,12 +1,14 @@
 package com.infinityfortress;
 
 import java.util.Random;
+// Will be removed
 
 public class Character {
 
     public enum Type {
         ALLY, ENEMY
     };
+
     public boolean isEmpty = false;
     public String role;
     public String race;
@@ -17,7 +19,7 @@ public class Character {
     public int maxHp;
     public int maxMp;
     public int expCap;
-    public int lvl=0;
+    public int lvl = 0;
     public int hp;
     public int mp;
     public int exp = 0;
@@ -35,7 +37,7 @@ public class Character {
     public String getArmor() {
         return this.equipment.armor;
     }
-    
+
     public String getAccessory1() {
         return this.equipment.accessory1;
     }
@@ -45,81 +47,81 @@ public class Character {
     }
 
     public String getAttackDesc() {
-      return this.BasicAttack.description;
+        return this.BasicAttack.description;
     }
 
     public String getAttackDMG() {
-        return ""+this.BasicAttack.damge;
+        return "" + this.BasicAttack.damge;
     }
 
     public String getAttackCost() {
-      return "" + this.BasicAttack.mpCost;
+        return "" + this.BasicAttack.mpCost;
     }
 
     public String getAttackType() {
-      return ""+this.BasicAttack.type;
+        return "" + this.BasicAttack.type;
     }
 
     public String getAttackHitCount() {
-      return ""+this.BasicAttack.hitCount;
+        return "" + this.BasicAttack.hitCount;
     }
 
     public String getSpecialDesc() {
-      return this.SpecialAttack.description;
+        return this.SpecialAttack.description;
     }
 
     public String getSpecialDMG() {
-        return ""+this.SpecialAttack.damge;
+        return "" + this.SpecialAttack.damge;
     }
 
     public String getSpecialCost() {
-      return "" + this.SpecialAttack.mpCost;
+        return "" + this.SpecialAttack.mpCost;
     }
 
     public String getSpecialType() {
-      return ""+this.SpecialAttack.type;
+        return "" + this.SpecialAttack.type;
     }
 
     public String getSpecialHitCount() {
-      return ""+this.SpecialAttack.hitCount;
+        return "" + this.SpecialAttack.hitCount;
     }
 
     // Equipment arrays for randomization
     private static final String[] WEAPONS = {
-        "Iron Sword", "Steel Blade", "Mystic Staff", "War Hammer", "Elven Bow",
-        "Dagger", "Crossbow", "Magic Wand", "Battle Axe", "Holy Mace"
+            "Iron Sword", "Steel Blade", "Mystic Staff", "War Hammer", "Elven Bow",
+            "Dagger", "Crossbow", "Magic Wand", "Battle Axe", "Holy Mace"
     };
 
     private static final String[] ARMOR = {
-        "Leather Armor", "Chain Mail", "Plate Armor", "Robes", "Scale Mail",
-        "Studded Leather", "Ring Mail", "Splint Armor", "Hide Armor", "Padded Armor"
+            "Leather Armor", "Chain Mail", "Plate Armor", "Robes", "Scale Mail",
+            "Studded Leather", "Ring Mail", "Splint Armor", "Hide Armor", "Padded Armor"
     };
 
     private static final String[] ACCESSORIES = {
-        "Ring of Power", "Amulet of Health", "Cloak of Protection", "Belt of Strength",
-        "Boots of Speed", "Gloves of Dexterity", "Crown of Wisdom", "Shield of Faith",
-        "Bracers of Defense", "Necklace of Magic", "Ring of Luck", "Charm of Fortune"
+            "Ring of Power", "Amulet of Health", "Cloak of Protection", "Belt of Strength",
+            "Boots of Speed", "Gloves of Dexterity", "Crown of Wisdom", "Shield of Faith",
+            "Bracers of Defense", "Necklace of Magic", "Ring of Luck", "Charm of Fortune"
     };
 
     private static final String[] ROLES = {
-        "Mage", "Warlock", "Cleric", "Summoner", "Rogue", "Archer", "Healer", "Tank", "Warrior"
+            "Mage", "Warlock", "Cleric", "Summoner", "Rogue", "Archer", "Healer", "Tank", "Warrior"
     };
 
     private static final String[] RACES = {
-        "Beastkin", "Demon", "Dragonborn", "Dwarf", "Elf", "Human", "Nephilim", "Orc", "Spiritborn"
+            "Beastkin", "Demon", "Dragonborn", "Dwarf", "Elf", "Human", "Nephilim", "Orc", "Spiritborn"
     };
 
     public Character(String type) {
         Random rand = new Random();
-        this.hp = this.maxHp = 50 + rand.nextInt(200);     // 50-249
-        this.mp = this.maxMp = 30 + rand.nextInt(170);       // 30-199
-        this.expCap = rand.nextInt(100);             // 0-99
-        this.defense = 10 + rand.nextInt(90);     // 10-99
-        this.strength = 15 + rand.nextInt(85);    // 15-99
-        this.speed = 10 + rand.nextInt(90);       // 10-99
-        this.critChance = 5 + rand.nextInt(45);   // 5-49
+        this.hp = this.maxHp = 50 + rand.nextInt(200); // 50-249
+        this.mp = this.maxMp = 30 + rand.nextInt(170); // 30-199
+        this.expCap = rand.nextInt(100); // 0-99
+        this.defense = 10 + rand.nextInt(90); // 10-99
+        this.strength = 15 + rand.nextInt(85); // 15-99
+        this.speed = 10 + rand.nextInt(90); // 10-99
+        this.critChance = 5 + rand.nextInt(45); // 5-49
         this.critDamage = 10 + rand.nextInt(40); // 10-49
-        this.luck = 1 + rand.nextInt(99);         // 1-99
+        this.luck = 1 + rand.nextInt(99); // 1-99
 
         this.type = type.equals("Ally") ? Type.ALLY : Type.ENEMY;
         // Randomized role and race (ignore parameters, randomize instead)
@@ -147,18 +149,18 @@ public class Character {
 class Attack {
 
     public enum SkillType {
-      Damage, Heal, Buff, Debuff, Block
+        Damage, Heal, Buff, Debuff, Block
     };
 
     public enum HitType {
-      Single, Split, Multi, All, 
+        Single, Split, Multi, All,
     };
 
     int damge;
     int mpCost;
     SkillType type;
     HitType hitCount;
-    
+
     String description;
 
     Attack(String d) {
