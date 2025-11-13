@@ -9,6 +9,7 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.ui.BattleTopUI;
 import com.infinityfortress.ui.DecisionUI;
+import com.infinityfortress.ui.SubactionsUI;
 import com.infinityfortress.characters.*;
 import com.infinityfortress.utils.*;
 
@@ -27,7 +28,6 @@ public class DecisionSystem {
         // Checks which the ability targets
         switch (targetType) {
             case SINGLE_ENEMY -> {
-                // Show enemy selection UI
                 ArrayList<NCharacter> enemies = getAliveEnemies(curr);
                 if (enemies.isEmpty()) {
                     System.out.println("No valid targets available!");
@@ -41,7 +41,6 @@ public class DecisionSystem {
                 return false;
             }
             case SINGLE_ALLY -> {
-                // Show ally selection UI
                 ArrayList<NCharacter> allies = getAliveAllies(curr);
                 if (allies.isEmpty()) {
                     System.out.println("No valid ally targets available!");
@@ -86,43 +85,14 @@ public class DecisionSystem {
                 return false;
             }
             case CHOOSE_SUBACTION -> {
+                Action subAction = selectSubAction(battleTop, selectedAction);
 
-                int choice = 0;
-                int maxChoice = selectedAction.getAllSubActions().size() - 1;
-
-                if (maxChoice == -1) {
-                    System.out.println("What? The Subactions are empty????");
+                if (subAction == null) {
                     return false;
                 }
-                // UI For Subaction will be implemented here
 
-                while (true) {
-                    // UI For Subaction will be implemented here
-                    InputHandler.waitForInput();
+                return start(battleTop, curr, subAction);
 
-                    // UI For Subaction will be implemented here
-
-                    if (InputHandler.left.get()) {
-                        choice = Math.max(0, choice - 1);
-                        InputHandler.left.set(false);
-                    }
-                    if (InputHandler.right.get()) {
-                        choice = Math.min(maxChoice, choice + 1);
-                        InputHandler.right.set(false);
-                    }
-                    if (InputHandler.back.get()) {
-                        InputHandler.back.set(false);
-                        return false;
-                    }
-                    if (InputHandler.enter.get()) {
-                        Action selectedSubAction = selectedAction.getAllSubActions().get(choice);
-
-                        if (start(battleTop, curr, selectedSubAction)) {
-                            return true;
-                        }
-                        InputHandler.enter.set(false);
-                    }
-                }
             }
             default -> {
                 System.out.println("Unknown targeting type: " + targetType);
@@ -161,7 +131,62 @@ public class DecisionSystem {
         }
     }
 
-    // Target selection UI
+    // Subaction selection UI; will refactor
+    private Action selectSubAction(BattleTopUI battleTop, Action subactions) {
+        int choice = 0;
+        int maxChoice = subactions.getAllSubActions().size() - 1;
+
+        if (maxChoice == -1) {
+            System.out.println("What? The Subactions are empty????");
+            return null;
+        }
+
+        SubactionsUI currUI = new SubactionsUI(battleTop);
+
+        while (true) {
+            currUI.display(subactions.getAllSubActions(), choice);
+            InputHandler.waitForInput();
+
+            if (InputHandler.right.get()) {
+                if (choice + 3 <= maxChoice) {
+                    choice += 3;
+                }
+                InputHandler.right.set(false);
+            }
+
+            if (InputHandler.left.get()) {
+                if (choice >= 3) {
+                    choice -= 3;
+                }
+                InputHandler.left.set(false);
+            }
+
+            if (InputHandler.down.get()) {
+                if (choice % 3 + 1 < 3 && choice + 1 <= maxChoice) {
+                    choice++;
+                }
+                InputHandler.down.set(false);
+            }
+
+            if (InputHandler.up.get()) {
+                if ((choice % 3) > 0) {
+                    choice--;
+                }
+                InputHandler.up.set(false);
+            }
+
+            if (InputHandler.back.get()) {
+                InputHandler.back.set(false);
+                return null;
+            }
+            if (InputHandler.enter.get()) {
+                InputHandler.enter.set(false);
+                return subactions.getAllSubActions().get(choice);
+            }
+        }
+    }
+
+    // Target selection UI; will refactor
     private NCharacter selectTarget(BattleTopUI battleTop, ArrayList<NCharacter> targets) {
         int choice = 0;
         DecisionUI currUI = new DecisionUI(battleTop);

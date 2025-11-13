@@ -85,6 +85,7 @@ public class App {
 
     public void gameLoop() {
         BattleSystem battle = new BattleSystem();
+
         battle.start();
     }
 

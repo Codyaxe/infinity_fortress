@@ -66,5 +66,6 @@ public class ProtectOne implements Action {
 
         protectEffect.apply();
         target.addTemporaryEffect(protectEffect);
+        System.out.println(String.format("Protection is applied to %s", target.getName()));
     };
 }

@@ -1,4 +1,5 @@
 package com.infinityfortress.ui;
+
 import com.infinityfortress.utils.Utils;
 
 public class SetupMenu {
@@ -20,7 +21,8 @@ public class SetupMenu {
                     System.out.print('│');
                     switch (i) {
                         case max / 2 -> {
-                            String msg = Utils.center("Setup your console to match the box, press ESC to reset box position", 117);
+                            String msg = Utils.center(
+                                    "Setup your console to match the box, press ESC to reset box position", 117);
                             System.out.print(msg);
                         }
                         case (max / 2) + 1 -> {
