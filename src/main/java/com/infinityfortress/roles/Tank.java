@@ -5,7 +5,7 @@ import com.infinityfortress.actions.GuardAction;
 public class Tank extends AbstractRole {
     public Tank() {
         super();
-        actions.addLast(new GuardAction());
+        actions.add(1, new GuardAction());
     }
 
     public String getName() {

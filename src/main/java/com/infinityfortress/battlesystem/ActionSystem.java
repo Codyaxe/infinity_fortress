@@ -5,7 +5,7 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.ui.ActionUI;
 import com.infinityfortress.ui.BattleTopUI;
 import com.infinityfortress.utils.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ActionSystem {
     private final DecisionSystem decisionSystem;
@@ -15,7 +15,7 @@ public class ActionSystem {
     }
 
     public boolean start(BattleTopUI battleTop, NCharacter curr) {
-        ArrayList<Action> availableActions = curr.getRole().getActions();
+        List<Action> availableActions = curr.getRole().getActions();
         if (availableActions.isEmpty()) {
             System.out.println("Character has no available actions!");
             return false;

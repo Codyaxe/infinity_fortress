@@ -71,7 +71,7 @@ public class StatsMenu {
                             descHeader[14]);
                     descGrid[4][14] = Utils.spaceBetween("MP Cost: ", String.valueOf(basicAction.getManaCost()),
                             descHeader[14]);
-                    String[] temp = Utils.createTextGrid(5, descHeader[14], basicAction.getDescription());
+                    String[] temp = Utils.createTextGrid(5, descHeader[14], basicAction.getStatDescription());
                     for (int i = 0; i < 5; i++) {
                         descGrid[7 + i][14] = Utils.leftAlign(temp[i], descHeader[14]);
                     }
@@ -98,7 +98,7 @@ public class StatsMenu {
                             descHeader[14]);
                     descGrid[4][14] = Utils.spaceBetween("MP Cost: ", String.valueOf(specialAction.getManaCost()),
                             descHeader[14]);
-                    String[] temp = Utils.createTextGrid(5, descHeader[14], specialAction.getDescription());
+                    String[] temp = Utils.createTextGrid(5, descHeader[14], specialAction.getStatDescription());
                     for (int i = 0; i < 5; i++) {
                         descGrid[7 + i][14] = Utils.leftAlign(temp[i], descHeader[14]);
                     }
