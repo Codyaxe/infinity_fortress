@@ -47,15 +47,15 @@ public class ProtectOne implements Action {
 
     public void execute(NCharacter user, NCharacter target) {
 
-        TemporaryEffect protectEffect = new TemporaryEffect(5, target) {
+        TemporaryEffect protectEffect = new TemporaryEffect(1, target) {
             @Override
             public void apply() {
-                this.target.setDefense(this.target.getDefense() + 50);
+                this.target.setDefense(this.target.getDefense() + 4);
             }
 
             @Override
             public void remove() {
-                this.target.setDefense(this.target.getDefense() - 50);
+                this.target.setDefense(this.target.getDefense() - 4);
             }
 
             @Override
@@ -63,6 +63,11 @@ public class ProtectOne implements Action {
                 return "Protect";
             }
         };
+
+        // If the user target themselves, this flag is not set.
+        if (user == target) {
+            protectEffect.setJustApplied(false);
+        }
 
         protectEffect.apply();
         target.addTemporaryEffect(protectEffect);

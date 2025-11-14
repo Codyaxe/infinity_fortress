@@ -209,6 +209,10 @@ public class NCharacter {
         condition.remove(effect);
     }
 
+    public ArrayList<TemporaryEffect> getAllTemporaryEffect() {
+        return condition;
+    }
+
     // Action Helper Methods for UI
 
     public Action getBasicAction() {

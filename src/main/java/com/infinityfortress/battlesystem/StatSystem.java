@@ -32,21 +32,26 @@ public class StatSystem {
             if (InputHandler.left.get()) {
                 curr = Math.max(0, curr - 1);
                 InputHandler.left.set(false);
+                AudioHandler.playSelect();
             }
             if (InputHandler.right.get()) {
                 curr = Math.min(characterList.size() - 1, curr + 1);
                 InputHandler.right.set(false);
+                AudioHandler.playSelect();
             }
             if (InputHandler.up.get()) {
                 choice = Math.max(0, choice - 1);
                 InputHandler.up.set(false);
+                AudioHandler.playSelect();
             }
             if (InputHandler.down.get()) {
                 choice = Math.min(2, choice + 1);
                 InputHandler.down.set(false);
+                AudioHandler.playSelect();
             }
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
+                AudioHandler.playBack();
                 return;
             }
         }

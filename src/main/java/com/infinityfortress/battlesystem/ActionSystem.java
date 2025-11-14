@@ -32,17 +32,21 @@ public class ActionSystem {
             if (InputHandler.left.get()) {
                 choice = Math.max(0, choice - 1);
                 InputHandler.left.set(false);
+                AudioHandler.playSelect();
             }
             if (InputHandler.right.get()) {
                 choice = Math.min(maxChoice, choice + 1);
                 InputHandler.right.set(false);
+                AudioHandler.playSelect();
             }
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
+                AudioHandler.playBack();
                 return false;
             }
             if (InputHandler.enter.get()) {
                 Action selectedAction = availableActions.get(choice);
+                AudioHandler.playEnter();
 
                 if (decisionSystem.start(battleTop, curr, selectedAction)) {
                     return true;

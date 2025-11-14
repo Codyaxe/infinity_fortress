@@ -152,6 +152,7 @@ public class DecisionSystem {
                     choice += 3;
                 }
                 InputHandler.right.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.left.get()) {
@@ -159,6 +160,7 @@ public class DecisionSystem {
                     choice -= 3;
                 }
                 InputHandler.left.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.down.get()) {
@@ -166,6 +168,7 @@ public class DecisionSystem {
                     choice++;
                 }
                 InputHandler.down.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.up.get()) {
@@ -173,14 +176,17 @@ public class DecisionSystem {
                     choice--;
                 }
                 InputHandler.up.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
+                AudioHandler.playBack();
                 return null;
             }
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
+                AudioHandler.playEnter();
                 return subactions.getAllSubActions().get(choice);
             }
         }
@@ -201,6 +207,7 @@ public class DecisionSystem {
                     choice += 3;
                 }
                 InputHandler.right.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.left.get()) {
@@ -208,6 +215,7 @@ public class DecisionSystem {
                     choice -= 3;
                 }
                 InputHandler.left.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.down.get()) {
@@ -215,6 +223,7 @@ public class DecisionSystem {
                     choice++;
                 }
                 InputHandler.down.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.up.get()) {
@@ -222,15 +231,18 @@ public class DecisionSystem {
                     choice--;
                 }
                 InputHandler.up.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
+                AudioHandler.playBack();
                 return null;
             }
 
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
+                AudioHandler.playEnter();
                 return targets.get(choice);
             }
         }

@@ -46,6 +46,7 @@ public final class ModifiedPriorityQueue {
     return turnOrder;
   }
 
+  // Update the character priority.
   public NCharacter getCurrCharAndUpdate() {
     this.queue.poll();
     addToQueue();

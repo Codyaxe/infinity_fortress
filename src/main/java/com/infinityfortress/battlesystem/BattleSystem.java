@@ -3,6 +3,7 @@ package com.infinityfortress.battlesystem;
 import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.effects.TemporaryEffect;
 import com.infinityfortress.ui.*;
 import com.infinityfortress.utils.*;
 import java.util.ArrayList;
@@ -38,21 +39,42 @@ public class BattleSystem {
             BattleUI battleUI = new BattleUI(battleTop);
 
             boolean turnComplete = false;
+
+            // Handles Temporary Effects
+            if (!currentCharacter.getAllTemporaryEffect().isEmpty()) {
+                ArrayList<TemporaryEffect> conditions = currentCharacter.getAllTemporaryEffect();
+                for (TemporaryEffect effect : conditions) {
+                    if (effect.isJustApplied()) {
+                        effect.setJustApplied(false);
+                    } else {
+                        effect.decrement();
+                        if (effect.getDuration() == 0) {
+                            effect.remove();
+                        }
+                    }
+                }
+                conditions.removeIf(effect -> effect.getDuration() == 0);
+            }
+
             while (!turnComplete) {
+
                 battleUI.display(choice);
                 InputHandler.waitForInput();
 
                 if (InputHandler.left.get()) {
                     choice = Math.max(0, choice - 1);
                     InputHandler.left.set(false);
+                    AudioHandler.playSelect();
                 }
                 if (InputHandler.right.get()) {
                     choice = Math.min(2, choice + 1);
                     InputHandler.right.set(false);
+                    AudioHandler.playSelect();
                 }
 
                 if (InputHandler.enter.get()) {
                     boolean actionSuccessful = false;
+                    AudioHandler.playEnter();
                     switch (choice) {
                         case 0 -> {
                             // Action
@@ -68,6 +90,7 @@ public class BattleSystem {
                         }
                     }
 
+                    // Update the character priority when their turn ends.
                     if (actionSuccessful) {
                         currentCharacter = turnQueue.getCurrCharAndUpdate();
                         InputHandler.enter.set(false);

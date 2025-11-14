@@ -11,6 +11,7 @@ public class App {
 
     public static void main(String[] args) {
         App game = new App();
+
         InputHandler.setupKeyListener();
         Utils.clearConsole();
         Utils.hideCursor();
@@ -38,7 +39,6 @@ public class App {
 
         t.start();
 
-        // Template code for Thread.sleep
         try {
             t.join();
         } catch (InterruptedException e) {
@@ -74,18 +74,23 @@ public class App {
 
         AtomicBoolean isSettingUp = new AtomicBoolean(true);
         while (isSettingUp.get()) {
+
             setup.display();
             InputHandler.waitForInput();
             if (InputHandler.enter.get()) {
                 isSettingUp.set(false);
+                InputHandler.enter.set(false);
+                AudioHandler.playEnter();
             }
             Utils.clearConsole();
         }
+
+        IntroTestUI s = new IntroTestUI();
+        s.display();
     }
 
     public void gameLoop() {
         BattleSystem battle = new BattleSystem();
-
         battle.start();
     }
 
