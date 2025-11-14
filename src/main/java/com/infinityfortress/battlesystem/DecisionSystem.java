@@ -7,10 +7,13 @@ import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.TargetingType;
-import com.infinityfortress.ui.BattleTopUI;
-import com.infinityfortress.ui.DecisionUI;
-import com.infinityfortress.characters.*;
-import com.infinityfortress.utils.*;
+import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.characters.NCharacterType;
+import com.infinityfortress.ui.BattleMenu.ActionComponent;
+import com.infinityfortress.ui.BattleMenu.MainBattleUI;
+import com.infinityfortress.ui.OldMenu.BattleFeildUI;
+import com.infinityfortress.ui.OldMenu.DecisionUI;
+import com.infinityfortress.utils.InputHandler;
 
 public class DecisionSystem {
     private final Player player;
@@ -20,11 +23,13 @@ public class DecisionSystem {
         this.player = player;
         this.enemy = enemy;
     }
-
-    public boolean start(BattleTopUI battleTop, NCharacter curr, Action selectedAction) {
-        TargetingType targetType = selectedAction.getTargetingType();
+    public boolean start(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+      MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
+        
+      TargetingType targetType = selectedAction.getTargetingType();
 
         // Refactoring this is likely
+        mainBattleUI.display();
         switch (targetType) {
             case SINGLE_ENEMY -> {
                 // Show enemy selection UI
@@ -33,11 +38,12 @@ public class DecisionSystem {
                     System.out.println("No valid targets available!");
                     return false;
                 }
-                NCharacter target = selectTarget(battleTop, enemies);
-                if (target != null) {
-                    selectedAction.execute(curr, target);
-                    return true;
-                }
+                // TEMP
+                // NCharacter target = selectTarget(battleTop, enemies);
+                // if (target != null) {
+                //     selectedAction.execute(curr, target);
+                //     return true;
+                // }
                 return false;
             }
             case SINGLE_ALLY -> {
@@ -47,11 +53,12 @@ public class DecisionSystem {
                     System.out.println("No valid ally targets available!");
                     return false;
                 }
-                NCharacter target = selectTarget(battleTop, allies);
-                if (target != null) {
-                    selectedAction.execute(curr, target);
-                    return true;
-                }
+                // TEMP
+                // NCharacter target = selectTarget(battleTop, allies);
+                // if (target != null) {
+                //     selectedAction.execute(curr, target);
+                //     return true;
+                // }
                 return false;
             }
             case ALL_ENEMIES -> {
@@ -128,7 +135,7 @@ public class DecisionSystem {
     }
 
     // Target selection UI
-    private NCharacter selectTarget(BattleTopUI battleTop, ArrayList<NCharacter> targets) {
+    private NCharacter selectTarget(BattleFeildUI battleTop, ArrayList<NCharacter> targets) {
         int choice = 0;
         DecisionUI currUI = new DecisionUI(battleTop);
         int maxChoice = targets.size() - 1;

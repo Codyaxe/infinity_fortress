@@ -1,13 +1,16 @@
 package com.infinityfortress.battlesystem;
 
-import com.infinityfortress.Enemy;
-import com.infinityfortress.Player;
-import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.ui.*;
-import com.infinityfortress.utils.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.infinityfortress.Enemy;
+import com.infinityfortress.Player;
+import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.characters.NCharacterType;
+import com.infinityfortress.ui.BattleMenu.MainBattleUI;
+import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.ModifiedPriorityQueue;
 
 public class BattleSystem {
 
@@ -16,11 +19,12 @@ public class BattleSystem {
     DecisionSystem decisionSystem;
     StatSystem statSystem;
     ActionSystem actionSystem;
+    ItemSystem itemSystem;
 
     public void start() {
         int choice = 0;
 
-        // Initialization, decisionsystem and actionsystem must access player and enemy.
+        // Initialization, decisionsystem and action system must access player and enemy.
         decisionSystem = new DecisionSystem(player, enemy);
         statSystem = new StatSystem(player);
         actionSystem = new ActionSystem(decisionSystem);
@@ -33,13 +37,16 @@ public class BattleSystem {
         ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
         NCharacter currentCharacter = turnQueue.peekCurrChar();
 
+        MainBattleUI mainBattleUI = new MainBattleUI(player.characters, enemy.characters, turnQueue.getQueue());
         while (true) {
-            BattleTopUI battleTop = new BattleTopUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
-            BattleUI battleUI = new BattleUI(battleTop);
+            mainBattleUI.display();
+            // BattleFeildUI battleField = new BattleFeildUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
+            // BattleUI battleUI = new BattleUI(battleField);
 
             boolean turnComplete = false;
             while (!turnComplete) {
-                battleUI.display(choice);
+              mainBattleUI.updateChoice(choice);
+                // battleUI.display(choice);
                 InputHandler.waitForInput();
 
                 if (InputHandler.left.get()) {
@@ -56,15 +63,18 @@ public class BattleSystem {
                     switch (choice) {
                         case 0 -> {
                             // Action
-                            actionSuccessful = actionSystem.start(battleTop, currentCharacter);
+                            actionSuccessful = actionSystem.start(mainBattleUI, currentCharacter);
                         }
                         case 1 -> {
                             // Stat
-                            statSystem.start(currentCharacter);
+                            // Only allow stat viewing for ally characters
+                            if (currentCharacter.getType() == NCharacterType.ALLY) {
+                                statSystem.start(currentCharacter);
+                            }
                         }
                         case 2 -> {
                             // Equipment
-                            actionSuccessful = false;
+                            actionSuccessful = true;
                         }
                     }
 
@@ -73,6 +83,7 @@ public class BattleSystem {
                         InputHandler.enter.set(false);
                         turnComplete = true;
                     }
+                    mainBattleUI.display();
                 }
             }
         }
@@ -88,10 +99,9 @@ public class BattleSystem {
 // .collect(Collectors.toCollection(ArrayList::new));
 // ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
 // Character curr = turnQueue.peekCurrChar();
-
 // while (true) {
 // int choice = 0;
-// BattleTopUI battleTop = new BattleTopUI(player.characters, enemy.characters,
+// BattleFeildUI battleTop = new BattleFeildUI(player.characters, enemy.characters,
 // turnQueue.getCurrentQueue());
 // BattleUI battleUI = new BattleUI(battleTop);
 // while (true) {

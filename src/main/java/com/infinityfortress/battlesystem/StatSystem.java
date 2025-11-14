@@ -5,8 +5,9 @@ import java.util.stream.Collectors;
 
 import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.ui.StatsMenu;
-import com.infinityfortress.utils.*;
+import com.infinityfortress.ui.StatsMenu.MainStatMenu;
+import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.Utils;
 
 public class StatSystem {
     private final Player player;
@@ -16,34 +17,32 @@ public class StatSystem {
     }
 
     public void start(NCharacter currentCharacter) {
-        int choice = 0;
-
-        ArrayList<NCharacter> characterList = player.characters.stream().filter(c -> c != null)
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        int curr = characterList.indexOf(currentCharacter);
-        StatsMenu statsMenu = new StatsMenu();
-        Utils.clearConsole();
+        ArrayList<NCharacter> characterList = player.characters.stream().filter(c -> c != null).collect(Collectors.toCollection(ArrayList::new));
+        // StatsMenu statsMenu = new StatsMenu();
+        
+        MainStatMenu menu = new MainStatMenu(characterList, characterList.indexOf(currentCharacter), 0);
         while (true) {
-            statsMenu.display(characterList.get(curr), choice, curr,
-                    characterList.size());
+            // statsMenu.display(characterList.get(selected), choice, selected, characterList.size());
             InputHandler.waitForInput();
-
             if (InputHandler.left.get()) {
-                curr = Math.max(0, curr - 1);
+                menu.leftCharacter();
                 InputHandler.left.set(false);
-            }
-            if (InputHandler.right.get()) {
-                curr = Math.min(characterList.size() - 1, curr + 1);
+                menu.updateCharacter();
+              }
+              if (InputHandler.right.get()) {
+                menu.rightCharacter();
                 InputHandler.right.set(false);
+                menu.updateCharacter();
             }
             if (InputHandler.up.get()) {
-                choice = Math.max(0, choice - 1);
+                menu.upChoice();
                 InputHandler.up.set(false);
-            }
-            if (InputHandler.down.get()) {
-                choice = Math.min(2, choice + 1);
+                menu.updateInfo();
+              }
+              if (InputHandler.down.get()) {
+                menu.downChoice();
                 InputHandler.down.set(false);
+                menu.updateInfo();
             }
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);

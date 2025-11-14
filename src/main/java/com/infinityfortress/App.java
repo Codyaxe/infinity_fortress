@@ -12,10 +12,12 @@ public class App {
     public static void main(String[] args) {
         App game = new App();
         InputHandler.setupKeyListener();
-        Utils.clearConsole();
-        Utils.hideCursor();
-        // game.intro();
+        Utils.initiallizeBorders();
+        InputHandler.waitForInput();
         game.setup();
+        
+        Utils.clearConsole();
+        // game.intro();
         game.gameLoop();
         InputHandler.stopKeyListener();
         Utils.showCursor();
@@ -70,6 +72,7 @@ public class App {
 
     public void setup() {
         Utils.clearConsole();
+        Utils.hideCursor();
         SetupMenu setup = new SetupMenu();
 
         AtomicBoolean isSettingUp = new AtomicBoolean(true);
@@ -94,10 +97,6 @@ public class App {
 
     public void println(String text) {
         System.out.println(text);
-    }
-
-    public void resultLoop() {
-
     }
 
 }

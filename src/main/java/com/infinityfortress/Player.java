@@ -2,11 +2,16 @@ package com.infinityfortress;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-// import java.util.Random;
-import com.infinityfortress.characters.*;
+
+import com.infinityfortress.Temp.EquipmentFactory;
+import com.infinityfortress.Temp.EquipmentTemp;
+import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.characters.NCharacterFactory;
+import com.infinityfortress.characters.NCharacterType;
 
 public class Player {
     public ArrayList<NCharacter> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
+    public ArrayList<EquipmentTemp> inventory = EquipmentFactory.createRandomEquipmentCollection(); 
 
     public Player() {
         // Generate random number of characters (1-5)
@@ -21,6 +26,7 @@ public class Player {
         characters.set(2, null);
         characters.set(3, factory.createNephilimMage(NCharacterType.ALLY));
         characters.set(4, factory.createNephilimCleric(NCharacterType.ALLY));
+
 
     }
 }

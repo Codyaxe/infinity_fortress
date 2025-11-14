@@ -16,6 +16,7 @@ public interface Action {
     String getDescription();
 
     TargetingType getTargetingType();
+    
 
     void execute(NCharacter user, NCharacter target);
 
