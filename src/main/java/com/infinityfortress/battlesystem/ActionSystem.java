@@ -34,14 +34,17 @@ public class ActionSystem {
             if (InputHandler.left.get()) {
                 choice = Math.max(0, choice - 1);
                 InputHandler.left.set(false);
+                AudioHandler.playSelect();
             }
             // 27 5 111
             if (InputHandler.right.get()) {
                 choice = Math.min(maxChoice, choice + 1);
                 InputHandler.right.set(false);
+                AudioHandler.playSelect();
             }
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
+                AudioHandler.playBack();
                 return false;
             }
             if (InputHandler.enter.get()) {

@@ -32,8 +32,12 @@ public class ProtectAll implements Action {
         return "Protection";
     };
 
-    public String getDescription() {
-        return "Just a Protection";
+    public String getStatDescription() {
+        return "ALL PROTECTION. Fill me STAT";
+    };
+
+    public String getBattleDescription() {
+        return "ALL DESCRIPTION Fill me BATTLE";
     };
 
     public TargetingType getTargetingType() {

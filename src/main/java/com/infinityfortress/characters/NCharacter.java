@@ -1,6 +1,7 @@
 package com.infinityfortress.characters;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.BasicAction;
@@ -244,11 +245,15 @@ public class NCharacter {
     // Conditions Manipulation
 
     public void addTemporaryEffect(TemporaryEffect effect) {
-        condition.addLast(effect);
+        condition.add(effect);
     }
 
     public void removeTemporaryEffect(TemporaryEffect effect) {
         condition.remove(effect);
+    }
+
+    public ArrayList<TemporaryEffect> getAllTemporaryEffect() {
+        return condition;
     }
 
     // Action Helper Methods for UI
@@ -278,7 +283,7 @@ public class NCharacter {
         return null;
     }
 
-    public ArrayList<Action> getAllActions() {
+    public List<Action> getAllActions() {
         return role.getActions();
     }
 

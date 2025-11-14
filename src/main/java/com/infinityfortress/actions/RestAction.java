@@ -1,24 +1,49 @@
 package com.infinityfortress.actions;
 
-public class RestAction {
+import com.infinityfortress.characters.NCharacter;
 
-    public RestAction() {
-
-    }
+public class RestAction implements Action {
 
     public String getName() {
         return "Rest";
     }
 
-    String getActionType() {
-        return "Restorative";
+    public RestAction() {
     }
 
-    String getDescription() {
-        return "Recovers a small amount of health and mana but leaves the user vulnerable.";
+    public int getHitCount() {
+        return 0;
     }
 
-    String getBattleDescription() {
-        return "takes a moment to rest. They've become vulnerable!";
+    public int getManaCost() {
+        return 0;
+    };
+
+    public int getBaseDamage() {
+        return 0;
+    };
+
+    public String getActionType() {
+        return "Generic";
+    };
+
+    public String getStatDescription() {
+        return "Block Stat Description";
+    };
+
+    public String getBattleDescription() {
+        return "Block Battle Description";
+    };
+
+    public TargetingType getTargetingType() {
+        return TargetingType.SELF;
     }
+
+    public Action[] getSubActions() {
+        return new Action[0];
+    };
+
+    public void execute(NCharacter user, NCharacter target) {
+        // End Turn Restore MP?
+    };
 }

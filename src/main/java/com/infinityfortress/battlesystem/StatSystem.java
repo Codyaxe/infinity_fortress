@@ -28,24 +28,29 @@ public class StatSystem {
                 menu.leftCharacter();
                 InputHandler.left.set(false);
                 menu.updateCharacter();
-              }
+                  AudioHandler.playSelect();
+            }
               if (InputHandler.right.get()) {
                 menu.rightCharacter();
                 InputHandler.right.set(false);
                 menu.updateCharacter();
+                AudioHandler.playSelect();
             }
             if (InputHandler.up.get()) {
                 menu.upChoice();
                 InputHandler.up.set(false);
                 menu.updateInfo();
-              }
+                  AudioHandler.playSelect();
+            }
               if (InputHandler.down.get()) {
                 menu.downChoice();
                 InputHandler.down.set(false);
                 menu.updateInfo();
+                AudioHandler.playSelect();
             }
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
+                AudioHandler.playBack();
                 return;
             }
         }

@@ -1,21 +1,27 @@
 package com.infinityfortress.roles;
 
+import java.util.List;
 import java.util.ArrayList;
-import com.infinityfortress.actions.Action;
-import com.infinityfortress.actions.AttackAction;
+import java.util.Collections;
+
+import com.infinityfortress.actions.*;
 
 public class AbstractRole implements Role {
-    ArrayList<Action> actions = new ArrayList<>();
+    protected ArrayList<Action> actions = new ArrayList<>();
 
     public AbstractRole() {
-        actions.addLast(new AttackAction());
+        actions.add(new AttackAction());
+        actions.add(new BlockAction());
+        actions.add(new RestAction());
+
     }
 
     public String getName() {
         return "Abstract Role";
     }
 
-    public ArrayList<Action> getActions(){ 
-        return actions;
+    public List<Action> getActions() {
+        return Collections.unmodifiableList(actions);
     }
+
 }

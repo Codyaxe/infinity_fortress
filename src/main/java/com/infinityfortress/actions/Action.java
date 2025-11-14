@@ -1,5 +1,7 @@
 package com.infinityfortress.actions;
 
+import java.util.ArrayList;
+
 import com.infinityfortress.characters.NCharacter;
 
 public interface Action {
@@ -13,10 +15,16 @@ public interface Action {
 
     String getActionType();
 
-    String getDescription();
+    String getStatDescription();
+
+    String getBattleDescription();
 
     TargetingType getTargetingType();
     
+
+    default ArrayList<Action> getAllSubActions() {
+        return new ArrayList<Action>();
+    }
 
     void execute(NCharacter user, NCharacter target);
 

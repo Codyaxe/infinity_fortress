@@ -29,17 +29,17 @@ public class AttackAction implements Action {
         return "Generic";
     };
 
-    public String getDescription() {
-        return "Generic Description";
+    public String getStatDescription() {
+        return "Attack Stat Description";
+    };
+
+    public String getBattleDescription() {
+        return "Attack Battle Description";
     };
 
     public TargetingType getTargetingType() {
         return TargetingType.SINGLE_ENEMY;
     }
-
-    public boolean hasSubActions() {
-        return false;
-    };
 
     public Action[] getSubActions() {
         return new Action[0];

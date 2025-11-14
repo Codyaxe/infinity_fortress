@@ -5,7 +5,7 @@ import com.infinityfortress.actions.StealAction;
 public class Rogue extends AbstractRole {
     public Rogue() {
         super();
-        actions.addLast(new StealAction());
+        actions.add(1, new StealAction());
     }
 
     public String getName() {

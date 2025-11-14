@@ -5,7 +5,7 @@ import com.infinityfortress.actions.HealAction;
 public class Healer extends AbstractRole {
     public Healer() {
         super();
-        actions.addLast(new HealAction());
+        actions.add(1, new HealAction());
     }
 
     public String getName() {

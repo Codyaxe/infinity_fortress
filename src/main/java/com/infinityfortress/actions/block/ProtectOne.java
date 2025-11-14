@@ -33,8 +33,12 @@ public class ProtectOne implements Action {
         return "Protection";
     };
 
-    public String getDescription() {
-        return "Just a Protection";
+    public String getStatDescription() {
+        return "Just a Protection. Fill me STAT";
+    };
+
+    public String getBattleDescription() {
+        return "Just a Protection. Fill me BATTLE";
     };
 
     public TargetingType getTargetingType() {
@@ -43,15 +47,15 @@ public class ProtectOne implements Action {
 
     public void execute(NCharacter user, NCharacter target) {
 
-        TemporaryEffect protectEffect = new TemporaryEffect(5, target) {
+        TemporaryEffect protectEffect = new TemporaryEffect(1, target) {
             @Override
             public void apply() {
-                this.target.setDefense(this.target.getDefense() + 50);
+                this.target.setDefense(this.target.getDefense() + 4);
             }
 
             @Override
             public void remove() {
-                this.target.setDefense(this.target.getDefense() - 50);
+                this.target.setDefense(this.target.getDefense() - 4);
             }
 
             @Override
@@ -60,7 +64,13 @@ public class ProtectOne implements Action {
             }
         };
 
+        // If the user target themselves, this flag is not set.
+        if (user == target) {
+            protectEffect.setJustApplied(false);
+        }
+
         protectEffect.apply();
         target.addTemporaryEffect(protectEffect);
+        System.out.println(String.format("Protection is applied to %s", target.getName()));
     };
 }

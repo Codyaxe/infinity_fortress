@@ -6,10 +6,12 @@ public class TemporaryEffect implements Effects {
     protected NCharacter target;
     private int duration;
     private int strength;
+    private boolean justApplied;
 
     public TemporaryEffect(int d, NCharacter t) {
         this.duration = d;
         this.target = t;
+        this.justApplied = true;
     }
 
     public String getName() {
@@ -28,6 +30,15 @@ public class TemporaryEffect implements Effects {
 
     public void decrement() {
         duration--;
+    }
+
+    // Instant Application Flag
+    public boolean isJustApplied() {
+        return justApplied;
+    }
+
+    public void setJustApplied(boolean x) {
+        justApplied = x;
     }
 
     // Strength Access Methods

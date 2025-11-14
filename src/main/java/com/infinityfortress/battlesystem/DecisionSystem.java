@@ -32,7 +32,6 @@ public class DecisionSystem {
         mainBattleUI.display();
         switch (targetType) {
             case SINGLE_ENEMY -> {
-                // Show enemy selection UI
                 ArrayList<NCharacter> enemies = getAliveEnemies(curr);
                 if (enemies.isEmpty()) {
                     System.out.println("No valid targets available!");
@@ -47,7 +46,6 @@ public class DecisionSystem {
                 return false;
             }
             case SINGLE_ALLY -> {
-                // Show ally selection UI
                 ArrayList<NCharacter> allies = getAliveAllies(curr);
                 if (allies.isEmpty()) {
                     System.out.println("No valid ally targets available!");
@@ -93,9 +91,14 @@ public class DecisionSystem {
                 return false;
             }
             case CHOOSE_SUBACTION -> {
-                // Implement subactions
-                // decision.start() recursion
-                return false;
+                Action subAction = selectSubAction(battleTop, selectedAction);
+
+                if (subAction == null) {
+                    return false;
+                }
+
+                return start(battleTop, curr, subAction);
+
             }
             default -> {
                 System.out.println("Unknown targeting type: " + targetType);
@@ -149,6 +152,7 @@ public class DecisionSystem {
                     choice += 3;
                 }
                 InputHandler.right.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.left.get()) {
@@ -156,6 +160,7 @@ public class DecisionSystem {
                     choice -= 3;
                 }
                 InputHandler.left.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.down.get()) {
@@ -163,6 +168,7 @@ public class DecisionSystem {
                     choice++;
                 }
                 InputHandler.down.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.up.get()) {
@@ -170,15 +176,18 @@ public class DecisionSystem {
                     choice--;
                 }
                 InputHandler.up.set(false);
+                AudioHandler.playSelect();
             }
 
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
+                AudioHandler.playBack();
                 return null;
             }
 
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
+                AudioHandler.playEnter();
                 return targets.get(choice);
             }
         }

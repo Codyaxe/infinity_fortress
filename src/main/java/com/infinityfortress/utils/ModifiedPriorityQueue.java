@@ -50,6 +50,7 @@ public final class ModifiedPriorityQueue {
     return this.queue;
   }
 
+  // Update the character priority.
   public NCharacter getCurrCharAndUpdate() {
     this.queue.poll();
     addToQueue();
