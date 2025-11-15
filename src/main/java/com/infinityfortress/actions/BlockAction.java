@@ -1,6 +1,7 @@
 package com.infinityfortress.actions;
 
 import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.effects.TemporaryEffect;
 
 public class BlockAction implements Action {
     private String message;
@@ -49,6 +50,24 @@ public class BlockAction implements Action {
     };
 
     public void execute(NCharacter user, NCharacter target) {
+        TemporaryEffect block = new TemporaryEffect(1, target) {
+            @Override
+            public void apply() {
+                this.target.setDefense(this.target.getDefense() + 3);
+            }
+
+            @Override
+            public void remove() {
+                this.target.setStrength(this.target.getStrength() - 3);
+            }
+
+            @Override
+            public String getName() {
+                return "Block";
+            }
+        };
+
+        block.apply();
         message = String.format("%s blocked.", user.getName());
     };
 

@@ -49,7 +49,13 @@ public class RestAction implements Action {
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        // End Turn Restore MP?
+        int manaValue = user.getMana() + 5;
+        if (manaValue <= user.getMaxMana()) {
+            user.setMana(manaValue);
+        } else {
+            user.setMana(user.getMaxMana());
+        }
+
         message = String.format("%s rested.", user.getName());
     };
 }

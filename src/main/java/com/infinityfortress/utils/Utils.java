@@ -1,7 +1,6 @@
 package com.infinityfortress.utils;
 
-import com.infinityfortress.ui.BattleMenu.MainBattleUI;
-import com.infinityfortress.ui.BattleMenu.PrintComponent;
+import com.infinityfortress.characters.NCharacter;
 
 public class Utils {
 
@@ -132,6 +131,29 @@ public class Utils {
         }
 
         return grid;
+    }
+
+    /**
+     * Processes damage calculation and applies it to the target.
+     * Returns a message describing the damage dealt.
+     * 
+     * @param user        The character dealing damage
+     * @param target      The character receiving damage
+     * @param totalDamage The calculated damage before defense
+     * @return A formatted message string
+     */
+    public static String processDamage(NCharacter user, NCharacter target, int totalDamage) {
+        int damageValue = (int) (totalDamage - (0.5 * target.getDefense()));
+        if (damageValue < 0) {
+            damageValue = 0;
+        }
+        target.setHealth(target.getHealth() - damageValue);
+
+        if (damageValue > 0) {
+            return String.format("%s dealt %s damage to %s.", user.getName(), damageValue, target.getName());
+        } else {
+            return String.format("%s dealt no damage to %s.", user.getName(), target.getName());
+        }
     }
 
 }

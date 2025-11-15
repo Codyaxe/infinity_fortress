@@ -1,40 +1,39 @@
-package com.infinityfortress.actions.power;
+package com.infinityfortress.actions.heal;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.utils.Utils;
 
-public class MeteorSmash implements Action {
+public class HealOne implements Action {
 
     private String message;
 
     public String getName() {
-        return "Meteor Smash";
+        return "Heal One";
     }
 
-    public MeteorSmash() {
+    public HealOne() {
     }
 
     public int getHitCount() {
-        return 1;
+        return 0;
     }
 
     public int getManaCost() {
-        return 15;
+        return 3;
     };
 
     public int getBaseDamage() {
-        return 10;
+        return 0;
     };
 
     public String getStatDescription() {
-        return "A expensive attack but a powerful one.";
+        return "Heals an injured ally for a good amount. Not effective at healing dead allies.";
     };
 
     public String getBattleDescription() {
-        return "A very damaging attack.";
+        return "Heals an ally for a good amount.";
     };
 
     public String getBattleMessage() {
@@ -42,15 +41,16 @@ public class MeteorSmash implements Action {
     };
 
     public TargetingType getTargetingType() {
-        return TargetingType.SINGLE_ENEMY;
+        return TargetingType.SINGLE_ALLY;
     }
 
     public ActionType getActionType() {
-        return ActionType.DAMAGE;
+        return ActionType.HEAL;
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        int totalDamage = this.getBaseDamage() + 2 * user.getStrength();
-        message = Utils.processDamage(user, target, totalDamage);
+        Heal heal = new Heal();
+        heal.execute(user, target);
+        message = String.format("%s heals %s by amount %s.", user.getName(), target.getName(), 10);
     };
 }
