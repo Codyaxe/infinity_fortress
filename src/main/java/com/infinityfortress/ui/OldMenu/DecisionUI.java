@@ -6,14 +6,14 @@ import com.infinityfortress.characters.*;
 import com.infinityfortress.utils.Utils;
 
 public class DecisionUI implements BattleUIComponent {
-    private BattleFeildUI top;
+    private BattleFieldUI top;
 
-    public DecisionUI(BattleFeildUI top) {
+    public DecisionUI(BattleFieldUI top) {
         this.top = top;
     }
 
     @Override
-    public BattleFeildUI getBattleFeildUI() {
+    public BattleFieldUI getBattleFieldUI() {
         return this.top;
     }
 
@@ -48,7 +48,7 @@ public class DecisionUI implements BattleUIComponent {
         optionGrid[options[choice][0]][options[choice][1]] = "➤";
 
         // Use custom frame building for DecisionUI since it has special formatting
-        StringBuilder frame = new StringBuilder(getBattleFeildUI().topUI.toString());
+        StringBuilder frame = new StringBuilder(getBattleFieldUI().topUI.toString());
 
         for (String[] row : optionGrid) {
             frame.append("│ ");

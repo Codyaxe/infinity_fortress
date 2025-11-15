@@ -11,7 +11,7 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
 import com.infinityfortress.ui.BattleMenu.ActionComponent;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
-import com.infinityfortress.ui.OldMenu.BattleFeildUI;
+import com.infinityfortress.ui.OldMenu.BattleFieldUI;
 import com.infinityfortress.ui.OldMenu.DecisionUI;
 import com.infinityfortress.utils.InputHandler;
 import com.infinityfortress.utils.AudioHandler;
@@ -24,10 +24,11 @@ public class DecisionSystem {
         this.player = player;
         this.enemy = enemy;
     }
+
     public boolean start(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
-      MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
-        
-      TargetingType targetType = selectedAction.getTargetingType();
+        MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
+
+        TargetingType targetType = selectedAction.getTargetingType();
 
         // Refactoring this is likely
         mainBattleUI.display();
@@ -41,8 +42,8 @@ public class DecisionSystem {
                 // TEMP
                 // NCharacter target = selectTarget(battleTop, enemies);
                 // if (target != null) {
-                //     selectedAction.execute(curr, target);
-                //     return true;
+                // selectedAction.execute(curr, target);
+                // return true;
                 // }
                 return false;
             }
@@ -55,8 +56,8 @@ public class DecisionSystem {
                 // TEMP
                 // NCharacter target = selectTarget(battleTop, allies);
                 // if (target != null) {
-                //     selectedAction.execute(curr, target);
-                //     return true;
+                // selectedAction.execute(curr, target);
+                // return true;
                 // }
                 return false;
             }
@@ -95,7 +96,7 @@ public class DecisionSystem {
                 // Action subAction = selectSubAction(battleTop, selectedAction);
 
                 // if (subAction == null) {
-                //     return false;
+                // return false;
                 // }
 
                 // return start(battleTop, curr, subAction);
@@ -140,7 +141,7 @@ public class DecisionSystem {
     }
 
     // Target selection UI
-    private NCharacter selectTarget(BattleFeildUI battleTop, ArrayList<NCharacter> targets) {
+    private NCharacter selectTarget(BattleFieldUI battleTop, ArrayList<NCharacter> targets) {
         int choice = 0;
         DecisionUI currUI = new DecisionUI(battleTop);
         int maxChoice = targets.size() - 1;

@@ -1,14 +1,14 @@
 package com.infinityfortress.ui.OldMenu;
 
 public class BattleUI implements BattleUIComponent {
-    private BattleFeildUI top;
+    private BattleFieldUI top;
 
-    public BattleUI(BattleFeildUI t) {
+    public BattleUI(BattleFieldUI t) {
         this.top = t;
     }
 
     @Override
-    public BattleFeildUI getBattleFeildUI() {
+    public BattleFieldUI getBattleFieldUI() {
         return this.top;
     }
 
