@@ -98,6 +98,13 @@ public class BattleSystem {
 
                     // Update the character priority when their turn ends.
                     if (actionSuccessful) {
+
+                        for (NCharacter character : characterList) {
+                            if (character.getHealth() <= 0) {
+                                character.setIsDead(true);
+                            }
+                        }
+                        mainBattleUI.updateField(player.characters, enemy.characters);
                         currentCharacter = turnQueue.getCurrCharAndUpdate();
                         InputHandler.enter.set(false);
                         turnComplete = true;
@@ -107,5 +114,9 @@ public class BattleSystem {
                 }
             }
         }
+    }
+
+    public void processEnd() {
+
     }
 }

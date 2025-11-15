@@ -60,7 +60,6 @@ public class ActionSystem {
             if (decisionSystem.start(mainBattleUI, curr, curr.getBlockAction())) {
               return true;
             }
-
           }
           case 3 -> {
             if (decisionSystem.start(mainBattleUI, curr, curr.getRestAction())) {

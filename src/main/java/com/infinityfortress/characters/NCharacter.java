@@ -28,6 +28,7 @@ public class NCharacter {
     private Race race;
     private ArrayList<TemporaryEffect> condition;
     private boolean isEmpty;
+    private boolean isDead;
 
     // Temp
     private Equipment equipment = new Equipment();
@@ -51,6 +52,7 @@ public class NCharacter {
         this.critChance = 10;
         this.critStrength = 2;
         this.isEmpty = false;
+        this.isDead = false;
         this.luck = 2;
         this.role = c;
         this.race = r;
@@ -149,6 +151,10 @@ public class NCharacter {
         return isEmpty;
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
+
     // Setters
 
     public void setType(NCharacterType type) {
@@ -205,6 +211,10 @@ public class NCharacter {
 
     public void setIsEmpty(boolean x) {
         this.isEmpty = x;
+    }
+
+    public void setIsDead(boolean x) {
+        this.isDead = x;
     }
 
     // Conditions Manipulation

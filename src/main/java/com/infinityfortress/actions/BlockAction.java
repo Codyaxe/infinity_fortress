@@ -3,6 +3,7 @@ package com.infinityfortress.actions;
 import com.infinityfortress.characters.NCharacter;
 
 public class BlockAction implements Action {
+    private String message;
 
     public String getName() {
         return "Block";
@@ -23,10 +24,6 @@ public class BlockAction implements Action {
         return 0;
     };
 
-    public String getActionType() {
-        return "Generic";
-    };
-
     public String getStatDescription() {
         return "Block Stat Description";
     };
@@ -35,16 +32,24 @@ public class BlockAction implements Action {
         return "Block Battle Description";
     };
 
+    public String getBattleMessage() {
+        return message;
+    };
+
     public TargetingType getTargetingType() {
         return TargetingType.SELF;
     }
+
+    public ActionType getActionType() {
+        return ActionType.GENERIC;
+    };
 
     public Action[] getSubActions() {
         return new Action[0];
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        // Increase user defense
+        message = String.format("%s blocked.", user.getName());
     };
 
 }

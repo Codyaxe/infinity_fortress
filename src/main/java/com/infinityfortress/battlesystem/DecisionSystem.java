@@ -11,6 +11,7 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
 import com.infinityfortress.ui.BattleMenu.ActionComponent;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
+import com.infinityfortress.utils.Printbox;
 
 public class DecisionSystem {
     private final Player player;
@@ -31,60 +32,75 @@ public class DecisionSystem {
             case TargetingType.SINGLE_ENEMY -> {
                 ArrayList<NCharacter> enemies = getAliveEnemies(curr);
                 if (enemies.isEmpty()) {
-                    System.out.println("No valid targets available!");
+                    Printbox.showMessage(mainBattleUI, "No valid ally targets available!");
                     return false;
                 }
                 TargetingSystem targetingSystem = new TargetingSystem();
                 NCharacter target = targetingSystem.start(mainBattleUI, enemies);
-                if (target != null) {
+                if (target != null && processMP(curr, selectedAction, mainBattleUI)) {
                     selectedAction.execute(curr, target);
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
                     return true;
                 }
                 return false;
             }
-            case TargetingType.SINGLE_ALLY -> {
+            case SINGLE_ALLY -> {
                 ArrayList<NCharacter> allies = getAliveAllies(curr);
                 if (allies.isEmpty()) {
-                    System.out.println("No valid ally targets available!");
+                    Printbox.showMessage(mainBattleUI, "No valid ally targets available!");
                     return false;
                 }
                 TargetingSystem targetingSystem = new TargetingSystem();
                 NCharacter target = targetingSystem.start(mainBattleUI, allies);
-                if (target != null) {
+                if (target != null && processMP(curr, selectedAction, mainBattleUI)) {
                     selectedAction.execute(curr, target);
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
                     return true;
                 }
                 return false;
             }
-            case TargetingType.ALL_ENEMIES -> {
+            case ALL_ENEMIES -> {
                 ArrayList<NCharacter> enemies = getAliveEnemies(curr);
-                for (NCharacter enemy : enemies) {
-                    selectedAction.execute(curr, enemy);
+                if (processMP(curr, selectedAction, mainBattleUI)) {
+                    for (NCharacter enemy : enemies) {
+                        selectedAction.execute(curr, enemy);
+                    }
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+                    return true;
                 }
-                return true;
+                return false;
             }
-            case TargetingType.ALL_ALLIES -> {
+            case ALL_ALLIES -> {
                 ArrayList<NCharacter> allies = getAliveAllies(curr);
-                for (NCharacter ally : allies) {
-                    selectedAction.execute(curr, ally);
+                if (processMP(curr, selectedAction, mainBattleUI)) {
+                    for (NCharacter ally : allies) {
+                        selectedAction.execute(curr, ally);
+                    }
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+                    return true;
                 }
-                return true;
+                return false;
             }
-            case TargetingType.SELF -> {
-                selectedAction.execute(curr, curr);
-                return true;
+            case SELF -> {
+                if (processMP(curr, selectedAction, mainBattleUI)) {
+                    selectedAction.execute(curr, curr);
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+                    return true;
+                }
+                return false;
             }
-            case TargetingType.NONE -> {
+            case NONE -> {
                 selectedAction.execute(curr, null);
                 return true;
             }
-            case TargetingType.RANDOM -> {
+            case RANDOM -> {
                 ArrayList<NCharacter> possibleTargets = getAliveEnemies(curr);
-                if (!possibleTargets.isEmpty()) {
+                if (!possibleTargets.isEmpty() && processMP(curr, selectedAction, mainBattleUI)) {
                     int randomIndex = (int) (Math.random() * possibleTargets.size());
                     selectedAction.execute(curr, possibleTargets.get(randomIndex));
                     return true;
                 }
+                Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
                 return false;
             }
             case TargetingType.CHOOSE_SUBACTION -> {
@@ -102,7 +118,7 @@ public class DecisionSystem {
                 }
             }
             default -> {
-                System.out.println("Unknown targeting type: " + targetType);
+                Printbox.showMessage(battleUI, "Unknown Targeting Type" + targetType);
                 return false;
             }
         }
@@ -114,11 +130,11 @@ public class DecisionSystem {
     private ArrayList<NCharacter> getAliveEnemies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
             return enemy.characters.stream()
-                    .filter(c -> c != null && c.getHealth() > 0)
+                    .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
             return player.characters.stream()
-                    .filter(c -> c != null && c.getHealth() > 0)
+                    .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
     }
@@ -129,13 +145,22 @@ public class DecisionSystem {
     private ArrayList<NCharacter> getAliveAllies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
             return player.characters.stream()
-                    .filter(c -> c != null && c.getHealth() > 0)
+                    .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
             return enemy.characters.stream()
-                    .filter(c -> c != null && c.getHealth() > 0)
+                    .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
     }
 
+    private boolean processMP(NCharacter curr, Action selectedAction, MainBattleUI battleUI) {
+        int currentMana = curr.getMana() - selectedAction.getManaCost();
+        if (currentMana < 0) {
+            Printbox.showMessage(battleUI, "You do not have enough mana!");
+            return false;
+        }
+        curr.setMana(currentMana);
+        return true;
+    }
 }

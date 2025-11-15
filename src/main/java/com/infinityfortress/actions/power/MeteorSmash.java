@@ -1,39 +1,39 @@
-package com.infinityfortress.actions.guard;
+package com.infinityfortress.actions.power;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
 
-public class ProtectShit implements Action {
+public class MeteorSmash implements Action {
 
     private String message;
 
     public String getName() {
-        return "Protect Shit";
+        return "Meteor Smash";
     }
 
-    public ProtectShit() {
+    public MeteorSmash() {
     }
 
     public int getHitCount() {
-        return 0;
+        return 1;
     }
 
     public int getManaCost() {
-        return 3;
+        return 15;
     };
 
     public int getBaseDamage() {
-        return 0;
+        return 100;
     };
 
     public String getStatDescription() {
-        return "Shitty Protection";
+        return "A expensive attack but a powerful one.";
     };
 
     public String getBattleDescription() {
-        return "This shitty protection spell will shit the X";
+        return "A very damaging attack.";
     };
 
     public String getBattleMessage() {
@@ -45,13 +45,12 @@ public class ProtectShit implements Action {
     }
 
     public ActionType getActionType() {
-        return ActionType.PROTECTION;
+        return ActionType.DAMAGE;
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        // WHY WOULD YOU PROTECT AN ENEMY???
-        Protect protect = new Protect();
-        protect.execute(user, target);
-        message = String.format("Protection is applied to %s.", target.getName());
+        int damageValue = this.getBaseDamage() + 2 * user.getStrength();
+        target.setHealth(target.getHealth() - damageValue);
+        message = String.format("%s dealt %s damage to %s.", user.getName(), damageValue, target.getName());
     };
 }

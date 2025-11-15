@@ -1,36 +1,31 @@
-package com.infinityfortress.actions.block;
+package com.infinityfortress.actions.guard;
 
 import com.infinityfortress.actions.Action;
+import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.TemporaryEffect;
 
 public class ProtectOne implements Action {
 
-    private int hitCount;
+    private String message;
 
     public String getName() {
         return "Protect One";
     }
 
     public ProtectOne() {
-        this.hitCount = 0;
     }
 
     public int getHitCount() {
-        return hitCount;
+        return 0;
     }
 
     public int getManaCost() {
-        return 0;
+        return 3;
     };
 
     public int getBaseDamage() {
         return 0;
-    };
-
-    public String getActionType() {
-        return "Protection";
     };
 
     public String getStatDescription() {
@@ -41,36 +36,26 @@ public class ProtectOne implements Action {
         return "Just a Protection. Fill me BATTLE";
     };
 
+    public String getBattleMessage() {
+        return message;
+    };
+
     public TargetingType getTargetingType() {
         return TargetingType.SINGLE_ALLY;
     }
 
+    public ActionType getActionType() {
+        return ActionType.PROTECTION;
+    };
+
     public void execute(NCharacter user, NCharacter target) {
-
-        TemporaryEffect protectEffect = new TemporaryEffect(1, target) {
-            @Override
-            public void apply() {
-                this.target.setDefense(this.target.getDefense() + 4);
-            }
-
-            @Override
-            public void remove() {
-                this.target.setDefense(this.target.getDefense() - 4);
-            }
-
-            @Override
-            public String getName() {
-                return "Protect";
-            }
-        };
-
-        // If the user target themselves, this flag is not set.
+        Protect protect = new Protect();
+        protect.execute(user, target);
         if (user == target) {
-            protectEffect.setJustApplied(false);
+            message = "Protection is applied to himself.";
+        } else {
+            message = String.format("Protection is applied to %s.", target.getName());
         }
 
-        protectEffect.apply();
-        target.addTemporaryEffect(protectEffect);
-        System.out.println(String.format("Protection is applied to %s", target.getName()));
     };
 }

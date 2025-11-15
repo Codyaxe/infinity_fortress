@@ -3,18 +3,17 @@ package com.infinityfortress.actions;
 import com.infinityfortress.characters.NCharacter;
 
 public class AttackAction implements Action {
-    private int hitCount;
+    private String message;
 
     public String getName() {
         return "Attack";
     }
 
     public AttackAction() {
-        this.hitCount = 1;
     }
 
     public int getHitCount() {
-        return hitCount;
+        return 1;
     }
 
     public int getManaCost() {
@@ -25,10 +24,6 @@ public class AttackAction implements Action {
         return 0;
     };
 
-    public String getActionType() {
-        return "Generic";
-    };
-
     public String getStatDescription() {
         return "Attack Stat Description";
     };
@@ -37,9 +32,17 @@ public class AttackAction implements Action {
         return "Attack Battle Description";
     };
 
+    public String getBattleMessage() {
+        return message;
+    };
+
     public TargetingType getTargetingType() {
         return TargetingType.SINGLE_ENEMY;
     }
+
+    public ActionType getActionType() {
+        return ActionType.GENERIC;
+    };
 
     public Action[] getSubActions() {
         return new Action[0];

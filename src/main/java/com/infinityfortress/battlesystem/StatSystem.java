@@ -21,6 +21,7 @@ public class StatSystem {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         MainStatMenu menu = new MainStatMenu(characterList, characterList.indexOf(currentCharacter), 0);
+        menu.updateCharacter();
         while (true) {
             InputHandler.waitForInput();
             if (InputHandler.left.get()) {

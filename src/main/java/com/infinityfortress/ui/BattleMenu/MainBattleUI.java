@@ -26,8 +26,7 @@ public class MainBattleUI {
 
   public void updateField(ArrayList<NCharacter> players, ArrayList<NCharacter> enemies) {
     this.field = new FieldComponent(players, enemies);
-    // Add this back if necessary
-    // this.field.displayComponent();
+    this.field.displayComponent();
   }
 
   // Battle Start
@@ -54,6 +53,13 @@ public class MainBattleUI {
   // Target Selection
   public MainBattleUI(MainBattleUI battleUI, TargetingComponent targetingUI) {
     this.selection = targetingUI;
+    this.field = battleUI.field;
+    this.turnOrder = battleUI.turnOrder;
+  }
+
+  // Print Component
+  public MainBattleUI(MainBattleUI battleUI, PrintComponent printComponent) {
+    this.selection = printComponent;
     this.field = battleUI.field;
     this.turnOrder = battleUI.turnOrder;
   }

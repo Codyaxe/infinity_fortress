@@ -1,35 +1,29 @@
-package com.infinityfortress.actions.block;
+package com.infinityfortress.actions.guard;
 
 import com.infinityfortress.actions.Action;
+import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;;
 
 public class ProtectAll implements Action {
-
-    private int hitCount;
 
     public String getName() {
         return "Protect All";
     }
 
     public ProtectAll() {
-        this.hitCount = 0;
     }
 
     public int getHitCount() {
-        return hitCount;
+        return 0;
     }
 
     public int getManaCost() {
-        return 0;
+        return 15;
     };
 
     public int getBaseDamage() {
         return 0;
-    };
-
-    public String getActionType() {
-        return "Protection";
     };
 
     public String getStatDescription() {
@@ -40,12 +34,20 @@ public class ProtectAll implements Action {
         return "ALL DESCRIPTION Fill me BATTLE";
     };
 
+    public String getBattleMessage() {
+        return "Protection is applied to all allies.";
+    };
+
     public TargetingType getTargetingType() {
         return TargetingType.ALL_ALLIES;
     }
 
+    public ActionType getActionType() {
+        return ActionType.PROTECTION;
+    };
+
     public void execute(NCharacter user, NCharacter target) {
-        ProtectOne protectOne = new ProtectOne();
-        protectOne.execute(user, target);
+        Protect protect = new Protect();
+        protect.execute(user, target);
     };
 }

@@ -1,5 +1,8 @@
 package com.infinityfortress.utils;
 
+import com.infinityfortress.ui.BattleMenu.MainBattleUI;
+import com.infinityfortress.ui.BattleMenu.PrintComponent;
+
 public class Utils {
 
     public static void clearConsole() {
@@ -11,11 +14,12 @@ public class Utils {
     }
 
     public static void initiallizeBorders() {
-      StringBuilder frame = new StringBuilder();
-      frame.append("\033[1;1H┌").append("─".repeat(117)).append("┐\n");
-      for (int i = 0; i < 31; i++) frame.append("\033[").append(i+2).append(";1H│").append(" ".repeat(117)).append("│\n");
-      frame.append("\033[33;1H└").append("─".repeat(117)).append("┘");
-      System.out.print(frame.toString());
+        StringBuilder frame = new StringBuilder();
+        frame.append("\033[1;1H┌").append("─".repeat(117)).append("┐\n");
+        for (int i = 0; i < 31; i++)
+            frame.append("\033[").append(i + 2).append(";1H│").append(" ".repeat(117)).append("│\n");
+        frame.append("\033[33;1H└").append("─".repeat(117)).append("┘");
+        System.out.print(frame.toString());
     }
 
     public static void hideCursor() {
@@ -33,7 +37,7 @@ public class Utils {
         if (width < text.length()) {
             return text.substring(0, width);
         }
-        
+
         int padding = width - text.length();
         int padLeft = padding / 2;
         int padRight = padding - padLeft;
@@ -45,7 +49,7 @@ public class Utils {
         if (width < text.length()) {
             return text.substring(0, width);
         }
-        
+
         int padding = width - text.length();
         return text + " ".repeat(padding);
     }
@@ -55,7 +59,7 @@ public class Utils {
         if (width < text.length()) {
             return text.substring(0, width);
         }
-        
+
         int padding = width - text.length();
         return " ".repeat(padding) + text;
     }
@@ -72,7 +76,7 @@ public class Utils {
                 return text1 + text2.substring(0, remainingWidth);
             }
         }
-        
+
         int padding = width - text1.length() - text2.length();
         return text1 + " ".repeat(padding) + text2;
     }
@@ -95,7 +99,7 @@ public class Utils {
             // Add words to current row until column limit is reached
             while (wordIndex < words.length) {
                 String word = words[wordIndex];
-                
+
                 // Handle case where individual word is longer than column width
                 if (word.length() > cols) {
                     word = word.substring(0, cols);
