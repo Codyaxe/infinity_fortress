@@ -11,10 +11,6 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
 import com.infinityfortress.ui.BattleMenu.ActionComponent;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
-import com.infinityfortress.ui.OldMenu.BattleFieldUI;
-import com.infinityfortress.ui.OldMenu.DecisionUI;
-import com.infinityfortress.utils.InputHandler;
-import com.infinityfortress.utils.AudioHandler;
 
 public class DecisionSystem {
     private final Player player;
@@ -30,60 +26,59 @@ public class DecisionSystem {
 
         TargetingType targetType = selectedAction.getTargetingType();
 
-        // Refactoring this is likely
         mainBattleUI.display();
         switch (targetType) {
-            case SINGLE_ENEMY -> {
+            case TargetingType.SINGLE_ENEMY -> {
                 ArrayList<NCharacter> enemies = getAliveEnemies(curr);
                 if (enemies.isEmpty()) {
                     System.out.println("No valid targets available!");
                     return false;
                 }
-                // TEMP
-                // NCharacter target = selectTarget(battleTop, enemies);
-                // if (target != null) {
-                // selectedAction.execute(curr, target);
-                // return true;
-                // }
+                TargetingSystem targetingSystem = new TargetingSystem();
+                NCharacter target = targetingSystem.start(mainBattleUI, enemies);
+                if (target != null) {
+                    selectedAction.execute(curr, target);
+                    return true;
+                }
                 return false;
             }
-            case SINGLE_ALLY -> {
+            case TargetingType.SINGLE_ALLY -> {
                 ArrayList<NCharacter> allies = getAliveAllies(curr);
                 if (allies.isEmpty()) {
                     System.out.println("No valid ally targets available!");
                     return false;
                 }
-                // TEMP
-                // NCharacter target = selectTarget(battleTop, allies);
-                // if (target != null) {
-                // selectedAction.execute(curr, target);
-                // return true;
-                // }
+                TargetingSystem targetingSystem = new TargetingSystem();
+                NCharacter target = targetingSystem.start(mainBattleUI, allies);
+                if (target != null) {
+                    selectedAction.execute(curr, target);
+                    return true;
+                }
                 return false;
             }
-            case ALL_ENEMIES -> {
+            case TargetingType.ALL_ENEMIES -> {
                 ArrayList<NCharacter> enemies = getAliveEnemies(curr);
                 for (NCharacter enemy : enemies) {
                     selectedAction.execute(curr, enemy);
                 }
                 return true;
             }
-            case ALL_ALLIES -> {
+            case TargetingType.ALL_ALLIES -> {
                 ArrayList<NCharacter> allies = getAliveAllies(curr);
                 for (NCharacter ally : allies) {
                     selectedAction.execute(curr, ally);
                 }
                 return true;
             }
-            case SELF -> {
+            case TargetingType.SELF -> {
                 selectedAction.execute(curr, curr);
                 return true;
             }
-            case NONE -> {
+            case TargetingType.NONE -> {
                 selectedAction.execute(curr, null);
                 return true;
             }
-            case RANDOM -> {
+            case TargetingType.RANDOM -> {
                 ArrayList<NCharacter> possibleTargets = getAliveEnemies(curr);
                 if (!possibleTargets.isEmpty()) {
                     int randomIndex = (int) (Math.random() * possibleTargets.size());
@@ -92,15 +87,15 @@ public class DecisionSystem {
                 }
                 return false;
             }
-            case CHOOSE_SUBACTION -> {
-                // Action subAction = selectSubAction(battleTop, selectedAction);
+            case TargetingType.CHOOSE_SUBACTION -> {
+                SubActionSystem subActionSystem = new SubActionSystem();
+                Action subAction = subActionSystem.start(battleUI, curr, selectedAction.getAllSubActions());
 
-                // if (subAction == null) {
-                // return false;
-                // }
+                if (subAction == null) {
+                    return false;
+                }
 
-                // return start(battleTop, curr, subAction);
-                return true;
+                return start(battleUI, curr, subAction);
 
             }
             default -> {
@@ -140,59 +135,4 @@ public class DecisionSystem {
         }
     }
 
-    // Target selection UI
-    private NCharacter selectTarget(BattleFieldUI battleTop, ArrayList<NCharacter> targets) {
-        int choice = 0;
-        DecisionUI currUI = new DecisionUI(battleTop);
-        int maxChoice = targets.size() - 1;
-
-        while (true) {
-            currUI.display(targets, choice);
-            InputHandler.waitForInput();
-
-            if (InputHandler.right.get()) {
-                if (choice + 3 <= maxChoice) {
-                    choice += 3;
-                }
-                InputHandler.right.set(false);
-                AudioHandler.playSelect();
-            }
-
-            if (InputHandler.left.get()) {
-                if (choice >= 3) {
-                    choice -= 3;
-                }
-                InputHandler.left.set(false);
-                AudioHandler.playSelect();
-            }
-
-            if (InputHandler.down.get()) {
-                if (choice % 3 + 1 < 3 && choice + 1 <= maxChoice) {
-                    choice++;
-                }
-                InputHandler.down.set(false);
-                AudioHandler.playSelect();
-            }
-
-            if (InputHandler.up.get()) {
-                if ((choice % 3) > 0) {
-                    choice--;
-                }
-                InputHandler.up.set(false);
-                AudioHandler.playSelect();
-            }
-
-            if (InputHandler.back.get()) {
-                InputHandler.back.set(false);
-                AudioHandler.playBack();
-                return null;
-            }
-
-            if (InputHandler.enter.get()) {
-                InputHandler.enter.set(false);
-                AudioHandler.playEnter();
-                return targets.get(choice);
-            }
-        }
-    }
 }

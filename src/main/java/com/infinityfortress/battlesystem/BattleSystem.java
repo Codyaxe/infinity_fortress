@@ -26,7 +26,8 @@ public class BattleSystem {
     public void start() {
         int choice = 0;
 
-        // Initialization, decisionsystem and action system must access player and enemy.
+        // Initialization, decisionsystem and action system must access player and
+        // enemy.
         decisionSystem = new DecisionSystem(player, enemy);
         statSystem = new StatSystem(player);
         actionSystem = new ActionSystem(decisionSystem);
@@ -121,7 +122,8 @@ public class BattleSystem {
 // Character curr = turnQueue.peekCurrChar();
 // while (true) {
 // int choice = 0;
-// BattleFeildUI battleTop = new BattleFeildUI(player.characters, enemy.characters,
+// BattleFeildUI battleTop = new BattleFeildUI(player.characters,
+// enemy.characters,
 // turnQueue.getCurrentQueue());
 // BattleUI battleUI = new BattleUI(battleTop);
 // while (true) {

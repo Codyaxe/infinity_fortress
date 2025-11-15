@@ -6,80 +6,80 @@ import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
 
-
 public class ActionSystem {
-    private final DecisionSystem decisionSystem;
-    private final SubActionSystem subActionSystem;
-    
-    public ActionSystem(DecisionSystem decisionSystem) {
-      this.decisionSystem = decisionSystem;
-      this.subActionSystem = new SubActionSystem(decisionSystem);
-    }
+  private final DecisionSystem decisionSystem;
 
-    public boolean start(MainBattleUI battleUI, NCharacter curr) {
-        MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
-        // if (availableActions.isEmpty()) {
-        //     System.out.println("Character has no available actions!");
-        //     return false;
-        // }
+  public ActionSystem(DecisionSystem decisionSystem) {
+    this.decisionSystem = decisionSystem;
+  }
 
-        int choice = 0;
-        // int maxChoice = availableActions.size() - 1;
-        int maxChoice = 3;
-        
-        // TEMP ACTIONS
-        mainBattleUI.updateSelection();
-        while (true) {
-            mainBattleUI.updateChoice(choice);
-            InputHandler.waitForInput();
+  public boolean start(MainBattleUI battleUI, NCharacter curr) {
+    MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
+    // if (availableActions.isEmpty()) {
+    // System.out.println("Character has no available actions!");
+    // return false;
+    // }
 
-            if (InputHandler.left.get()) {
-                choice = Math.max(0, choice - 1);
-                InputHandler.left.set(false);
-                AudioHandler.playSelect();
-            }
-            if (InputHandler.right.get()) {
-                choice = Math.min(maxChoice, choice + 1);
-                InputHandler.right.set(false);
-                AudioHandler.playSelect();
-            }
-            if (InputHandler.back.get()) {
-                InputHandler.back.set(false);
-                AudioHandler.playBack();
-                return false;
-            }
-            if (InputHandler.enter.get()) {
-              switch (choice) {
-                case 0 -> {
-                  return true;
-                }
-                case 1 -> {
-                  if (!curr.getSpecialAction().getAllSubActions().isEmpty()) {
-                    return subActionSystem.start(mainBattleUI, curr, curr.getSpecialAction().getAllSubActions());
-                  } else {
-                    return true;
-                  }
-                }
-                case 2 -> {
+    int choice = 0;
+    // int maxChoice = availableActions.size() - 1;
+    int maxChoice = 3;
 
-                }
-                case 3 -> {
+    // TEMP ACTIONS
+    mainBattleUI.updateSelection();
+    while (true) {
+      mainBattleUI.updateChoice(choice);
+      InputHandler.waitForInput();
 
-                }
+      if (InputHandler.left.get()) {
+        choice = Math.max(0, choice - 1);
+        InputHandler.left.set(false);
+        AudioHandler.playSelect();
+      }
+      if (InputHandler.right.get()) {
+        choice = Math.min(maxChoice, choice + 1);
+        InputHandler.right.set(false);
+        AudioHandler.playSelect();
+      }
+      if (InputHandler.back.get()) {
+        InputHandler.back.set(false);
+        AudioHandler.playBack();
+        return false;
+      }
+      if (InputHandler.enter.get()) {
+        AudioHandler.playEnter();
+        switch (choice) {
+          case 0 -> {
+            return true;
+          }
+          case 1 -> {
+            if (!curr.getSpecialAction().getAllSubActions().isEmpty()) {
+              if (decisionSystem.start(mainBattleUI, curr, curr.getSpecialAction())) {
+                return true;
               }
-              // if (selectedAction.size()>1){
-              //   if (subActionSystem.start(mainBattleUI, curr, selectedAction)) {
-              //       return true;
-              //   }
-              // }
-              // else {
-              //   if (decisionSystem.start(mainBattleUI, curr, selectedAction.get(0))) {
-              //       return true;
-              //   }
-              // }
-              mainBattleUI.updateSelection();
-              InputHandler.enter.set(false);
+            } else {
+              return true;
             }
+          }
+          case 2 -> {
+
+          }
+          case 3 -> {
+
+          }
         }
+        // if (selectedAction.size()>1){
+        // if (subActionSystem.start(mainBattleUI, curr, selectedAction)) {
+        // return true;
+        // }
+        // }
+        // else {
+        // if (decisionSystem.start(mainBattleUI, curr, selectedAction.get(0))) {
+        // return true;
+        // }
+        // }
+        mainBattleUI.updateSelection();
+        InputHandler.enter.set(false);
+      }
     }
+  }
 }

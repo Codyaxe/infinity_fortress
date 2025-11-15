@@ -52,7 +52,6 @@ public class App {
 
     public void dialouge(String text, int duration) {
         for (int i = 0; i < text.length(); i++) {
-            // Check if skip was requested
             if (InputHandler.enter.get()) {
                 System.out.print(text.substring(i));
                 break;
