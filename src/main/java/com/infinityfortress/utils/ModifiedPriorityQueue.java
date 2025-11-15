@@ -13,12 +13,18 @@ public final class ModifiedPriorityQueue {
   final private Queue<NCharacter> queue = new LinkedList<>();
 
   public void addToQueue() {
-    this.queue.add(this.list.get(0).first);
-    this.list.set(0, new Pair<>(this.list.get(0).first, 0));
     this.list = this.list.stream()
-        .map(c -> new Pair<NCharacter, Integer>(c.first, c.second + c.first.getSpeed()))
-        .sorted((a, b) -> b.second - a.second)
+        .filter(pair -> !pair.first.isDead())
         .collect(Collectors.toCollection(ArrayList::new));
+
+    if (!this.list.isEmpty()) {
+      this.queue.add(this.list.get(0).first);
+      this.list.set(0, new Pair<>(this.list.get(0).first, 0));
+      this.list = this.list.stream()
+          .map(c -> new Pair<NCharacter, Integer>(c.first, c.second + c.first.getSpeed()))
+          .sorted((a, b) -> b.second - a.second)
+          .collect(Collectors.toCollection(ArrayList::new));
+    }
   }
 
   public ModifiedPriorityQueue(ArrayList<NCharacter> characters) {
@@ -47,6 +53,8 @@ public final class ModifiedPriorityQueue {
   // Update the character priority.
   public NCharacter getCurrCharAndUpdate() {
     this.queue.poll();
+    // Remove any dead characters from the queue
+    this.queue.removeIf(c -> c.isDead());
     addToQueue();
     return peekCurrChar();
   }

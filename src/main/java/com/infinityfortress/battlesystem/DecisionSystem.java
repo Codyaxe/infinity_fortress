@@ -35,7 +35,7 @@ public class DecisionSystem {
                     Printbox.showMessage(mainBattleUI, "No valid ally targets available!");
                     return false;
                 }
-                TargetingSystem targetingSystem = new TargetingSystem();
+                TargetingSystem targetingSystem = new TargetingSystem(selectedAction, curr);
                 NCharacter target = targetingSystem.start(mainBattleUI, enemies);
                 if (target != null && processMP(curr, selectedAction, mainBattleUI)) {
                     selectedAction.execute(curr, target);
@@ -50,7 +50,7 @@ public class DecisionSystem {
                     Printbox.showMessage(mainBattleUI, "No valid ally targets available!");
                     return false;
                 }
-                TargetingSystem targetingSystem = new TargetingSystem();
+                TargetingSystem targetingSystem = new TargetingSystem(selectedAction, curr);
                 NCharacter target = targetingSystem.start(mainBattleUI, allies);
                 if (target != null && processMP(curr, selectedAction, mainBattleUI)) {
                     selectedAction.execute(curr, target);

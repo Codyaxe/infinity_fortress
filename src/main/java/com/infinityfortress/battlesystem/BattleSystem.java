@@ -61,7 +61,7 @@ public class BattleSystem {
                 conditions.removeIf(effect -> effect.getDuration() == 0);
             }
 
-            while (!turnComplete) {
+            while (!turnComplete && currentCharacter.getType() == NCharacterType.ALLY) {
                 mainBattleUI.updateChoice(choice);
                 InputHandler.waitForInput();
 
@@ -96,27 +96,37 @@ public class BattleSystem {
                         }
                     }
 
-                    // Update the character priority when their turn ends.
                     if (actionSuccessful) {
-
-                        for (NCharacter character : characterList) {
-                            if (character.getHealth() <= 0) {
-                                character.setIsDead(true);
-                            }
-                        }
-                        mainBattleUI.updateField(player.characters, enemy.characters);
-                        currentCharacter = turnQueue.getCurrCharAndUpdate();
-                        InputHandler.enter.set(false);
                         turnComplete = true;
-                        mainBattleUI.updateTurnOrder(turnQueue.getCurrentQueue());
+                        InputHandler.enter.set(false);
+
                     }
+
                     mainBattleUI.display();
                 }
             }
+
+            while (!turnComplete && currentCharacter.getType() == NCharacterType.ENEMY) {
+                boolean actionSuccessful = false;
+                actionSuccessful = actionSystem.start(mainBattleUI, currentCharacter);
+                if (actionSuccessful) {
+                    turnComplete = true;
+                }
+            }
+            processEnd(mainBattleUI, characterList, currentCharacter);
+            currentCharacter = turnQueue.getCurrCharAndUpdate();
+            mainBattleUI.updateTurnOrder(turnQueue.getCurrentQueue());
+
         }
     }
 
-    public void processEnd() {
-
+    public void processEnd(MainBattleUI mainBattleUI, ArrayList<NCharacter> characterList,
+            NCharacter currentCharacter) {
+        for (NCharacter character : characterList) {
+            if (character.getHealth() <= 0) {
+                character.setIsDead(true);
+            }
+        }
+        mainBattleUI.updateField(player.characters, enemy.characters);
     }
 }
