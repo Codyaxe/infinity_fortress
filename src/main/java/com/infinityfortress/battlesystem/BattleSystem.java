@@ -1,6 +1,7 @@
 package com.infinityfortress.battlesystem;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,7 +48,7 @@ public class BattleSystem {
 
             // Handles Temporary Effects
             if (!currentCharacter.getAllTemporaryEffect().isEmpty()) {
-                ArrayList<TemporaryEffect> conditions = currentCharacter.getAllTemporaryEffect();
+                Set<TemporaryEffect> conditions = currentCharacter.getAllTemporaryEffect();
                 for (TemporaryEffect effect : conditions) {
                     if (effect.isJustApplied()) {
                         effect.setJustApplied(false);

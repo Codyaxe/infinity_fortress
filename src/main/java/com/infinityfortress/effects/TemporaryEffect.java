@@ -60,4 +60,19 @@ public class TemporaryEffect implements Effects {
     public void remove() {
         System.out.println("Generic Effect Removed!");
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        TemporaryEffect other = (TemporaryEffect) obj;
+        return this.getName().equals(other.getName()) && this.target.equals(other.target);
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode() + target.hashCode();
+    }
 }

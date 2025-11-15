@@ -1,7 +1,9 @@
 package com.infinityfortress.characters;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.effects.TemporaryEffect;
@@ -26,7 +28,7 @@ public class NCharacter {
     private int luck;
     private Role role;
     private Race race;
-    private ArrayList<TemporaryEffect> condition;
+    private Set<TemporaryEffect> condition;
     private boolean isEmpty;
     private boolean isDead;
 
@@ -56,7 +58,8 @@ public class NCharacter {
         this.luck = 2;
         this.role = c;
         this.race = r;
-        this.condition = new ArrayList<>();
+        this.condition = new HashSet<>();
+
     }
 
     public NCharacter(NCharacterType type, int health, int mana, int exp, int defense,
@@ -79,7 +82,7 @@ public class NCharacter {
         this.role = role;
         this.race = race;
         this.isEmpty = false;
-        this.condition = new ArrayList<>();
+        this.condition = new HashSet<>();
     }
 
     // Getters
@@ -227,7 +230,7 @@ public class NCharacter {
         condition.remove(effect);
     }
 
-    public ArrayList<TemporaryEffect> getAllTemporaryEffect() {
+    public Set<TemporaryEffect> getAllTemporaryEffect() {
         return condition;
     }
 
