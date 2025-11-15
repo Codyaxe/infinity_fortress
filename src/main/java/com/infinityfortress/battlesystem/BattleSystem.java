@@ -86,7 +86,6 @@ public class BattleSystem {
                         }
                         case 1 -> {
                             // Stat
-                            // Only allow stat viewing for ally characters
                             if (currentCharacter.getType() == NCharacterType.ALLY) {
                                 statSystem.start(currentCharacter);
                             }
@@ -110,56 +109,3 @@ public class BattleSystem {
         }
     }
 }
-
-// public void battleLoop() {
-// // Create Turn Order Array
-// ArrayList<Pair<Character, Integer>> characterList = Stream.concat(
-// player.characters.stream(), enemy.characters.stream())
-// .filter(c -> c != null)
-// .map(c -> new Pair<>(c, c.speed))
-// .collect(Collectors.toCollection(ArrayList::new));
-// ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
-// Character curr = turnQueue.peekCurrChar();
-// while (true) {
-// int choice = 0;
-// BattleFeildUI battleTop = new BattleFeildUI(player.characters,
-// enemy.characters,
-// turnQueue.getCurrentQueue());
-// BattleUI battleUI = new BattleUI(battleTop);
-// while (true) {
-// battleUI.display(choice);
-// waiting();
-// if (left.get()) {
-// choice = Math.max(0, choice - 1);
-// left.set(false);
-// }
-// if (right.get()) {
-// choice = Math.min(2, choice + 1);
-// right.set(false);
-// }
-// if (enter.get()) {
-// boolean flag = false;
-// switch (choice) {
-// case 0 -> {
-// if (actionLoop(battleTop, curr)) {
-// curr = turnQueue.getCurrCharAndUpdate();
-// flag=true;
-// }
-// }
-// case 1 -> {
-// if (curr.type == Character.Type.ALLY) {
-// statLoop(curr);
-// }
-// }
-// case 2 -> {
-// curr = turnQueue.getCurrCharAndUpdate();
-// enter.set(false);
-// flag = true;
-// break;
-// }
-// }
-// if (flag) break;
-// }
-// }
-// }
-// }

@@ -15,16 +15,10 @@ public class ActionSystem {
 
   public boolean start(MainBattleUI battleUI, NCharacter curr) {
     MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
-    // if (availableActions.isEmpty()) {
-    // System.out.println("Character has no available actions!");
-    // return false;
-    // }
 
     int choice = 0;
-    // int maxChoice = availableActions.size() - 1;
     int maxChoice = 3;
 
-    // TEMP ACTIONS
     mainBattleUI.updateSelection();
     while (true) {
       mainBattleUI.updateChoice(choice);
@@ -49,7 +43,9 @@ public class ActionSystem {
         AudioHandler.playEnter();
         switch (choice) {
           case 0 -> {
-            return true;
+            if (decisionSystem.start(mainBattleUI, curr, curr.getBasicAction())) {
+              return true;
+            }
           }
           case 1 -> {
             if (!curr.getSpecialAction().getAllSubActions().isEmpty()) {
@@ -61,22 +57,18 @@ public class ActionSystem {
             }
           }
           case 2 -> {
+            if (decisionSystem.start(mainBattleUI, curr, curr.getBlockAction())) {
+              return true;
+            }
 
           }
           case 3 -> {
+            if (decisionSystem.start(mainBattleUI, curr, curr.getRestAction())) {
+              return true;
+            }
 
           }
         }
-        // if (selectedAction.size()>1){
-        // if (subActionSystem.start(mainBattleUI, curr, selectedAction)) {
-        // return true;
-        // }
-        // }
-        // else {
-        // if (decisionSystem.start(mainBattleUI, curr, selectedAction.get(0))) {
-        // return true;
-        // }
-        // }
         mainBattleUI.updateSelection();
         InputHandler.enter.set(false);
       }

@@ -19,12 +19,9 @@ public class StatSystem {
     public void start(NCharacter currentCharacter) {
         ArrayList<NCharacter> characterList = player.characters.stream().filter(c -> c != null)
                 .collect(Collectors.toCollection(ArrayList::new));
-        // StatsMenu statsMenu = new StatsMenu();
 
         MainStatMenu menu = new MainStatMenu(characterList, characterList.indexOf(currentCharacter), 0);
         while (true) {
-            // statsMenu.display(characterList.get(selected), choice, selected,
-            // characterList.size());
             InputHandler.waitForInput();
             if (InputHandler.left.get()) {
                 menu.leftCharacter();

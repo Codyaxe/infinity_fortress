@@ -233,6 +233,16 @@ public class NCharacter {
         return actions.size() > 1 ? actions.get(1) : null;
     }
 
+    public Action getBlockAction() {
+        List<Action> actions = role.getActions();
+        return actions.size() > 1 ? actions.get(2) : null;
+    }
+
+    public Action getRestAction() {
+        List<Action> actions = role.getActions();
+        return actions.size() > 1 ? actions.get(3) : null;
+    }
+
     public Action getActionByName(String actionName) {
         return role.getActions().stream()
                 .filter(action -> action.getName().equals(actionName))

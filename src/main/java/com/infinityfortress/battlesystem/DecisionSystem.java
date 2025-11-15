@@ -89,14 +89,17 @@ public class DecisionSystem {
             }
             case TargetingType.CHOOSE_SUBACTION -> {
                 SubActionSystem subActionSystem = new SubActionSystem();
-                Action subAction = subActionSystem.start(battleUI, curr, selectedAction.getAllSubActions());
+                while (true) {
+                    Action subAction = subActionSystem.start(battleUI, curr, selectedAction.getAllSubActions());
 
-                if (subAction == null) {
-                    return false;
+                    if (subAction == null) {
+                        return false;
+                    }
+
+                    if (start(battleUI, curr, subAction)) {
+                        return true;
+                    }
                 }
-
-                return start(battleUI, curr, subAction);
-
             }
             default -> {
                 System.out.println("Unknown targeting type: " + targetType);
