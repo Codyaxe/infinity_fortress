@@ -2,6 +2,7 @@ package com.infinityfortress.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.infinityfortress.characters.NCharacter;
 
 public class SubAction implements Action {
@@ -10,6 +11,9 @@ public class SubAction implements Action {
 
     public SubAction() {
         this.hitCount = 0;
+    }
+    public SubAction(Action act) {
+      addSubAction(act);
     }
 
     public String getName() {
@@ -50,7 +54,7 @@ public class SubAction implements Action {
     };
 
     // Say your character levels up or learns a new skill, you can use addSubaction.
-    public void addSubAction(Action action) {
+    public final void addSubAction(Action action) {
         subActions.add(action);
     }
 

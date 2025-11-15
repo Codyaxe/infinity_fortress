@@ -1,31 +1,30 @@
 package com.infinityfortress.ui.BattleMenu;
-import com.infinityfortress.characters.*;
-import java.util.Queue;
+import java.util.ArrayList;
+
 import com.infinityfortress.utils.Utils;
 
 public class TurnOrderComponent {
   StringBuilder turnOrderUI;
 
-  public TurnOrderComponent(Queue<NCharacter> turnOrder) {
+  public TurnOrderComponent(ArrayList<String> turnOrder) {
     StringBuilder frame = new StringBuilder();
     int[] pos = {29, 49, 73};
     int[] size = {19, 23, 19};
     int idx=0;
     frame.append("\033[2;27H").append("➤");
-    while (!turnOrder.isEmpty()) {
+    for (String name : turnOrder) {
       frame.append("\033[2;").append(pos[idx]).append("H")
-      .append(turnOrder.peek().getType() == NCharacterType.ALLY ? "\033[32m" : "\033[31m")
-      .append(Utils.center(turnOrder.poll().getName(), size[idx++]));
+      .append(Utils.center(name, size[idx++] + 9));
     }
     frame.append("\033[0m");
     this.turnOrderUI = frame;
   }
 
-  public void display() {
+  public void displayComponent() {
     System.out.print(this.turnOrderUI.toString());
   }
 
-  public StringBuilder getTurnOrder() {
+  public StringBuilder getComponent() {
     return this.turnOrderUI;
   }
 }

@@ -2,11 +2,11 @@ package com.infinityfortress.battlesystem;
 
 import java.util.ArrayList;
 
+import com.infinityfortress.actions.Action;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.SubActionComponent;
 import com.infinityfortress.utils.InputHandler;
-import com.infinityfortress.actions.Action;
 
 
 public class SubActionSystem {

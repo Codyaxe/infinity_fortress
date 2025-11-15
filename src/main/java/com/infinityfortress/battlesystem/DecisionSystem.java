@@ -14,6 +14,7 @@ import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.OldMenu.BattleFeildUI;
 import com.infinityfortress.ui.OldMenu.DecisionUI;
 import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.AudioHandler;
 
 public class DecisionSystem {
     private final Player player;
@@ -91,13 +92,14 @@ public class DecisionSystem {
                 return false;
             }
             case CHOOSE_SUBACTION -> {
-                Action subAction = selectSubAction(battleTop, selectedAction);
+                // Action subAction = selectSubAction(battleTop, selectedAction);
 
-                if (subAction == null) {
-                    return false;
-                }
+                // if (subAction == null) {
+                //     return false;
+                // }
 
-                return start(battleTop, curr, subAction);
+                // return start(battleTop, curr, subAction);
+                return true;
 
             }
             default -> {

@@ -3,8 +3,11 @@ package com.infinityfortress;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.infinityfortress.battlesystem.BattleSystem;
-import com.infinityfortress.ui.*;
-import com.infinityfortress.utils.*;
+import com.infinityfortress.ui.IntroTestUI;
+import com.infinityfortress.ui.SetupMenu;
+import com.infinityfortress.utils.AudioHandler;
+import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.Utils;
 import com.sun.jna.Platform;
 
 public class App {
@@ -13,12 +16,10 @@ public class App {
         App game = new App();
 
         InputHandler.setupKeyListener();
-        Utils.initiallizeBorders();
-        InputHandler.waitForInput();
         game.setup();
-        
         Utils.clearConsole();
         // game.intro();
+        Utils.initiallizeBorders();
         game.gameLoop();
         InputHandler.stopKeyListener();
         Utils.showCursor();
@@ -94,7 +95,11 @@ public class App {
 
     public void gameLoop() {
         BattleSystem battle = new BattleSystem();
+
+        // Ang lakas + d bagay sa intro
+        // AudioHandler.playBattle();
         battle.start();
+
     }
 
     public void print(String text) {

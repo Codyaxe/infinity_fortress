@@ -3,7 +3,9 @@ package com.infinityfortress.battlesystem;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.ui.BattleMenu.ActionComponent;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
+import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
+
 
 public class ActionSystem {
     private final DecisionSystem decisionSystem;
@@ -36,7 +38,6 @@ public class ActionSystem {
                 InputHandler.left.set(false);
                 AudioHandler.playSelect();
             }
-            // 27 5 111
             if (InputHandler.right.get()) {
                 choice = Math.min(maxChoice, choice + 1);
                 InputHandler.right.set(false);
@@ -50,18 +51,14 @@ public class ActionSystem {
             if (InputHandler.enter.get()) {
               switch (choice) {
                 case 0 -> {
-
+                  return true;
                 }
                 case 1 -> {
-                  // System.out.println("Special Skill Selected");
-                  // System.out.println("Has SubActions: " + curr.getSpecialSkillAction().hasSubActions());
-                  // System.out.println("SubActions Size: " + curr.getSpecialSkillAction().getActions().size());
-                  if (curr.getSpecialSkillAction().hasSubActions()) {
-                    subActionSystem.start(mainBattleUI, curr, curr.getSpecialSkillAction().getActions());
+                  if (!curr.getSpecialAction().getAllSubActions().isEmpty()) {
+                    return subActionSystem.start(mainBattleUI, curr, curr.getSpecialAction().getAllSubActions());
                   } else {
                     return true;
                   }
-
                 }
                 case 2 -> {
 

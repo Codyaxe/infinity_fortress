@@ -7,28 +7,14 @@ import java.util.ArrayList;
 public class FieldComponent {
   private final StringBuilder frameUI;
 
-  private static StringBuilder CharacterDisplay(NCharacter character, int xPos, int yPos) {
-    if (character == null) return new StringBuilder();
-    StringBuilder frame = new StringBuilder();
-    int width=19;
-    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H┌").append("─".repeat(width)).append("┐");
-    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H│").append(Utils.center(character.getName(), width)).append("│");
-    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H├").append("─".repeat(width)).append("┤");
-    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H│ HP: ").append(Utils.center(character.getHealth()+"/"+character.getMaxHealth(), width-5)).append("│");
-    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H├").append("─".repeat(width)).append("┤");
-    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H│ MP: ").append(Utils.center(character.getMana()+"/"+character.getMaxMana(), width-5)).append("│");
-    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H└").append("─".repeat(width)).append("┘");
-    return frame;
-  }
-
   public FieldComponent(ArrayList<NCharacter> players, ArrayList<NCharacter> enemies) {
     StringBuilder frame = new StringBuilder();
     int startX = 4, startY = 3, width = 111, height = 21;
-
+  
     frame.append("\033[").append(startY).append(";").append(startX).append("H┌").append("─".repeat(width)).append("┐");
     for (int i = 1; i <= height; i++) frame.append("\033[").append(startY + i).append(";").append(startX).append("H│").append(" ".repeat(width)).append("│");
     frame.append("\033[").append(startY+height+1).append(";").append(startX).append("H└").append("─".repeat(width)).append("┘");
-
+  
     int[][] playerCoords = {
       {6, 4},
       {28, 8},
@@ -44,25 +30,37 @@ public class FieldComponent {
       {72 , 15},
       {94, 18},
     };
-    // 86
-
+  
     for (int i=0; i<players.size(); i++) {
       frame.append(CharacterDisplay(players.get(i), playerCoords[i][0], playerCoords[i][1]));
     }
-
+  
     for (int i=0; i<enemies.size(); i++) {
       frame.append(CharacterDisplay(enemies.get(i), enemyCoords[i][0], enemyCoords[i][1]));
     }
-
-    // System.out.print(frame.toString());
+  
     this.frameUI = frame;
   }
 
-  public void display() {
-    System.out.print(this.frameUI.toString());
-  }
-  public StringBuilder getField() {
-    return this.frameUI;
+  private static StringBuilder CharacterDisplay(NCharacter character, int xPos, int yPos) {
+    if (character == null) return new StringBuilder();
+    StringBuilder frame = new StringBuilder();
+    int width=19;
+    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H┌").append("─".repeat(width)).append("┐");
+    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H│").append(Utils.center(character.getName(), width)).append("│");
+    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H├").append("─".repeat(width)).append("┤");
+    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H│ HP: ").append(Utils.center(character.getHealth()+"/"+character.getMaxHealth(), width-5)).append("│");
+    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H├").append("─".repeat(width)).append("┤");
+    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H│ MP: ").append(Utils.center(character.getMana()+"/"+character.getMaxMana(), width-5)).append("│");
+    frame.append("\033[").append(yPos++).append(";").append(xPos).append("H└").append("─".repeat(width)).append("┘");
+    return frame;
   }
 
+  public void displayComponent() {
+    System.out.print(this.frameUI.toString());
+  }
+
+  public StringBuilder getComponent() {
+    return this.frameUI;
+  }
 }

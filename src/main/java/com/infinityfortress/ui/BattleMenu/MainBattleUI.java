@@ -1,12 +1,13 @@
 package com.infinityfortress.ui.BattleMenu;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.utils.Utils;
 
+
+// update=replace object
+// display=print to console
+// get=return stringbuilder
 public class MainBattleUI {
   SelectionUI selection;
   FieldComponent field;
@@ -20,33 +21,31 @@ public class MainBattleUI {
     System.out.print(this.selection.getSelection().toString());
   }
 
-  public void updateTurnOrder(Queue<NCharacter> turnOrder) {
-    Queue<NCharacter> turn = new LinkedList<>();
-    turn.addAll(turnOrder);
+  public void updateTurnOrder(ArrayList<String> turn) {
     this.turnOrder = new TurnOrderComponent(turn);
-    System.out.print(this.turnOrder.getTurnOrder().toString());
   }
   
-  public void updateField(ArrayList<NCharacter> players, ArrayList<NCharacter> enemies, Queue<NCharacter> turnOrder) {
+  public void updateField(ArrayList<NCharacter> players, ArrayList<NCharacter> enemies) {
     this.field = new FieldComponent(players, enemies);
-    this.field.display();
-    System.out.print(this.field.getField().toString());
+    // Add this back if necessary
+    // this.field.displayComponent();
   }
   
-  public MainBattleUI(ArrayList<NCharacter> players, ArrayList<NCharacter> enemies, Queue<NCharacter> tempQueue) {
-    Queue<NCharacter> turn = new LinkedList<>();
-    turn.addAll(tempQueue);
+  // Battle Start
+  public MainBattleUI(ArrayList<NCharacter> players, ArrayList<NCharacter> enemies, ArrayList<String> turn) {
     this.turnOrder = new TurnOrderComponent(turn);
     this.field = new FieldComponent(players, enemies);
     this.selection = new OptionsComponent();
   }
 
+  // Action Selected
   public MainBattleUI(MainBattleUI battleUI, ActionComponent actionUI) {
     this.selection = actionUI;
     this.field = battleUI.field;
     this.turnOrder = battleUI.turnOrder;
   }
 
+  // SubAction Selected
   public MainBattleUI(MainBattleUI battleUI, SubActionComponent subActionUI) {
     this.selection = subActionUI;
     this.field = battleUI.field;
@@ -54,14 +53,12 @@ public class MainBattleUI {
   }
 
   public void display() {
-    Utils.initiallizeBorders();
-    // It just looks weird but I like it
+    // It just looks weird and that's why I like it
     System.out.print(
-      this.field.getField().append(
-        this.turnOrder.getTurnOrder().append(
-          this.selection.getSelection()
-        )
-      )
+      this.field.getComponent()
+      .append(this.turnOrder.getComponent())
+      .append(this.selection.getSelection())
+      .toString()
     );
   }
 }

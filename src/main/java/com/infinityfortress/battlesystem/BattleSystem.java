@@ -8,7 +8,9 @@ import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
+import com.infinityfortress.effects.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
+import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
 import com.infinityfortress.utils.ModifiedPriorityQueue;
 
@@ -37,12 +39,9 @@ public class BattleSystem {
         ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
         NCharacter currentCharacter = turnQueue.peekCurrChar();
 
-        MainBattleUI mainBattleUI = new MainBattleUI(player.characters, enemy.characters, turnQueue.getQueue());
+        MainBattleUI mainBattleUI = new MainBattleUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
         while (true) {
             mainBattleUI.display();
-            // BattleFeildUI battleField = new BattleFeildUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
-            // BattleUI battleUI = new BattleUI(battleField);
-
             boolean turnComplete = false;
 
             // Handles Temporary Effects
@@ -62,8 +61,7 @@ public class BattleSystem {
             }
 
             while (!turnComplete) {
-              mainBattleUI.updateChoice(choice);
-                // battleUI.display(choice);
+                mainBattleUI.updateChoice(choice);
                 InputHandler.waitForInput();
 
                 if (InputHandler.left.get()) {
@@ -103,6 +101,7 @@ public class BattleSystem {
                         currentCharacter = turnQueue.getCurrCharAndUpdate();
                         InputHandler.enter.set(false);
                         turnComplete = true;
+                        mainBattleUI.updateTurnOrder(turnQueue.getCurrentQueue());
                     }
                     mainBattleUI.display();
                 }

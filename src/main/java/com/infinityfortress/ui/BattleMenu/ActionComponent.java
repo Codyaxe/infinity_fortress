@@ -36,12 +36,12 @@ public class ActionComponent extends SelectionUI {
   
   @Override
   public void display() {
-    System.out.print(new StringBuilder().append(displaySekeleton()).append(displayChoices()).append(updateChoice(0)));
+    System.out.print(new StringBuilder().append(getSkeleton()).append(displayChoices()).append(updateChoice(0)));
   }
 
   @Override
   public StringBuilder getSelection() {
-    return (new StringBuilder().append(displaySekeleton()).append(displayChoices()));
+    return (new StringBuilder().append(getSkeleton()).append(displayChoices()));
   }
 
 }

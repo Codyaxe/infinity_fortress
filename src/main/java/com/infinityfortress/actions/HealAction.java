@@ -5,6 +5,7 @@ public class HealAction extends SubAction {
     public HealAction() {
     }
 
+    @Override
     public String getName() {
         return "Heal";
     }

@@ -16,15 +16,15 @@ public class InfoComponent {
     frame.append("\033[17;57H┌").append("─".repeat(selectionSize)).append("┬").append("─".repeat(infoSize)).append("┐");
     frame.append("\033[18;57H│").append(" ".repeat(selectionSize)).append("│ ").append(
       Utils.spaceBetween(
-        Utils.spaceBetween("Damage: ", ""+curr.getBasicSkillAction().getBaseDamage(), (int)infoSize/2-3),
-        Utils.spaceBetween("MP Cost: ", ""+curr.getBasicSkillAction().getManaCost(), (int)infoSize/2-3),
+        Utils.spaceBetween("Damage: ", ""+curr.getBasicAction().getBaseDamage(), (int)infoSize/2-3),
+        Utils.spaceBetween("MP Cost: ", ""+curr.getBasicAction().getManaCost(), (int)infoSize/2-3),
         infoSize-2
       )
     ).append(" │");
     frame.append("\033[19;57H│").append(" ".repeat(selectionSize)).append("│ ").append(
       Utils.spaceBetween(
-        Utils.spaceBetween("Type: ", ""+curr.getBasicSkillAction().getActionType(), (int)infoSize/2-3),
-        Utils.spaceBetween("Style: ", ""+curr.getBasicSkillAction().getTargetingType(), (int)infoSize/2-3),
+        Utils.spaceBetween("Type: ", ""+curr.getBasicAction().getActionType(), (int)infoSize/2-3),
+        Utils.spaceBetween("Style: ", ""+curr.getBasicAction().getTargetingType(), (int)infoSize/2-3),
         infoSize-2
       )
     ).append(" │");
@@ -38,7 +38,7 @@ public class InfoComponent {
     frame.append("\033[21;57H│").append(" ".repeat(selectionSize)).append("│").append(" ".repeat(infoSize)).append("│");
     frame.append("\033[22;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign("Description: ", infoSize-2)).append(" │");
     
-    String[] temp = Utils.createTextGrid(descSize, infoSize, curr.getBasicSkillAction().getDescription());
+    String[] temp = Utils.createTextGrid(descSize, infoSize, curr.getBasicAction().getStatDescription());
     for (int i = 0; i < descSize; i++) frame.append("\033[").append(23+i).append(";57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(temp[i], infoSize-2)).append(" │");
     
     frame.append("\033[29;57H└").append("─".repeat(selectionSize)).append("┴").append("─".repeat(infoSize)).append("┘");
@@ -59,15 +59,15 @@ public class InfoComponent {
     frame.append("\033[17;57H┌").append("─".repeat(selectionSize)).append("┬").append("─".repeat(infoSize)).append("┐");
     frame.append("\033[18;57H│").append(" ".repeat(selectionSize)).append("│ ").append(
       Utils.spaceBetween(
-        Utils.spaceBetween("Damage: ", ""+curr.getSpecialSkillAction().getBaseDamage(), (int)infoSize/2-3),
-        Utils.spaceBetween("MP Cost: ", ""+curr.getSpecialSkillAction().getManaCost(), (int)infoSize/2-3),
+        Utils.spaceBetween("Damage: ", ""+curr.getSpecialAction().getBaseDamage(), (int)infoSize/2-3),
+        Utils.spaceBetween("MP Cost: ", ""+curr.getSpecialAction().getManaCost(), (int)infoSize/2-3),
         infoSize-2
       )
     ).append(" │");
     frame.append("\033[19;57H│").append(" ".repeat(selectionSize)).append("│ ").append(
       Utils.spaceBetween(
-        Utils.spaceBetween("Type: ", ""+curr.getSpecialSkillAction().getActionType(), (int)infoSize/2-3),
-        Utils.spaceBetween("Style: ", ""+curr.getSpecialSkillAction().getTargetingType(), (int)infoSize/2-3),
+        Utils.spaceBetween("Type: ", ""+curr.getSpecialAction().getActionType(), (int)infoSize/2-3),
+        Utils.spaceBetween("Style: ", ""+curr.getSpecialAction().getTargetingType(), (int)infoSize/2-3),
         infoSize-2
       )
     ).append(" │");
@@ -80,7 +80,7 @@ public class InfoComponent {
 
     frame.append("\033[21;57H│").append(" ".repeat(selectionSize)).append("│").append(" ".repeat(infoSize)).append("│");
     frame.append("\033[22;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign("Description: ", infoSize-2)).append(" │");
-    String[] temp = Utils.createTextGrid(descSize, infoSize, curr.getSpecialSkillAction().getDescription());
+    String[] temp = Utils.createTextGrid(descSize, infoSize, curr.getSpecialAction().getStatDescription());
     for (int i = 0; i < descSize; i++) frame.append("\033[").append(23+i).append(";57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(temp[i], infoSize-2)).append(" │");
     frame.append("\033[29;57H└").append("─".repeat(selectionSize)).append("┴").append("─".repeat(infoSize)).append("┘");
 
@@ -100,19 +100,19 @@ public class InfoComponent {
     frame.append("\033[17;57H┌").append("─".repeat(selectionSize)).append("┬").append("─".repeat(infoSize)).append("┐");
     
     frame.append("\033[18;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign("Weapon: ", infoSize-2)).append(" │");
-    frame.append("\033[19;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(curr.getWeapon().getName(), infoSize-2)).append(" │");
+    frame.append("\033[19;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(curr.getEquipment().getWeaponName(), infoSize-2)).append(" │");
     frame.append("\033[20;57H│").append(" ".repeat(selectionSize)).append("│").append(" ".repeat(infoSize)).append("│");
     
     frame.append("\033[21;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign("Armor: ", infoSize-2)).append(" │");
-    frame.append("\033[22;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(curr.getArmor().getName(), infoSize-2)).append(" │");
+    frame.append("\033[22;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(curr.getEquipment().getArmorName(), infoSize-2)).append(" │");
     frame.append("\033[23;57H│").append(" ".repeat(selectionSize)).append("│").append(" ".repeat(infoSize)).append("│");
     
     frame.append("\033[24;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign("Accessory 1: ", infoSize-2)).append(" │");
-    frame.append("\033[25;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(curr.getAccessory1().getName(), infoSize-2)).append(" │");
+    frame.append("\033[25;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(curr.getEquipment().getAccessory1Name(), infoSize-2)).append(" │");
     frame.append("\033[26;57H│").append(" ".repeat(selectionSize)).append("│").append(" ".repeat(infoSize)).append("│");
 
     frame.append("\033[27;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign("Accessory 2: ", infoSize-2)).append(" │");
-    frame.append("\033[28;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(curr.getAccessory2().getName(), infoSize-2)).append(" │");
+    frame.append("\033[28;57H│").append(" ".repeat(selectionSize)).append("│ ").append(Utils.leftAlign(curr.getEquipment().getAccessory2Name(), infoSize-2)).append(" │");
     frame.append("\033[29;57H└").append("─".repeat(selectionSize)).append("┴").append("─".repeat(infoSize)).append("┘");
 
     frame.append("\033[20;58H").append(Utils.center("BASIC SKILL", selectionSize));

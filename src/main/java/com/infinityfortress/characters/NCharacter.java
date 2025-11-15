@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.infinityfortress.actions.Action;
-import com.infinityfortress.actions.BasicAction;
-import com.infinityfortress.actions.SpecialAction;
 import com.infinityfortress.effects.TemporaryEffect;
+import com.infinityfortress.equipments.Equipment;
 import com.infinityfortress.races.Race;
 import com.infinityfortress.roles.Role;
-import com.infinityfortress.Temp.*;
-import com.infinityfortress.actions.MainAction;
 
 public class NCharacter {
     private String name;
@@ -32,18 +29,37 @@ public class NCharacter {
     private ArrayList<TemporaryEffect> condition;
     private boolean isEmpty;
 
-    //TEMP
-    // Temporary UI skill attributes
-    
-    public ArrayList<MainAction> actions = new ArrayList<>();
+    // Temp
+    private Equipment equipment = new Equipment();
 
-    // Temporary equipment slots
-    private EquipmentTemp weapon;
-    private EquipmentTemp armor;
-    private EquipmentTemp accessory1;
-    private EquipmentTemp accessory2;
-    
-    public NCharacter(NCharacterType type, int health, int mana, int exp, int defense, int strength, int speed, int critStrength, int critChance, int luck, Role role, Race race) {
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    // Default Constructor
+    // Role and Race class will have default values which will extend the base
+    // attributes. For now placeholder values are included.
+    public NCharacter(Role c, Race r) {
+        this.name = r.getName() + " " + c.getName();
+        this.type = NCharacterType.ALLY;
+        this.health = 10;
+        this.mana = 10;
+        this.exp = 0;
+        this.defense = 0;
+        this.strength = 10;
+        this.speed = 10;
+        this.critChance = 10;
+        this.critStrength = 2;
+        this.isEmpty = false;
+        this.luck = 2;
+        this.role = c;
+        this.race = r;
+        this.condition = new ArrayList<>();
+    }
+
+    public NCharacter(NCharacterType type, int health, int mana, int exp, int defense,
+            int strength, int speed, int critStrength, int critChance,
+            int luck, Role role, Race race) {
         this.name = race.getName() + " " + role.getName();
         this.type = type;
         this.maxHealth = health;
@@ -62,58 +78,7 @@ public class NCharacter {
         this.race = race;
         this.isEmpty = false;
         this.condition = new ArrayList<>();
-
-        // --- Random temporary action generation for UI ---
-        // Create ArrayList with BasicAction and SpecialAction
-        actions.add(new BasicAction());
-        actions.add(new SpecialAction());
-
-        // --- Random equipment generation ---
-        // Generate random equipment based on role
-        this.weapon = EquipmentFactory.createRandomWeapon(role.getName().toLowerCase());
-        this.armor = EquipmentFactory.createRandomArmor();
-        this.accessory1 = EquipmentFactory.createRandomAccessory();
-        this.accessory2 = EquipmentFactory.createRandomAccessory();
-        // --- end equipment generation ---
-        
-        // --- end temporary skill generation ---
     }
-    
-    // Action getters using single actions ArrayList
-
-    public MainAction getBasicSkillAction() {
-        return !actions.isEmpty() ? actions.get(0) : null;
-    }
-
-    public MainAction getSpecialSkillAction() {
-        return actions.size() > 1 ? actions.get(1) : null;
-    }
-
-    // Get all actions
-    public ArrayList<MainAction> getActions() {
-        return actions;
-    }
-
-    // Temporary equipment getters
-    public EquipmentTemp getWeapon() {
-        return weapon;
-    }
-
-    public EquipmentTemp getArmor() {
-        return armor;
-    }
-
-    public EquipmentTemp getAccessory1() {
-        return accessory1;
-    }
-
-    public EquipmentTemp getAccessory2() {
-        return accessory2;
-    }
-
-
-
-
 
     // Getters
     public String getName() {
@@ -258,15 +223,15 @@ public class NCharacter {
 
     // Action Helper Methods for UI
 
-    // public Action getBasicAction() {
-    //     ArrayList<Action> roleActions = role.getActions();
-    //     return roleActions.isEmpty() ? null : roleActions.get(0);
-    // }
+    public Action getBasicAction() {
+        List<Action> actions = role.getActions();
+        return actions.isEmpty() ? null : actions.get(0);
+    }
 
-    // public Action getSpecialAction() {
-    //     ArrayList<Action> roleActions = role.getActions();
-    //     return roleActions.size() > 1 ? roleActions.get(1) : null;
-    // }
+    public Action getSpecialAction() {
+        List<Action> actions = role.getActions();
+        return actions.size() > 1 ? actions.get(1) : null;
+    }
 
     public Action getActionByName(String actionName) {
         return role.getActions().stream()
@@ -276,9 +241,9 @@ public class NCharacter {
     }
 
     public Action getActionByIndex(int index) {
-        ArrayList<Action> roleActions = role.getActions();
-        if (index >= 0 && index < roleActions.size()) {
-            return roleActions.get(index);
+        List<Action> actions = role.getActions();
+        if (index >= 0 && index < actions.size()) {
+            return actions.get(index);
         }
         return null;
     }
@@ -290,4 +255,5 @@ public class NCharacter {
     public int getActionCount() {
         return role.getActions().size();
     }
+
 }

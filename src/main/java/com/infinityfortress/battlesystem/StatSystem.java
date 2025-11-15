@@ -7,7 +7,7 @@ import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.ui.StatsMenu.MainStatMenu;
 import com.infinityfortress.utils.InputHandler;
-import com.infinityfortress.utils.Utils;
+import com.infinityfortress.utils.AudioHandler;
 
 public class StatSystem {
     private final Player player;

@@ -6,7 +6,7 @@ public abstract class SelectionUI {
   public abstract StringBuilder displayChoices();
   public abstract StringBuilder getSelection();
 
-  public static StringBuilder displaySekeleton() {
+  public static StringBuilder getSkeleton() {
     StringBuilder frame = new StringBuilder();
     int startX = 4, startY = 26, width = 111, height = 7;
     frame.append("\033[").append(startY).append(";").append(startX).append("H┌").append("─".repeat(width)).append("┐");

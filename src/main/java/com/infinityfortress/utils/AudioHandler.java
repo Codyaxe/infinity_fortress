@@ -131,6 +131,10 @@ public class AudioHandler {
         play("audio/back.wav");
     }
 
+    public static void playBattle() {
+        play("audio/battle.wav");
+    }
+
     public static void playIntro() {
         audioExecutor.execute(() -> {
             try {

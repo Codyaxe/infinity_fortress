@@ -21,8 +21,6 @@ public final class ModifiedPriorityQueue {
         .collect(Collectors.toCollection(ArrayList::new));
   }
 
-  // I modified the code so it handles speed directly from a list of character
-  // instead of storing the speed in pair values
   public ModifiedPriorityQueue(ArrayList<NCharacter> characters) {
     this.list = characters.stream()
         .filter(c -> c != null)
@@ -46,10 +44,6 @@ public final class ModifiedPriorityQueue {
     return turnOrder;
   }
 
-  public Queue<NCharacter> getQueue() {
-    return this.queue;
-  }
-
   // Update the character priority.
   public NCharacter getCurrCharAndUpdate() {
     this.queue.poll();
@@ -59,13 +53,5 @@ public final class ModifiedPriorityQueue {
 
   public NCharacter peekCurrChar() {
     return this.queue.peek();
-  }
-
-  public String showQueue() {
-    StringBuilder sb = new StringBuilder();
-    for (NCharacter c : this.queue) {
-      sb.append(c.getRole().getName()).append(" ").append(c.getRole().getName()).append(" | ");
-    }
-    return sb.toString();
   }
 }
