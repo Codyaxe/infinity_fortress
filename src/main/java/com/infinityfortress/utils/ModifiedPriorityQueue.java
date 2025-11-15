@@ -18,7 +18,10 @@ public final class ModifiedPriorityQueue {
         .collect(Collectors.toCollection(ArrayList::new));
 
     if (!this.list.isEmpty()) {
-      this.queue.add(this.list.get(0).first);
+      NCharacter topCharacter = this.list.get(0).first;
+      if (!this.queue.contains(topCharacter)) {
+        this.queue.add(topCharacter);
+      }
       this.list.set(0, new Pair<>(this.list.get(0).first, 0));
       this.list = this.list.stream()
           .map(c -> new Pair<NCharacter, Integer>(c.first, c.second + c.first.getSpeed()))
@@ -39,6 +42,13 @@ public final class ModifiedPriorityQueue {
   }
 
   public ArrayList<String> getCurrentQueue() {
+    this.queue.removeIf(c -> c.isDead());
+
+    // Ensures there is always three characters in the queue
+    while (this.queue.size() < 3 && !this.list.isEmpty()) {
+      addToQueue();
+    }
+
     ArrayList<String> turnOrder = new ArrayList<>();
     for (NCharacter c : this.queue) {
       if (c.getType() == NCharacterType.ALLY) {
@@ -50,16 +60,14 @@ public final class ModifiedPriorityQueue {
     return turnOrder;
   }
 
-  // Update the character priority.
   public NCharacter getCurrCharAndUpdate() {
     this.queue.poll();
-    // Remove any dead characters from the queue
-    this.queue.removeIf(c -> c.isDead());
     addToQueue();
     return peekCurrChar();
   }
 
   public NCharacter peekCurrChar() {
+    this.queue.removeIf(c -> c.isDead());
     return this.queue.peek();
   }
 }
