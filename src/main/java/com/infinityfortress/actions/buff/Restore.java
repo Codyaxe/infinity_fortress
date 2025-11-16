@@ -1,20 +1,20 @@
-package com.infinityfortress.actions.heal;
+package com.infinityfortress.actions.buff;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.Heal;
+import com.infinityfortress.effects.Restoration;
 
-public class HealOne implements Action {
+public class Restore implements Action {
 
     private String message;
 
     public String getName() {
-        return "Heal One";
+        return "Restore";
     }
 
-    public HealOne() {
+    public Restore() {
     }
 
     public int getHitCount() {
@@ -22,7 +22,7 @@ public class HealOne implements Action {
     }
 
     public int getManaCost() {
-        return 3;
+        return 5;
     };
 
     public int getBaseDamage() {
@@ -30,11 +30,11 @@ public class HealOne implements Action {
     };
 
     public String getStatDescription() {
-        return "Heals an injured ally for a good amount. Not effective at healing dead allies.";
+        return "Gives an ally more MP, meaning more special spam.";
     };
 
     public String getBattleDescription() {
-        return "Heals an ally for a good amount.";
+        return "Gives an ally 10 MP.";
     };
 
     public String getBattleMessage() {
@@ -46,12 +46,12 @@ public class HealOne implements Action {
     }
 
     public ActionType getActionType() {
-        return ActionType.HEAL;
+        return ActionType.RESTORATION;
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        Heal heal = new Heal();
-        heal.execute(user, target);
-        message = String.format("%s heals %s by amount %s.", user.getName(), target.getName(), 10);
+        Restoration restoration = new Restoration();
+        int manaRestored = restoration.execute(user, target);
+        message = String.format("%s's mana is restored by an amount %s", target.getName(), manaRestored);
     };
 }

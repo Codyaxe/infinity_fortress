@@ -1,20 +1,19 @@
-package com.infinityfortress.actions.heal;
+package com.infinityfortress.actions.debuff;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.Heal;
+import com.infinityfortress.effects.temporaryeffect.WeakenEffect;
 
-public class HealOne implements Action {
-
+public class Weaken implements Action {
     private String message;
 
     public String getName() {
-        return "Heal One";
+        return "Weaken";
     }
 
-    public HealOne() {
+    public Weaken() {
     }
 
     public int getHitCount() {
@@ -22,36 +21,38 @@ public class HealOne implements Action {
     }
 
     public int getManaCost() {
-        return 3;
-    };
+        return 5;
+    }
 
     public int getBaseDamage() {
         return 0;
-    };
+    }
 
     public String getStatDescription() {
-        return "Heals an injured ally for a good amount. Not effective at healing dead allies.";
-    };
+        return "Reduces the target's strength by 4 for 5 turns.";
+    }
 
     public String getBattleDescription() {
-        return "Heals an ally for a good amount.";
-    };
+        return "Weakens the target's physical power.";
+    }
 
     public String getBattleMessage() {
         return message;
-    };
+    }
 
     public TargetingType getTargetingType() {
-        return TargetingType.SINGLE_ALLY;
+        return TargetingType.SINGLE_ENEMY;
     }
 
     public ActionType getActionType() {
-        return ActionType.HEAL;
-    };
+        return ActionType.UTILITY;
+    }
 
     public void execute(NCharacter user, NCharacter target) {
-        Heal heal = new Heal();
-        heal.execute(user, target);
-        message = String.format("%s heals %s by amount %s.", user.getName(), target.getName(), 10);
-    };
+        WeakenEffect weakenEffect = new WeakenEffect(5, target);
+
+        weakenEffect.apply();
+        target.addTemporaryEffect(weakenEffect);
+        message = String.format("%s is weakened!", target.getName());
+    }
 }

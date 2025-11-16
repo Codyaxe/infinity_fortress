@@ -1,16 +1,15 @@
 package com.infinityfortress.battlesystem;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.stream.IntStream;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
-import com.infinityfortress.effects.ProtectEffect;
-import com.infinityfortress.effects.RageEffect;
-import com.infinityfortress.effects.TemporaryEffect;
+import com.infinityfortress.effects.temporaryeffect.ProtectEffect;
+import com.infinityfortress.effects.temporaryeffect.RageEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.TargetingComponent;
 import com.infinityfortress.utils.AudioHandler;
@@ -109,13 +108,10 @@ public class TargetingSystem {
                         scores[i] += 50;
                     }
 
-                    if (attackDominant(current)) {
-                        scores[i] += (int) (target.getMaxHealth());
-                    }
-
                     if (isSquishy(current)) {
                         scores[i] += (int) ((target.getMaxHealth() / target.getHealth()) * 2);
                     }
+
                     break;
                 case HEAL:
                     if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
@@ -178,10 +174,16 @@ public class TargetingSystem {
             }
         }
 
-        int choice = IntStream.range(0, scores.length)
-                .boxed()
-                .max(Comparator.comparingInt(i -> scores[i]))
-                .orElse(-1);
+        int maxScore = IntStream.of(scores).max().orElse(-1);
+
+        ArrayList<Integer> maxIndices = new ArrayList<>();
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i] == maxScore) {
+                maxIndices.add(i);
+            }
+        }
+
+        int choice = maxIndices.get((int) (Math.random() * maxIndices.size()));
 
         return targets.get(choice);
     }

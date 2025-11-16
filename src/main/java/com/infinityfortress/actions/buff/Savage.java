@@ -1,20 +1,20 @@
-package com.infinityfortress.actions.guard;
+package com.infinityfortress.actions.buff;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.Protect;
+import com.infinityfortress.effects.temporaryeffect.SavageEffect;
 
-public class ProtectOne implements Action {
+public class Savage implements Action {
 
     private String message;
 
     public String getName() {
-        return "Protect One";
+        return "Savage";
     }
 
-    public ProtectOne() {
+    public Savage() {
     }
 
     public int getHitCount() {
@@ -22,7 +22,7 @@ public class ProtectOne implements Action {
     }
 
     public int getManaCost() {
-        return 3;
+        return 5;
     };
 
     public int getBaseDamage() {
@@ -30,11 +30,11 @@ public class ProtectOne implements Action {
     };
 
     public String getStatDescription() {
-        return "Just a Protection. Fill me STAT";
+        return "Makes your ally feral, increasing their critical hit chance and critical strength.";
     };
 
     public String getBattleDescription() {
-        return "Just a Protection. Fill me BATTLE";
+        return "Increases an ally critical hit chance and critical strength.";
     };
 
     public String getBattleMessage() {
@@ -46,16 +46,19 @@ public class ProtectOne implements Action {
     }
 
     public ActionType getActionType() {
-        return ActionType.PROTECTION;
+        return ActionType.CRITICAL;
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        Protect protect = new Protect();
-        protect.execute(user, target);
+        SavageEffect savageEffect = new SavageEffect(5, target);
+
+        savageEffect.apply();
+        target.addTemporaryEffect(savageEffect);
         if (user == target) {
-            message = "Protection is applied to himself.";
+            message = "Savage is applied to himself.";
+            savageEffect.setJustApplied(false);
         } else {
-            message = String.format("Protection is applied to %s.", target.getName());
+            message = String.format("Savage is applied to %s.", target.getName());
         }
 
     };

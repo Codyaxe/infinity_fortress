@@ -4,6 +4,7 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.effects.Heal;
 
 public class HealAll implements Action {
 

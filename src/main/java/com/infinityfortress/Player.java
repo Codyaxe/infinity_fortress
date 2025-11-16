@@ -18,11 +18,11 @@ public class Player {
 
         NCharacterFactory factory = new NCharacterFactory();
 
-        characters.set(0, factory.createHumanWarrior(NCharacterType.ALLY));
-        characters.set(1, factory.createHumanRogue(NCharacterType.ALLY));
-        characters.set(2, factory.createDragonbornWarrior(NCharacterType.ALLY));
-        characters.set(3, factory.createNephilimTank(NCharacterType.ALLY));
-        characters.set(4, factory.createElfHealer(NCharacterType.ALLY));
+        characters.set(0, factory.createDemonWarlock(NCharacterType.ALLY));
+        characters.set(1, factory.createHumanCleric(NCharacterType.ALLY));
+        characters.set(2, factory.createDragonbornMage(NCharacterType.ALLY));
+        characters.set(3, factory.createBeastkinArcher(NCharacterType.ALLY));
+        characters.set(4, factory.createBeastkinSummoner(NCharacterType.ALLY));
 
     }
 }

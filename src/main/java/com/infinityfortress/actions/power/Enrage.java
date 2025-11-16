@@ -4,7 +4,7 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.RageEffect;
+import com.infinityfortress.effects.temporaryeffect.RageEffect;
 
 public class Enrage implements Action {
 

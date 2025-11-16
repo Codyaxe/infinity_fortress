@@ -9,7 +9,8 @@ import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
-import com.infinityfortress.effects.TemporaryEffect;
+import com.infinityfortress.effects.summoneffect.SummonEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
@@ -39,6 +40,14 @@ public class BattleSystem {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
+
+        // Sets up a callback that reacts to speed changes, allows for priority queue to
+        // react.
+        for (NCharacter character : characterList) {
+            character.getAllTemporaryEffect()
+                    .forEach(effect -> effect.setOnSpeedChange(() -> turnQueue.refreshQueueOrder()));
+        }
+
         NCharacter currentCharacter = turnQueue.peekCurrChar();
 
         MainBattleUI mainBattleUI = new MainBattleUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
@@ -46,10 +55,15 @@ public class BattleSystem {
             mainBattleUI.display();
             boolean turnComplete = false;
 
+            // Process Summon Effects at start of turn
+            processSummonEffects(currentCharacter, player.characters, enemy.characters, mainBattleUI);
+
             // Handles Temporary Effects
             if (!currentCharacter.getAllTemporaryEffect().isEmpty()) {
                 Set<TemporaryEffect> conditions = currentCharacter.getAllTemporaryEffect();
                 for (TemporaryEffect effect : conditions) {
+                    effect.setOnSpeedChange(() -> turnQueue.refreshQueueOrder());
+
                     if (effect.isJustApplied()) {
                         effect.setJustApplied(false);
                     } else {
@@ -123,12 +137,48 @@ public class BattleSystem {
 
     public void processEnd(MainBattleUI mainBattleUI, ArrayList<NCharacter> characterList,
             NCharacter currentCharacter) {
-        for (NCharacter character : characterList) {
-            if (character.getHealth() <= 0) {
-                character.setIsDead(true);
-            }
-
-        }
+        processSummonDurations(currentCharacter, characterList);
         mainBattleUI.updateField(player.characters, enemy.characters);
+        mainBattleUI.display();
+    }
+
+    private void processSummonEffects(NCharacter currentCharacter, ArrayList<NCharacter> allies,
+            ArrayList<NCharacter> enemies, MainBattleUI battleUI) {
+        Set<SummonEffect> summons = currentCharacter.getAllSummonsEffect();
+
+        for (SummonEffect summon : summons) {
+            summon.execute(currentCharacter, allies, enemies, battleUI);
+        }
+
+        updateDeathStatus(allies);
+        updateDeathStatus(enemies);
+        battleUI.updateField(player.characters, enemy.characters);
+        battleUI.display();
+    }
+
+    private void processSummonDurations(NCharacter character, ArrayList<NCharacter> characterList) {
+        Set<SummonEffect> summons = character.getAllSummonsEffect();
+        Set<SummonEffect> toRemove = new java.util.HashSet<>();
+
+        for (SummonEffect summon : summons) {
+            summon.decrementDuration();
+            if (summon.isExpired()) {
+                toRemove.add(summon);
+            }
+        }
+
+        for (SummonEffect summon : toRemove) {
+            character.removeSummonEffect(summon);
+        }
+
+        updateDeathStatus(characterList);
+    }
+
+    private void updateDeathStatus(ArrayList<NCharacter> characters) {
+        for (NCharacter c : characters) {
+            if (c.getHealth() <= 0) {
+                c.setIsDead(true);
+            }
+        }
     }
 }

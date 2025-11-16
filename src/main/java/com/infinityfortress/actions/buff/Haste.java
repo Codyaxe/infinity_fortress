@@ -1,20 +1,20 @@
-package com.infinityfortress.actions.heal;
+package com.infinityfortress.actions.buff;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.Heal;
+import com.infinityfortress.effects.temporaryeffect.HasteEffect;
 
-public class HealOne implements Action {
+public class Haste implements Action {
 
     private String message;
 
     public String getName() {
-        return "Heal One";
+        return "Haste";
     }
 
-    public HealOne() {
+    public Haste() {
     }
 
     public int getHitCount() {
@@ -22,7 +22,7 @@ public class HealOne implements Action {
     }
 
     public int getManaCost() {
-        return 3;
+        return 5;
     };
 
     public int getBaseDamage() {
@@ -30,11 +30,11 @@ public class HealOne implements Action {
     };
 
     public String getStatDescription() {
-        return "Heals an injured ally for a good amount. Not effective at healing dead allies.";
+        return "Increases the user speed and moving them up the queue.";
     };
 
     public String getBattleDescription() {
-        return "Heals an ally for a good amount.";
+        return "Gives a user speed.";
     };
 
     public String getBattleMessage() {
@@ -46,12 +46,20 @@ public class HealOne implements Action {
     }
 
     public ActionType getActionType() {
-        return ActionType.HEAL;
+        return ActionType.SPEED;
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        Heal heal = new Heal();
-        heal.execute(user, target);
-        message = String.format("%s heals %s by amount %s.", user.getName(), target.getName(), 10);
+        HasteEffect hasteEffect = new HasteEffect(5, target);
+
+        hasteEffect.apply();
+        target.addTemporaryEffect(hasteEffect);
+        if (user == target) {
+            message = "Haste is applied to himself.";
+            hasteEffect.setJustApplied(false);
+        } else {
+            message = String.format("Haste is applied to %s.", target.getName());
+        }
+
     };
 }

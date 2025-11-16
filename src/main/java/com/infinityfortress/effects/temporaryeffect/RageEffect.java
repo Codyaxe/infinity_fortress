@@ -1,4 +1,4 @@
-package com.infinityfortress.effects;
+package com.infinityfortress.effects.temporaryeffect;
 
 import com.infinityfortress.characters.NCharacter;
 
@@ -25,5 +25,10 @@ public class RageEffect extends TemporaryEffect {
     @Override
     public String getName() {
         return "Rage";
+    }
+
+    @Override
+    public TemporaryEffectType getType() {
+        return TemporaryEffectType.BUFF;
     }
 }

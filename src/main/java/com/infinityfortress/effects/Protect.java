@@ -1,7 +1,7 @@
-package com.infinityfortress.actions.guard;
+package com.infinityfortress.effects;
 
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.ProtectEffect;
+import com.infinityfortress.effects.temporaryeffect.ProtectEffect;
 
 public class Protect {
     public void execute(NCharacter user, NCharacter target) {

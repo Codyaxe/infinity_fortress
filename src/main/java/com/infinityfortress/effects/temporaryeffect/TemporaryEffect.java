@@ -1,12 +1,14 @@
-package com.infinityfortress.effects;
+package com.infinityfortress.effects.temporaryeffect;
 
 import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.effects.Effects;
 
 public class TemporaryEffect implements Effects {
     protected NCharacter target;
     private int duration;
     private int strength;
     private boolean justApplied;
+    private Runnable onSpeedChange;
 
     public TemporaryEffect(int d, NCharacter t) {
         this.duration = d;
@@ -16,6 +18,10 @@ public class TemporaryEffect implements Effects {
 
     public String getName() {
         return "Generic Name";
+    }
+
+    public TemporaryEffectType getType() {
+        return TemporaryEffectType.NONE;
     }
 
     // Duration Access Methods
@@ -49,6 +55,17 @@ public class TemporaryEffect implements Effects {
 
     public int getStrength() {
         return strength;
+    }
+
+    // Speed Change Callback
+    public void setOnSpeedChange(Runnable callback) {
+        this.onSpeedChange = callback;
+    }
+
+    protected void notifySpeedChange() {
+        if (onSpeedChange != null) {
+            onSpeedChange.run();
+        }
     }
 
     // Effect Override

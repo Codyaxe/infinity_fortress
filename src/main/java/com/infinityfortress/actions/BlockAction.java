@@ -1,7 +1,7 @@
 package com.infinityfortress.actions;
 
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.TemporaryEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 
 public class BlockAction implements Action {
     private String message;

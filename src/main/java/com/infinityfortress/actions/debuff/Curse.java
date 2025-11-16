@@ -1,20 +1,19 @@
-package com.infinityfortress.actions.heal;
+package com.infinityfortress.actions.debuff;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.Heal;
+import com.infinityfortress.effects.temporaryeffect.CurseEffect;
 
-public class HealOne implements Action {
-
+public class Curse implements Action {
     private String message;
 
     public String getName() {
-        return "Heal One";
+        return "Curse";
     }
 
-    public HealOne() {
+    public Curse() {
     }
 
     public int getHitCount() {
@@ -22,36 +21,38 @@ public class HealOne implements Action {
     }
 
     public int getManaCost() {
-        return 3;
-    };
+        return 5;
+    }
 
     public int getBaseDamage() {
         return 0;
-    };
+    }
 
     public String getStatDescription() {
-        return "Heals an injured ally for a good amount. Not effective at healing dead allies.";
-    };
+        return "Reduces the target's defense by 5 for 3 turns.";
+    }
 
     public String getBattleDescription() {
-        return "Heals an ally for a good amount.";
-    };
+        return "Curses the target, lowering their defenses.";
+    }
 
     public String getBattleMessage() {
         return message;
-    };
+    }
 
     public TargetingType getTargetingType() {
-        return TargetingType.SINGLE_ALLY;
+        return TargetingType.SINGLE_ENEMY;
     }
 
     public ActionType getActionType() {
-        return ActionType.HEAL;
-    };
+        return ActionType.UTILITY;
+    }
 
     public void execute(NCharacter user, NCharacter target) {
-        Heal heal = new Heal();
-        heal.execute(user, target);
-        message = String.format("%s heals %s by amount %s.", user.getName(), target.getName(), 10);
-    };
+        CurseEffect curseEffect = new CurseEffect(3, target);
+
+        curseEffect.apply();
+        target.addTemporaryEffect(curseEffect);
+        message = String.format("%s is cursed!", target.getName());
+    }
 }

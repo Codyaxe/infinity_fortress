@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.infinityfortress.actions.Action;
-import com.infinityfortress.effects.TemporaryEffect;
+import com.infinityfortress.effects.summoneffect.SummonEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.equipments.Equipment;
 import com.infinityfortress.races.Race;
 import com.infinityfortress.roles.Role;
@@ -28,6 +29,7 @@ public class NCharacter {
     private Role role;
     private Race race;
     private Set<TemporaryEffect> condition;
+    private Set<SummonEffect> summons;
     private boolean isEmpty;
     private boolean isDead;
     private boolean hasTakenTurn;
@@ -60,6 +62,7 @@ public class NCharacter {
         this.role = c;
         this.race = r;
         this.condition = new HashSet<>();
+        this.summons = new HashSet<>();
 
     }
 
@@ -85,6 +88,7 @@ public class NCharacter {
         this.isEmpty = false;
         this.hasTakenTurn = false;
         this.condition = new HashSet<>();
+        this.summons = new HashSet<>();
     }
 
     // Getters
@@ -242,6 +246,20 @@ public class NCharacter {
 
     public Set<TemporaryEffect> getAllTemporaryEffect() {
         return condition;
+    }
+
+    // Summons Manipulation
+
+    public void addSummonEffect(SummonEffect summon) {
+        summons.add(summon);
+    }
+
+    public void removeSummonEffect(SummonEffect summon) {
+        summons.remove(summon);
+    }
+
+    public Set<SummonEffect> getAllSummonsEffect() {
+        return summons;
     }
 
     // Action Helper Methods for UI

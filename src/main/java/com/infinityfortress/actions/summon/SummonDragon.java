@@ -1,20 +1,19 @@
-package com.infinityfortress.actions.heal;
+package com.infinityfortress.actions.summon;
 
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.Heal;
+import com.infinityfortress.effects.summoneffect.DragonSummon;
 
-public class HealOne implements Action {
-
+public class SummonDragon implements Action {
     private String message;
 
     public String getName() {
-        return "Heal One";
+        return "Summon Dragon";
     }
 
-    public HealOne() {
+    public SummonDragon() {
     }
 
     public int getHitCount() {
@@ -22,36 +21,35 @@ public class HealOne implements Action {
     }
 
     public int getManaCost() {
-        return 3;
-    };
+        return 8;
+    }
 
     public int getBaseDamage() {
         return 0;
-    };
+    }
 
     public String getStatDescription() {
-        return "Heals an injured ally for a good amount. Not effective at healing dead allies.";
-    };
+        return "Summons a dragon that strikes a single enemy each turn for great damage";
+    }
 
     public String getBattleDescription() {
-        return "Heals an ally for a good amount.";
-    };
+        return "Summons a dragon to strike enemies";
+    }
 
     public String getBattleMessage() {
         return message;
-    };
+    }
 
     public TargetingType getTargetingType() {
-        return TargetingType.SINGLE_ALLY;
+        return TargetingType.SELF;
     }
 
     public ActionType getActionType() {
-        return ActionType.HEAL;
-    };
+        return ActionType.UTILITY;
+    }
 
     public void execute(NCharacter user, NCharacter target) {
-        Heal heal = new Heal();
-        heal.execute(user, target);
-        message = String.format("%s heals %s by amount %s.", user.getName(), target.getName(), 10);
-    };
+        user.addSummonEffect(new DragonSummon(5));
+        message = user.getName() + " summons a dragon to protect them!";
+    }
 }
