@@ -2,6 +2,7 @@ package com.infinityfortress.ui;
 
 import com.infinityfortress.utils.Utils;
 
+// will be refactored later
 public class SetupMenu {
     public void display() {
         final int max = 33;

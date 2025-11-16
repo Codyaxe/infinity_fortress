@@ -3,19 +3,23 @@ package com.infinityfortress;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.infinityfortress.battlesystem.BattleSystem;
-import com.infinityfortress.ui.*;
-import com.infinityfortress.utils.*;
+import com.infinityfortress.ui.IntroTestUI;
+import com.infinityfortress.ui.SetupMenu;
+import com.infinityfortress.utils.AudioHandler;
+import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.Utils;
 import com.sun.jna.Platform;
 
 public class App {
 
     public static void main(String[] args) {
         App game = new App();
+
         InputHandler.setupKeyListener();
-        Utils.clearConsole();
-        Utils.hideCursor();
-        // game.intro();
         game.setup();
+        Utils.clearConsole();
+        // game.intro();
+        Utils.initiallizeBorders();
         game.gameLoop();
         InputHandler.stopKeyListener();
         Utils.showCursor();
@@ -38,7 +42,6 @@ public class App {
 
         t.start();
 
-        // Template code for Thread.sleep
         try {
             t.join();
         } catch (InterruptedException e) {
@@ -49,7 +52,6 @@ public class App {
 
     public void dialouge(String text, int duration) {
         for (int i = 0; i < text.length(); i++) {
-            // Check if skip was requested
             if (InputHandler.enter.get()) {
                 System.out.print(text.substring(i));
                 break;
@@ -70,23 +72,33 @@ public class App {
 
     public void setup() {
         Utils.clearConsole();
+        Utils.hideCursor();
         SetupMenu setup = new SetupMenu();
 
         AtomicBoolean isSettingUp = new AtomicBoolean(true);
         while (isSettingUp.get()) {
+
             setup.display();
             InputHandler.waitForInput();
             if (InputHandler.enter.get()) {
                 isSettingUp.set(false);
+                InputHandler.enter.set(false);
+                AudioHandler.playEnter();
             }
             Utils.clearConsole();
         }
+
+        IntroTestUI s = new IntroTestUI();
+        s.display();
     }
 
     public void gameLoop() {
         BattleSystem battle = new BattleSystem();
 
+        // Ang lakas + d bagay sa intro
+        // AudioHandler.playBattle();
         battle.start();
+
     }
 
     public void print(String text) {
@@ -95,10 +107,6 @@ public class App {
 
     public void println(String text) {
         System.out.println(text);
-    }
-
-    public void resultLoop() {
-
     }
 
 }

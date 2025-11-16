@@ -8,5 +8,8 @@ public enum TargetingType {
     SELF,
     CHOOSE_SUBACTION,
     RANDOM,
-    NONE
+    NONE,
+    // Additional
+    Multi, // 3, one main and adjacent
+    Split // Archer specific, EX: hit Enemy A twice hit Enemy C once
 }

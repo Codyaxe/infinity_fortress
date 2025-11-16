@@ -13,13 +13,15 @@ public interface Action {
 
     int getBaseDamage();
 
-    String getActionType();
-
     String getStatDescription();
 
     String getBattleDescription();
 
+    String getBattleMessage();
+
     TargetingType getTargetingType();
+
+    ActionType getActionType();
 
     default ArrayList<Action> getAllSubActions() {
         return new ArrayList<Action>();

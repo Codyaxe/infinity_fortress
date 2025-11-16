@@ -1,8 +1,10 @@
 package com.infinityfortress.actions;
 
 import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 
 public class BlockAction implements Action {
+    private String message;
 
     public String getName() {
         return "Block";
@@ -23,10 +25,6 @@ public class BlockAction implements Action {
         return 0;
     };
 
-    public String getActionType() {
-        return "Generic";
-    };
-
     public String getStatDescription() {
         return "Block Stat Description";
     };
@@ -35,16 +33,42 @@ public class BlockAction implements Action {
         return "Block Battle Description";
     };
 
+    public String getBattleMessage() {
+        return message;
+    };
+
     public TargetingType getTargetingType() {
         return TargetingType.SELF;
     }
+
+    public ActionType getActionType() {
+        return ActionType.GENERIC;
+    };
 
     public Action[] getSubActions() {
         return new Action[0];
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        // Increase user defense
+        TemporaryEffect block = new TemporaryEffect(1, target) {
+            @Override
+            public void apply() {
+                this.target.setDefense(this.target.getDefense() + 3);
+            }
+
+            @Override
+            public void remove() {
+                this.target.setStrength(this.target.getStrength() - 3);
+            }
+
+            @Override
+            public String getName() {
+                return "Block";
+            }
+        };
+
+        block.apply();
+        message = String.format("%s blocked.", user.getName());
     };
 
 }

@@ -2,14 +2,18 @@ package com.infinityfortress.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.infinityfortress.characters.NCharacter;
 
 public class SubAction implements Action {
     protected final List<Action> subActions = new ArrayList<>();
-    private int hitCount;
+    private String message;
 
     public SubAction() {
-        this.hitCount = 0;
+    }
+
+    public SubAction(Action act) {
+        addSubAction(act);
     }
 
     public String getName() {
@@ -17,7 +21,7 @@ public class SubAction implements Action {
     };
 
     public int getHitCount() {
-        return hitCount;
+        return 0;
     }
 
     public int getManaCost() {
@@ -28,10 +32,6 @@ public class SubAction implements Action {
         return 0;
     };
 
-    public String getActionType() {
-        return "NONE";
-    };
-
     public String getStatDescription() {
         return "A SUBACTION";
     };
@@ -40,8 +40,16 @@ public class SubAction implements Action {
         return "A SUBACTION";
     };
 
+    public String getBattleMessage() {
+        return message;
+    };
+
     public TargetingType getTargetingType() {
         return TargetingType.CHOOSE_SUBACTION;
+    };
+
+    public ActionType getActionType() {
+        return ActionType.NOTHING;
     };
 
     @Override
@@ -50,7 +58,7 @@ public class SubAction implements Action {
     };
 
     // Say your character levels up or learns a new skill, you can use addSubaction.
-    public void addSubAction(Action action) {
+    public final void addSubAction(Action action) {
         subActions.add(action);
     }
 

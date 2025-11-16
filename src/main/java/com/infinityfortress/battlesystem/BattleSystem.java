@@ -1,13 +1,20 @@
 package com.infinityfortress.battlesystem;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.ui.*;
-import com.infinityfortress.utils.*;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import com.infinityfortress.characters.NCharacterType;
+import com.infinityfortress.effects.summoneffect.SummonEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
+import com.infinityfortress.ui.BattleMenu.MainBattleUI;
+import com.infinityfortress.utils.AudioHandler;
+import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.ModifiedPriorityQueue;
 
 public class BattleSystem {
 
@@ -16,11 +23,13 @@ public class BattleSystem {
     DecisionSystem decisionSystem;
     StatSystem statSystem;
     ActionSystem actionSystem;
+    ItemSystem itemSystem;
 
     public void start() {
         int choice = 0;
 
-        // Initialization, decisionsystem and actionsystem must access player and enemy.
+        // Initialization, decisionsystem and action system must access player and
+        // enemy.
         decisionSystem = new DecisionSystem(player, enemy);
         statSystem = new StatSystem(player);
         actionSystem = new ActionSystem(decisionSystem);
@@ -31,103 +40,145 @@ public class BattleSystem {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
+
+        // Sets up a callback that reacts to speed changes, allows for priority queue to
+        // react.
+        for (NCharacter character : characterList) {
+            character.getAllTemporaryEffect()
+                    .forEach(effect -> effect.setOnSpeedChange(() -> turnQueue.refreshQueueOrder()));
+        }
+
         NCharacter currentCharacter = turnQueue.peekCurrChar();
 
+        MainBattleUI mainBattleUI = new MainBattleUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
         while (true) {
-            BattleTopUI battleTop = new BattleTopUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
-            BattleUI battleUI = new BattleUI(battleTop);
-
+            mainBattleUI.display();
             boolean turnComplete = false;
-            while (!turnComplete) {
-                battleUI.display(choice);
+
+            // Process Summon Effects at start of turn
+            processSummonEffects(currentCharacter, player.characters, enemy.characters, mainBattleUI);
+
+            // Handles Temporary Effects
+            if (!currentCharacter.getAllTemporaryEffect().isEmpty()) {
+                Set<TemporaryEffect> conditions = currentCharacter.getAllTemporaryEffect();
+                for (TemporaryEffect effect : conditions) {
+                    effect.setOnSpeedChange(() -> turnQueue.refreshQueueOrder());
+
+                    if (effect.isJustApplied()) {
+                        effect.setJustApplied(false);
+                    } else {
+                        effect.decrement();
+                        if (effect.getDuration() == 0) {
+                            effect.remove();
+                        }
+                    }
+                }
+                conditions.removeIf(effect -> effect.getDuration() == 0);
+            }
+
+            while (!turnComplete && currentCharacter.getType() == NCharacterType.ALLY) {
+                mainBattleUI.updateChoice(choice);
                 InputHandler.waitForInput();
 
                 if (InputHandler.left.get()) {
                     choice = Math.max(0, choice - 1);
                     InputHandler.left.set(false);
+                    AudioHandler.playSelect();
                 }
                 if (InputHandler.right.get()) {
                     choice = Math.min(2, choice + 1);
                     InputHandler.right.set(false);
+                    AudioHandler.playSelect();
                 }
 
                 if (InputHandler.enter.get()) {
                     boolean actionSuccessful = false;
+                    AudioHandler.playEnter();
                     switch (choice) {
                         case 0 -> {
                             // Action
-                            actionSuccessful = actionSystem.start(battleTop, currentCharacter);
+                            actionSuccessful = actionSystem.start(mainBattleUI, currentCharacter);
                         }
                         case 1 -> {
                             // Stat
-                            statSystem.start(currentCharacter);
+                            if (currentCharacter.getType() == NCharacterType.ALLY) {
+                                statSystem.start(currentCharacter);
+                            }
                         }
                         case 2 -> {
                             // Equipment
-                            actionSuccessful = false;
+                            actionSuccessful = true;
                         }
                     }
 
                     if (actionSuccessful) {
-                        currentCharacter = turnQueue.getCurrCharAndUpdate();
-                        InputHandler.enter.set(false);
                         turnComplete = true;
+                        InputHandler.enter.set(false);
+
                     }
+
+                    mainBattleUI.display();
                 }
+            }
+
+            while (!turnComplete && currentCharacter.getType() == NCharacterType.ENEMY) {
+                boolean actionSuccessful = false;
+                actionSuccessful = actionSystem.start(mainBattleUI, currentCharacter);
+                if (actionSuccessful) {
+                    turnComplete = true;
+                }
+            }
+            processEnd(mainBattleUI, characterList, currentCharacter);
+            currentCharacter = turnQueue.getCurrCharAndUpdate();
+            mainBattleUI.updateTurnOrder(turnQueue.getCurrentQueue());
+
+        }
+    }
+
+    public void processEnd(MainBattleUI mainBattleUI, ArrayList<NCharacter> characterList,
+            NCharacter currentCharacter) {
+        processSummonDurations(currentCharacter, characterList);
+        mainBattleUI.updateField(player.characters, enemy.characters);
+        mainBattleUI.display();
+    }
+
+    private void processSummonEffects(NCharacter currentCharacter, ArrayList<NCharacter> allies,
+            ArrayList<NCharacter> enemies, MainBattleUI battleUI) {
+        Set<SummonEffect> summons = currentCharacter.getAllSummonsEffect();
+
+        for (SummonEffect summon : summons) {
+            summon.execute(currentCharacter, allies, enemies, battleUI);
+        }
+
+        updateDeathStatus(allies);
+        updateDeathStatus(enemies);
+        battleUI.updateField(player.characters, enemy.characters);
+        battleUI.display();
+    }
+
+    private void processSummonDurations(NCharacter character, ArrayList<NCharacter> characterList) {
+        Set<SummonEffect> summons = character.getAllSummonsEffect();
+        Set<SummonEffect> toRemove = new java.util.HashSet<>();
+
+        for (SummonEffect summon : summons) {
+            summon.decrementDuration();
+            if (summon.isExpired()) {
+                toRemove.add(summon);
+            }
+        }
+
+        for (SummonEffect summon : toRemove) {
+            character.removeSummonEffect(summon);
+        }
+
+        updateDeathStatus(characterList);
+    }
+
+    private void updateDeathStatus(ArrayList<NCharacter> characters) {
+        for (NCharacter c : characters) {
+            if (c.getHealth() <= 0) {
+                c.setIsDead(true);
             }
         }
     }
 }
-
-// public void battleLoop() {
-// // Create Turn Order Array
-// ArrayList<Pair<Character, Integer>> characterList = Stream.concat(
-// player.characters.stream(), enemy.characters.stream())
-// .filter(c -> c != null)
-// .map(c -> new Pair<>(c, c.speed))
-// .collect(Collectors.toCollection(ArrayList::new));
-// ModifiedPriorityQueue turnQueue = new ModifiedPriorityQueue(characterList);
-// Character curr = turnQueue.peekCurrChar();
-
-// while (true) {
-// int choice = 0;
-// BattleTopUI battleTop = new BattleTopUI(player.characters, enemy.characters,
-// turnQueue.getCurrentQueue());
-// BattleUI battleUI = new BattleUI(battleTop);
-// while (true) {
-// battleUI.display(choice);
-// waiting();
-// if (left.get()) {
-// choice = Math.max(0, choice - 1);
-// left.set(false);
-// }
-// if (right.get()) {
-// choice = Math.min(2, choice + 1);
-// right.set(false);
-// }
-// if (enter.get()) {
-// boolean flag = false;
-// switch (choice) {
-// case 0 -> {
-// if (actionLoop(battleTop, curr)) {
-// curr = turnQueue.getCurrCharAndUpdate();
-// flag=true;
-// }
-// }
-// case 1 -> {
-// if (curr.type == Character.Type.ALLY) {
-// statLoop(curr);
-// }
-// }
-// case 2 -> {
-// curr = turnQueue.getCurrCharAndUpdate();
-// enter.set(false);
-// flag = true;
-// break;
-// }
-// }
-// if (flag) break;
-// }
-// }
-// }
-// }

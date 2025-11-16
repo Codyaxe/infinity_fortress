@@ -8,6 +8,7 @@ public class Warrior extends AbstractRole {
         actions.add(1, new PowerAction());
     }
 
+    @Override
     public String getName() {
         return "Warrior";
     }

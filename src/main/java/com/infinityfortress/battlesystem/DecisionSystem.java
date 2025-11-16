@@ -7,11 +7,11 @@ import com.infinityfortress.Enemy;
 import com.infinityfortress.Player;
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.TargetingType;
-import com.infinityfortress.ui.BattleTopUI;
-import com.infinityfortress.ui.DecisionUI;
-import com.infinityfortress.ui.SubactionsUI;
-import com.infinityfortress.characters.*;
-import com.infinityfortress.utils.*;
+import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.characters.NCharacterType;
+import com.infinityfortress.ui.BattleMenu.ActionComponent;
+import com.infinityfortress.ui.BattleMenu.MainBattleUI;
+import com.infinityfortress.utils.Printbox;
 
 public class DecisionSystem {
     private final Player player;
@@ -22,20 +22,24 @@ public class DecisionSystem {
         this.enemy = enemy;
     }
 
-    public boolean start(BattleTopUI battleTop, NCharacter curr, Action selectedAction) {
+    public boolean start(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
+
         TargetingType targetType = selectedAction.getTargetingType();
 
-        // Checks which the ability targets
+        mainBattleUI.display();
         switch (targetType) {
-            case SINGLE_ENEMY -> {
+            case TargetingType.SINGLE_ENEMY -> {
                 ArrayList<NCharacter> enemies = getAliveEnemies(curr);
                 if (enemies.isEmpty()) {
-                    System.out.println("No valid targets available!");
+                    Printbox.showMessage(mainBattleUI, "No valid ally targets available!");
                     return false;
                 }
-                NCharacter target = selectTarget(battleTop, enemies);
-                if (target != null) {
+                TargetingSystem targetingSystem = new TargetingSystem(selectedAction, curr);
+                NCharacter target = targetingSystem.start(mainBattleUI, enemies);
+                if (target != null && processMP(curr, selectedAction, mainBattleUI)) {
                     selectedAction.execute(curr, target);
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
                     return true;
                 }
                 return false;
@@ -43,33 +47,47 @@ public class DecisionSystem {
             case SINGLE_ALLY -> {
                 ArrayList<NCharacter> allies = getAliveAllies(curr);
                 if (allies.isEmpty()) {
-                    System.out.println("No valid ally targets available!");
+                    Printbox.showMessage(mainBattleUI, "No valid ally targets available!");
                     return false;
                 }
-                NCharacter target = selectTarget(battleTop, allies);
-                if (target != null) {
+                TargetingSystem targetingSystem = new TargetingSystem(selectedAction, curr);
+                NCharacter target = targetingSystem.start(mainBattleUI, allies);
+                if (target != null && processMP(curr, selectedAction, mainBattleUI)) {
                     selectedAction.execute(curr, target);
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
                     return true;
                 }
                 return false;
             }
             case ALL_ENEMIES -> {
                 ArrayList<NCharacter> enemies = getAliveEnemies(curr);
-                for (NCharacter enemy : enemies) {
-                    selectedAction.execute(curr, enemy);
+                if (processMP(curr, selectedAction, mainBattleUI)) {
+                    for (NCharacter enemy : enemies) {
+                        selectedAction.execute(curr, enemy);
+                    }
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+                    return true;
                 }
-                return true;
+                return false;
             }
             case ALL_ALLIES -> {
                 ArrayList<NCharacter> allies = getAliveAllies(curr);
-                for (NCharacter ally : allies) {
-                    selectedAction.execute(curr, ally);
+                if (processMP(curr, selectedAction, mainBattleUI)) {
+                    for (NCharacter ally : allies) {
+                        selectedAction.execute(curr, ally);
+                    }
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+                    return true;
                 }
-                return true;
+                return false;
             }
             case SELF -> {
-                selectedAction.execute(curr, curr);
-                return true;
+                if (processMP(curr, selectedAction, mainBattleUI)) {
+                    selectedAction.execute(curr, curr);
+                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+                    return true;
+                }
+                return false;
             }
             case NONE -> {
                 selectedAction.execute(curr, null);
@@ -77,25 +95,30 @@ public class DecisionSystem {
             }
             case RANDOM -> {
                 ArrayList<NCharacter> possibleTargets = getAliveEnemies(curr);
-                if (!possibleTargets.isEmpty()) {
+                if (!possibleTargets.isEmpty() && processMP(curr, selectedAction, mainBattleUI)) {
                     int randomIndex = (int) (Math.random() * possibleTargets.size());
                     selectedAction.execute(curr, possibleTargets.get(randomIndex));
                     return true;
                 }
+                Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
                 return false;
             }
-            case CHOOSE_SUBACTION -> {
-                Action subAction = selectSubAction(battleTop, selectedAction);
+            case TargetingType.CHOOSE_SUBACTION -> {
+                SubActionSystem subActionSystem = new SubActionSystem();
+                while (true) {
+                    Action subAction = subActionSystem.start(battleUI, curr, selectedAction.getAllSubActions());
 
-                if (subAction == null) {
-                    return false;
+                    if (subAction == null) {
+                        return false;
+                    }
+
+                    if (start(battleUI, curr, subAction)) {
+                        return true;
+                    }
                 }
-
-                return start(battleTop, curr, subAction);
-
             }
             default -> {
-                System.out.println("Unknown targeting type: " + targetType);
+                Printbox.showMessage(battleUI, "Unknown Targeting Type" + targetType);
                 return false;
             }
         }
@@ -107,11 +130,11 @@ public class DecisionSystem {
     private ArrayList<NCharacter> getAliveEnemies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
             return enemy.characters.stream()
-                    .filter(c -> c != null && c.getHealth() > 0)
+                    .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
             return player.characters.stream()
-                    .filter(c -> c != null && c.getHealth() > 0)
+                    .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
     }
@@ -122,117 +145,22 @@ public class DecisionSystem {
     private ArrayList<NCharacter> getAliveAllies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
             return player.characters.stream()
-                    .filter(c -> c != null && c.getHealth() > 0)
+                    .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
             return enemy.characters.stream()
-                    .filter(c -> c != null && c.getHealth() > 0)
+                    .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
     }
 
-    // Subaction selection UI; will refactor
-    private Action selectSubAction(BattleTopUI battleTop, Action subactions) {
-        int choice = 0;
-        int maxChoice = subactions.getAllSubActions().size() - 1;
-
-        if (maxChoice == -1) {
-            System.out.println("What? The Subactions are empty????");
-            return null;
+    private boolean processMP(NCharacter curr, Action selectedAction, MainBattleUI battleUI) {
+        int currentMana = curr.getMana() - selectedAction.getManaCost();
+        if (currentMana < 0) {
+            Printbox.showMessage(battleUI, "You do not have enough mana!");
+            return false;
         }
-
-        SubactionsUI currUI = new SubactionsUI(battleTop);
-
-        while (true) {
-            currUI.display(subactions.getAllSubActions(), choice);
-            InputHandler.waitForInput();
-
-            if (InputHandler.right.get()) {
-                if (choice + 3 <= maxChoice) {
-                    choice += 3;
-                }
-                InputHandler.right.set(false);
-            }
-
-            if (InputHandler.left.get()) {
-                if (choice >= 3) {
-                    choice -= 3;
-                }
-                InputHandler.left.set(false);
-            }
-
-            if (InputHandler.down.get()) {
-                if (choice % 3 + 1 < 3 && choice + 1 <= maxChoice) {
-                    choice++;
-                }
-                InputHandler.down.set(false);
-            }
-
-            if (InputHandler.up.get()) {
-                if ((choice % 3) > 0) {
-                    choice--;
-                }
-                InputHandler.up.set(false);
-            }
-
-            if (InputHandler.back.get()) {
-                InputHandler.back.set(false);
-                return null;
-            }
-            if (InputHandler.enter.get()) {
-                InputHandler.enter.set(false);
-                return subactions.getAllSubActions().get(choice);
-            }
-        }
-    }
-
-    // Target selection UI; will refactor
-    private NCharacter selectTarget(BattleTopUI battleTop, ArrayList<NCharacter> targets) {
-        int choice = 0;
-        DecisionUI currUI = new DecisionUI(battleTop);
-        int maxChoice = targets.size() - 1;
-
-        while (true) {
-            currUI.display(targets, choice);
-            InputHandler.waitForInput();
-
-            if (InputHandler.right.get()) {
-                if (choice + 3 <= maxChoice) {
-                    choice += 3;
-                }
-                InputHandler.right.set(false);
-            }
-
-            if (InputHandler.left.get()) {
-                if (choice >= 3) {
-                    choice -= 3;
-                }
-                InputHandler.left.set(false);
-            }
-
-            if (InputHandler.down.get()) {
-                if (choice % 3 + 1 < 3 && choice + 1 <= maxChoice) {
-                    choice++;
-                }
-                InputHandler.down.set(false);
-            }
-
-            if (InputHandler.up.get()) {
-                if ((choice % 3) > 0) {
-                    choice--;
-                }
-                InputHandler.up.set(false);
-            }
-
-            if (InputHandler.back.get()) {
-                InputHandler.back.set(false);
-                return null;
-            }
-
-            if (InputHandler.enter.get()) {
-                InputHandler.enter.set(false);
-                return targets.get(choice);
-            }
-        }
+        curr.setMana(currentMana);
+        return true;
     }
 }

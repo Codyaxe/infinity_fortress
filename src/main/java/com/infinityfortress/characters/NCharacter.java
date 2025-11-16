@@ -1,12 +1,15 @@
 package com.infinityfortress.characters;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.infinityfortress.actions.Action;
+import com.infinityfortress.effects.summoneffect.SummonEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
+import com.infinityfortress.equipments.Equipment;
 import com.infinityfortress.races.Race;
 import com.infinityfortress.roles.Role;
-import com.infinityfortress.effects.TemporaryEffect;
 
 public class NCharacter {
     private String name;
@@ -25,8 +28,18 @@ public class NCharacter {
     private int luck;
     private Role role;
     private Race race;
-    private ArrayList<TemporaryEffect> condition;
+    private Set<TemporaryEffect> condition;
+    private Set<SummonEffect> summons;
     private boolean isEmpty;
+    private boolean isDead;
+    private boolean hasTakenTurn;
+
+    // Temp
+    private Equipment equipment = new Equipment();
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
 
     // Default Constructor
     // Role and Race class will have default values which will extend the base
@@ -43,10 +56,14 @@ public class NCharacter {
         this.critChance = 10;
         this.critStrength = 2;
         this.isEmpty = false;
+        this.isDead = false;
+        this.hasTakenTurn = false;
         this.luck = 2;
         this.role = c;
         this.race = r;
-        this.condition = new ArrayList<>();
+        this.condition = new HashSet<>();
+        this.summons = new HashSet<>();
+
     }
 
     public NCharacter(NCharacterType type, int health, int mana, int exp, int defense,
@@ -69,7 +86,9 @@ public class NCharacter {
         this.role = role;
         this.race = race;
         this.isEmpty = false;
-        this.condition = new ArrayList<>();
+        this.hasTakenTurn = false;
+        this.condition = new HashSet<>();
+        this.summons = new HashSet<>();
     }
 
     // Getters
@@ -141,6 +160,10 @@ public class NCharacter {
         return isEmpty;
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
+
     // Setters
 
     public void setType(NCharacterType type) {
@@ -199,6 +222,18 @@ public class NCharacter {
         this.isEmpty = x;
     }
 
+    public void setIsDead(boolean x) {
+        this.isDead = x;
+    }
+
+    public boolean hasTakenTurn() {
+        return hasTakenTurn;
+    }
+
+    public void setHasTakenTurn(boolean hasTakenTurn) {
+        this.hasTakenTurn = hasTakenTurn;
+    }
+
     // Conditions Manipulation
 
     public void addTemporaryEffect(TemporaryEffect effect) {
@@ -207,6 +242,24 @@ public class NCharacter {
 
     public void removeTemporaryEffect(TemporaryEffect effect) {
         condition.remove(effect);
+    }
+
+    public Set<TemporaryEffect> getAllTemporaryEffect() {
+        return condition;
+    }
+
+    // Summons Manipulation
+
+    public void addSummonEffect(SummonEffect summon) {
+        summons.add(summon);
+    }
+
+    public void removeSummonEffect(SummonEffect summon) {
+        summons.remove(summon);
+    }
+
+    public Set<SummonEffect> getAllSummonsEffect() {
+        return summons;
     }
 
     // Action Helper Methods for UI
@@ -219,6 +272,16 @@ public class NCharacter {
     public Action getSpecialAction() {
         List<Action> actions = role.getActions();
         return actions.size() > 1 ? actions.get(1) : null;
+    }
+
+    public Action getBlockAction() {
+        List<Action> actions = role.getActions();
+        return actions.size() > 1 ? actions.get(2) : null;
+    }
+
+    public Action getRestAction() {
+        List<Action> actions = role.getActions();
+        return actions.size() > 1 ? actions.get(3) : null;
     }
 
     public Action getActionByName(String actionName) {
