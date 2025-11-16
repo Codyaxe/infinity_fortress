@@ -8,6 +8,9 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
+import com.infinityfortress.effects.ProtectEffect;
+import com.infinityfortress.effects.RageEffect;
+import com.infinityfortress.effects.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.TargetingComponent;
 import com.infinityfortress.utils.AudioHandler;
@@ -96,30 +99,82 @@ public class TargetingSystem {
         for (int i = 0; i <= maxChoice; i++) {
             NCharacter target = targets.get(i);
 
-            // Damage-dependent
-            if (actionType == ActionType.DAMAGE) {
-                if (target.getHealth() <= (int) (0.10 * target.getMaxHealth())) {
-                    scores[i] += 100;
-                } else if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
-                    scores[i] += 75;
-                } else if (target.getHealth() <= (int) (0.50 * target.getMaxHealth())) {
-                    scores[i] += 50;
-                }
+            switch (actionType) {
+                case DAMAGE:
+                    if (target.getHealth() <= (int) (0.10 * target.getMaxHealth())) {
+                        scores[i] += 100;
+                    } else if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
+                        scores[i] += 75;
+                    } else if (target.getHealth() <= (int) (0.50 * target.getMaxHealth())) {
+                        scores[i] += 50;
+                    }
 
-                if (attackDominant(current)) {
-                    scores[i] += (int) (target.getMaxHealth() * 0.1);
-                }
-            }
+                    if (attackDominant(current)) {
+                        scores[i] += (int) (target.getMaxHealth());
+                    }
 
-            // Utility-dependent
-            else {
-                if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
-                    scores[i] += 100;
-                } else if (target.getHealth() <= (int) (0.50 * target.getMaxHealth())) {
-                    scores[i] += 75;
-                } else if (target.getHealth() <= (int) (0.75 * target.getMaxHealth())) {
-                    scores[i] += 50;
-                }
+                    if (isSquishy(current)) {
+                        scores[i] += (int) ((target.getMaxHealth() / target.getHealth()) * 2);
+                    }
+                    break;
+                case HEAL:
+                    if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
+                        scores[i] += 100;
+                    } else if (target.getHealth() <= (int) (0.50 * target.getMaxHealth())) {
+                        scores[i] += 75;
+                    } else if (target.getHealth() <= (int) (0.75 * target.getMaxHealth())) {
+                        scores[i] += 50;
+                    }
+                    break;
+                case RESTORATION:
+                    if (target.getMana() <= (int) (0.25 * target.getMaxMana())) {
+                        scores[i] += 100;
+                    } else if (target.getMana() <= (int) (0.50 * target.getMaxMana())) {
+                        scores[i] += 75;
+                    } else if (target.getMana() <= (int) (0.75 * target.getMaxMana())) {
+                        scores[i] += 50;
+                    }
+                    break;
+                case PROTECTION:
+                    if (defenseDominant(target)) {
+                        scores[i] += 50;
+                    } else if (isSquishy(target)) {
+                        scores[i] += 75;
+                    }
+
+                    if (!hasCondition(target, new ProtectEffect())) {
+                        scores[i] -= 200;
+                    }
+                    break;
+                case STRENGTH:
+                    if (attackDominant(target) && !hasCondition(target, new RageEffect())) {
+                        scores[i] += 50;
+                    }
+                    break;
+                case SPEED:
+                    if (speedDominant(target)) {
+                        scores[i] += 50;
+                    }
+                    break;
+                case CRITICAL:
+                    if (criticalDominant(target)) {
+                        scores[i] += 50;
+                    }
+                    break;
+                case HEALTH:
+                    if (healthDominant(target)) {
+                        scores[i] += 50;
+                    } else if (isSquishy(target)) {
+                        scores[i] += 75;
+                    }
+                    break;
+                case UTILITY:
+                    if (utilityDependent(target)) {
+                        scores[i] += 50;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -135,6 +190,47 @@ public class TargetingSystem {
         String role = character.getRole().getName();
         return role.equals("Warrior") || role.equals("Rogue") || role.equals("Archer")
                 || role.equals("Mage") || role.equals("Summoner");
+    }
+
+    private boolean speedDominant(NCharacter character) {
+        String role = character.getRole().getName();
+        return role.equals("Warrior") || role.equals("Rogue") || role.equals("Archer");
+    }
+
+    private boolean criticalDominant(NCharacter character) {
+        String role = character.getRole().getName();
+        return role.equals("Warrior") || role.equals("Mage") || role.equals("Archer");
+    }
+
+    private boolean healthDominant(NCharacter character) {
+        String role = character.getRole().getName();
+        return role.equals("Warrior") || role.equals("Tank");
+    }
+
+    private boolean defenseDominant(NCharacter character) {
+        String role = character.getRole().getName();
+        return role.equals("Warrior") || role.equals("Tank") || role.equals("Warlock");
+    }
+
+    private boolean utilityDependent(NCharacter character) {
+        String role = character.getRole().getName();
+        return role.equals("Warrior") || role.equals("Mage") || role.equals("Warlock") || role.equals("Rogue")
+                || role.equals("Summoner");
+    }
+
+    private boolean isSquishy(NCharacter character) {
+        String role = character.getRole().getName();
+        return role.equals("Healer") || role.equals("Cleric") || role.equals("Archer") || role.equals("Rogue")
+                || role.equals("Summoner");
+    }
+
+    private boolean hasCondition(NCharacter character, TemporaryEffect status) {
+        for (TemporaryEffect condition : character.getAllTemporaryEffect()) {
+            if (condition.equals(status)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

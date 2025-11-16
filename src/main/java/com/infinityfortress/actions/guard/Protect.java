@@ -1,26 +1,11 @@
 package com.infinityfortress.actions.guard;
 
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.TemporaryEffect;
+import com.infinityfortress.effects.ProtectEffect;
 
 public class Protect {
     public void execute(NCharacter user, NCharacter target) {
-        TemporaryEffect protectEffect = new TemporaryEffect(1, target) {
-            @Override
-            public void apply() {
-                this.target.setDefense(this.target.getDefense() + 4);
-            }
-
-            @Override
-            public void remove() {
-                this.target.setDefense(this.target.getDefense() - 4);
-            }
-
-            @Override
-            public String getName() {
-                return "Protect";
-            }
-        };
+        ProtectEffect protectEffect = new ProtectEffect(1, target);
 
         // If the user target themselves, this flag is not set.
         if (user == target) {

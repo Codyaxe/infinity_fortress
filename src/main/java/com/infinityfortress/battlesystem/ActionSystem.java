@@ -92,7 +92,7 @@ public class ActionSystem {
 
     MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
 
-    int[] scores = { 1000, 0, 0, 0 };
+    int[] scores = { 50, 0, 0, 0 };
     final int BASIC = 0;
     final int SPECIAL = 1;
     final int BLOCK = 2;
@@ -101,7 +101,7 @@ public class ActionSystem {
     // Mana scoring
     if (curr.getMana() == 0) {
       scores[REST] += 100;
-    } else if (curr.getMana() < (int) (0.25 * curr.getMaxMana())) {
+    } else if (curr.getMana() < (int) (0.33 * curr.getMaxMana())) {
       scores[REST] += 75;
     } else if (curr.getMana() == curr.getMana()) {
       scores[SPECIAL] += 75;

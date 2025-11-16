@@ -20,10 +20,9 @@ public class Player {
 
         characters.set(0, factory.createHumanWarrior(NCharacterType.ALLY));
         characters.set(1, factory.createHumanRogue(NCharacterType.ALLY));
-        characters.set(2, null);
-        characters.set(3, factory.createNephilimMage(NCharacterType.ALLY));
-        characters.set(4, factory.createNephilimCleric(NCharacterType.ALLY));
-
+        characters.set(2, factory.createDragonbornWarrior(NCharacterType.ALLY));
+        characters.set(3, factory.createNephilimTank(NCharacterType.ALLY));
+        characters.set(4, factory.createElfHealer(NCharacterType.ALLY));
 
     }
 }

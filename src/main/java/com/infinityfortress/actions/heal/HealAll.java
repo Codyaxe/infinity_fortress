@@ -8,7 +8,7 @@ import com.infinityfortress.characters.NCharacter;
 public class HealAll implements Action {
 
     public String getName() {
-        return "Heal One";
+        return "Heal All";
     }
 
     public HealAll() {

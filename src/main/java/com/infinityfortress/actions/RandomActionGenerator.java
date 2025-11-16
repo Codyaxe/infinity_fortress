@@ -120,7 +120,7 @@ public class RandomActionGenerator {
     }
 
     private static ActionType getRandomActionType() {
-        ActionType[] actionTypes = { ActionType.BUFF, ActionType.DAMAGE, ActionType.DEBUFF, ActionType.GENERIC,
+        ActionType[] actionTypes = { ActionType.DAMAGE, ActionType.GENERIC,
                 ActionType.HEAL, ActionType.PROTECTION, ActionType.UTILITY };
         return actionTypes[random.nextInt(actionTypes.length)];
     }

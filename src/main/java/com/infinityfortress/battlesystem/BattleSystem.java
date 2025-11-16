@@ -127,6 +127,7 @@ public class BattleSystem {
             if (character.getHealth() <= 0) {
                 character.setIsDead(true);
             }
+
         }
         mainBattleUI.updateField(player.characters, enemy.characters);
     }

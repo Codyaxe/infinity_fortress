@@ -30,6 +30,7 @@ public class NCharacter {
     private Set<TemporaryEffect> condition;
     private boolean isEmpty;
     private boolean isDead;
+    private boolean hasTakenTurn;
 
     // Temp
     private Equipment equipment = new Equipment();
@@ -54,6 +55,7 @@ public class NCharacter {
         this.critStrength = 2;
         this.isEmpty = false;
         this.isDead = false;
+        this.hasTakenTurn = false;
         this.luck = 2;
         this.role = c;
         this.race = r;
@@ -81,6 +83,7 @@ public class NCharacter {
         this.role = role;
         this.race = race;
         this.isEmpty = false;
+        this.hasTakenTurn = false;
         this.condition = new HashSet<>();
     }
 
@@ -217,6 +220,14 @@ public class NCharacter {
 
     public void setIsDead(boolean x) {
         this.isDead = x;
+    }
+
+    public boolean hasTakenTurn() {
+        return hasTakenTurn;
+    }
+
+    public void setHasTakenTurn(boolean hasTakenTurn) {
+        this.hasTakenTurn = hasTakenTurn;
     }
 
     // Conditions Manipulation

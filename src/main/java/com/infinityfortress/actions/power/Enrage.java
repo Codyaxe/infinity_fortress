@@ -4,7 +4,7 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.TemporaryEffect;
+import com.infinityfortress.effects.RageEffect;
 
 public class Enrage implements Action {
 
@@ -50,29 +50,14 @@ public class Enrage implements Action {
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        TemporaryEffect protectEffect = new TemporaryEffect(5, target) {
-            @Override
-            public void apply() {
-                this.target.setStrength(this.target.getStrength() + 5);
-            }
-
-            @Override
-            public void remove() {
-                this.target.setStrength(this.target.getStrength() - 5);
-            }
-
-            @Override
-            public String getName() {
-                return "Rage";
-            }
-        };
+        RageEffect rageEffect = new RageEffect(5, target);
 
         if (user == target) {
-            protectEffect.setJustApplied(false);
+            rageEffect.setJustApplied(false);
         }
 
-        protectEffect.apply();
-        target.addTemporaryEffect(protectEffect);
+        rageEffect.apply();
+        target.addTemporaryEffect(rageEffect);
         message = String.format("%s gains Rage.", user.getName());
     };
 }
