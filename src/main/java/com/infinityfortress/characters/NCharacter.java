@@ -7,7 +7,7 @@ import java.util.Set;
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.effects.summoneffect.SummonEffect;
 import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
-import com.infinityfortress.equipments.Equipment;
+import com.infinityfortress.equipments.EquippedSlots;
 import com.infinityfortress.races.Race;
 import com.infinityfortress.roles.Role;
 
@@ -30,14 +30,15 @@ public class NCharacter {
     private Race race;
     private Set<TemporaryEffect> condition;
     private Set<SummonEffect> summons;
+    private EquippedSlots equipments;
     private boolean isEmpty;
     private boolean isDead;
     private boolean hasTakenTurn;
 
     // Temp
-    private Equipment equipment = new Equipment();
+    private EquippedSlots equipment = new EquippedSlots();
 
-    public Equipment getEquipment() {
+    public EquippedSlots getEquipment() {
         return equipment;
     }
 

@@ -32,7 +32,7 @@ public class IceShard implements Action {
     }
 
     public String getBattleDescription() {
-        return "Fires an ice shard all enemies.";
+        return "Fires an ice shard to all enemies.";
     }
 
     public String getBattleMessage() {
