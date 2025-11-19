@@ -176,7 +176,7 @@ public class BattleSystem {
 
     private void updateDeathStatus(ArrayList<NCharacter> characters) {
         for (NCharacter c : characters) {
-            if (c.getHealth() <= 0) {
+            if (c!=null && c.getHealth() <= 0) {
                 c.setIsDead(true);
             }
         }

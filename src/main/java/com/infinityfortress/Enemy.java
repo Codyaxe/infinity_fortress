@@ -2,8 +2,10 @@ package com.infinityfortress;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-// import java.util.Random;
-import com.infinityfortress.characters.*;
+
+import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.characters.NCharacterFactory;
+import com.infinityfortress.characters.NCharacterType;
 
 public class Enemy {
     public ArrayList<NCharacter> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
@@ -16,10 +18,10 @@ public class Enemy {
 
         NCharacterFactory factory = new NCharacterFactory();
 
-        characters.set(0, factory.createDwarfTank(NCharacterType.ENEMY));
+        // characters.set(0, factory.createDwarfTank(NCharacterType.ENEMY));
         characters.set(1, factory.createBeastkinRogue(NCharacterType.ENEMY));
         characters.set(2, factory.createDragonbornSummoner(NCharacterType.ENEMY));
-        characters.set(3, factory.createDwarfWarrior(NCharacterType.ENEMY));
+        // characters.set(3, factory.createDwarfWarrior(NCharacterType.ENEMY));
         characters.set(4, factory.createOrcWarlock(NCharacterType.ENEMY));
     }
 

@@ -16,6 +16,7 @@ import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
 
 public class TargetingSystem {
+
     private Action selectedAction;
     private NCharacter current;
 
@@ -42,9 +43,11 @@ public class TargetingSystem {
         while (true) {
             targetUI.updateChoice(choice);
             InputHandler.waitForInput();
-
+            // Refinde option traversal
             if (InputHandler.right.get()) {
-                if (choice % 3 < 2 && choice + 1 <= maxChoice) {
+                if (targets.size() > 2 && choice==targets.size()-1 ) {
+                    choice = 2;
+                } else if (choice % 3 < 2 && choice + 1 <= maxChoice) {
                     choice++;
                 }
                 InputHandler.right.set(false);
@@ -52,7 +55,9 @@ public class TargetingSystem {
             }
 
             if (InputHandler.left.get()) {
-                if (choice % 3 > 0) {
+                if (targets.size() > 2 && choice==3 ) {
+                    choice = 0;
+                }else if (choice % 3 > 0) {
                     choice--;
                 }
                 InputHandler.left.set(false);
@@ -60,7 +65,9 @@ public class TargetingSystem {
             }
 
             if (InputHandler.down.get()) {
-                if (choice + 3 <= maxChoice) {
+                if (choice <= 2 && choice + 3 >= targets.size() - 1 && targets.size() > 3) {
+                    choice = targets.size() - 1;
+                } else if (choice + 3 <= maxChoice) {
                     choice += 3;
                 }
                 InputHandler.down.set(false);
@@ -99,7 +106,7 @@ public class TargetingSystem {
             NCharacter target = targets.get(i);
 
             switch (actionType) {
-                case DAMAGE:
+                case DAMAGE -> {
                     if (target.getHealth() <= (int) (0.10 * target.getMaxHealth())) {
                         scores[i] += 100;
                     } else if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
@@ -111,9 +118,8 @@ public class TargetingSystem {
                     if (isSquishy(current)) {
                         scores[i] += (int) ((target.getMaxHealth() / target.getHealth()) * 2);
                     }
-
-                    break;
-                case HEAL:
+                }
+                case HEAL -> {
                     if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
                         scores[i] += 100;
                     } else if (target.getHealth() <= (int) (0.50 * target.getMaxHealth())) {
@@ -121,8 +127,8 @@ public class TargetingSystem {
                     } else if (target.getHealth() <= (int) (0.75 * target.getMaxHealth())) {
                         scores[i] += 50;
                     }
-                    break;
-                case RESTORATION:
+                }
+                case RESTORATION -> {
                     if (target.getMana() <= (int) (0.25 * target.getMaxMana())) {
                         scores[i] += 100;
                     } else if (target.getMana() <= (int) (0.50 * target.getMaxMana())) {
@@ -130,8 +136,8 @@ public class TargetingSystem {
                     } else if (target.getMana() <= (int) (0.75 * target.getMaxMana())) {
                         scores[i] += 50;
                     }
-                    break;
-                case PROTECTION:
+                }
+                case PROTECTION -> {
                     if (defenseDominant(target)) {
                         scores[i] += 50;
                     } else if (isSquishy(target)) {
@@ -141,36 +147,36 @@ public class TargetingSystem {
                     if (!hasCondition(target, new ProtectEffect())) {
                         scores[i] -= 200;
                     }
-                    break;
-                case STRENGTH:
+                }
+                case STRENGTH -> {
                     if (attackDominant(target) && !hasCondition(target, new RageEffect())) {
                         scores[i] += 50;
                     }
-                    break;
-                case SPEED:
+                }
+                case SPEED -> {
                     if (speedDominant(target)) {
                         scores[i] += 50;
                     }
-                    break;
-                case CRITICAL:
+                }
+                case CRITICAL -> {
                     if (criticalDominant(target)) {
                         scores[i] += 50;
                     }
-                    break;
-                case HEALTH:
+                }
+                case HEALTH -> {
                     if (healthDominant(target)) {
                         scores[i] += 50;
                     } else if (isSquishy(target)) {
                         scores[i] += 75;
                     }
-                    break;
-                case UTILITY:
+                }
+                case UTILITY -> {
                     if (utilityDependent(target)) {
                         scores[i] += 50;
                     }
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
 

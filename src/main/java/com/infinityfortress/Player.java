@@ -21,8 +21,8 @@ public class Player {
         characters.set(0, factory.createDemonWarlock(NCharacterType.ALLY));
         characters.set(1, factory.createHumanCleric(NCharacterType.ALLY));
         characters.set(2, factory.createDragonbornMage(NCharacterType.ALLY));
-        characters.set(3, factory.createBeastkinArcher(NCharacterType.ALLY));
-        characters.set(4, factory.createBeastkinSummoner(NCharacterType.ALLY));
+        // characters.set(3, factory.createBeastkinArcher(NCharacterType.ALLY));
+        // characters.set(4, factory.createBeastkinSummoner(NCharacterType.ALLY));
 
     }
 }
