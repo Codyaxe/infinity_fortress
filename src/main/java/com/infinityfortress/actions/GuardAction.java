@@ -1,8 +1,8 @@
 package com.infinityfortress.actions;
 
-import com.infinityfortress.actions.block.ProtectAll;
-import com.infinityfortress.actions.block.ProtectOne;
-import com.infinityfortress.actions.block.ProtectShit;
+import com.infinityfortress.actions.guard.ProtectAll;
+import com.infinityfortress.actions.guard.ProtectOne;
+import com.infinityfortress.actions.guard.ProtectShit;
 
 public class GuardAction extends SubAction {
 

@@ -2,12 +2,12 @@ package com.infinityfortress.ui.OldMenu;
 
 public interface BattleUIComponent {
     // Use Composition to get the top UI instead of inheritance.
-    BattleFeildUI getBattleFeildUI();
+    BattleFieldUI getBattleFieldUI();
 
     // Build a frame with the common structure
 
     default String buildFrame(String[][] optionGrid, int[] optionHeader) {
-        StringBuilder frame = new StringBuilder(getBattleFeildUI().topUI.toString());
+        StringBuilder frame = new StringBuilder(getBattleFieldUI().topUI.toString());
 
         for (String[] row : optionGrid) {
             frame.append("│ ");

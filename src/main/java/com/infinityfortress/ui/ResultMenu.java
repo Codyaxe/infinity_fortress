@@ -1,17 +1,17 @@
 package com.infinityfortress.ui;
 
-import com.infinityfortress.ui.OldMenu.BattleFeildUI;
+import com.infinityfortress.ui.OldMenu.BattleFieldUI;
 import com.infinityfortress.ui.OldMenu.BattleUIComponent;
 
 public class ResultMenu implements BattleUIComponent {
-  private BattleFeildUI top;
+  private BattleFieldUI top;
 
-  public ResultMenu(BattleFeildUI top) {
+  public ResultMenu(BattleFieldUI top) {
     this.top = top;
   }
 
   @Override
-  public BattleFeildUI getBattleFeildUI() {
+  public BattleFieldUI getBattleFieldUI() {
     return this.top;
   }
 }

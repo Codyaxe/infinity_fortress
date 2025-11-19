@@ -29,14 +29,15 @@ public class SubActionComponent extends SelectionUI {
             int[][] coords = new int[subActions.size()][4];
 
             int prefix = padding + startX;
-            frame.append("\033[").append(startY + 3).append(";").append(startX + 1).append("H").append(" ".repeat(padding));
+            frame.append("\033[").append(startY + 3).append(";").append(startX + 1).append("H")
+                    .append(" ".repeat(padding));
             for (int i = 0; i < coords.length; i++) {
                 frame.append("  ").append(subActions.get(i).getName()).append("  ");
                 if (i < coords.length - 1) {
                     frame.append(" ".repeat(spaceBetween));
                 }
 
-                coords[i] = new int[]{startY + 2, startY + 4, prefix, sizes[i] + prefix + 1};
+                coords[i] = new int[] { startY + 2, startY + 4, prefix, sizes[i] + prefix + 1 };
                 prefix += (sizes[i] + spaceBetween);
             }
             frame.append(" ".repeat(padding));
@@ -55,13 +56,15 @@ public class SubActionComponent extends SelectionUI {
     public StringBuilder updateChoice(int choice) {
         StringBuilder frame = new StringBuilder();
 
-        String[] choiceIndicators = {"┌", "┐", "└", "┘"};
+        String[] choiceIndicators = { "┌", "┐", "└", "┘" };
         for (int i = 0; i < this.choiceCoords.length; i++) {
             for (int j = 0; j < choiceIndicators.length; j++) {
                 if (i == choice) {
-                    frame.append("\033[").append(this.choiceCoords[i][j / 2]).append(";").append(this.choiceCoords[i][j % 2 + 2]).append("H").append(choiceIndicators[j]); 
-                }else {
-                    frame.append("\033[").append(this.choiceCoords[i][j / 2]).append(";").append(this.choiceCoords[i][j % 2 + 2]).append("H").append(" ");
+                    frame.append("\033[").append(this.choiceCoords[i][j / 2]).append(";")
+                            .append(this.choiceCoords[i][j % 2 + 2]).append("H").append(choiceIndicators[j]);
+                } else {
+                    frame.append("\033[").append(this.choiceCoords[i][j / 2]).append(";")
+                            .append(this.choiceCoords[i][j % 2 + 2]).append("H").append(" ");
                 }
             }
         }

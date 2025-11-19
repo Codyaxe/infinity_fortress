@@ -3,6 +3,7 @@ package com.infinityfortress.actions;
 import com.infinityfortress.characters.NCharacter;
 
 public class RestAction implements Action {
+    private String message;
 
     public String getName() {
         return "Rest";
@@ -23,10 +24,6 @@ public class RestAction implements Action {
         return 0;
     };
 
-    public String getActionType() {
-        return "Generic";
-    };
-
     public String getStatDescription() {
         return "Block Stat Description";
     };
@@ -35,15 +32,30 @@ public class RestAction implements Action {
         return "Block Battle Description";
     };
 
+    public String getBattleMessage() {
+        return message;
+    };
+
     public TargetingType getTargetingType() {
         return TargetingType.SELF;
     }
+
+    public ActionType getActionType() {
+        return ActionType.GENERIC;
+    };
 
     public Action[] getSubActions() {
         return new Action[0];
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        // End Turn Restore MP?
+        int manaValue = user.getMana() + 5;
+        if (manaValue <= user.getMaxMana()) {
+            user.setMana(manaValue);
+        } else {
+            user.setMana(user.getMaxMana());
+        }
+
+        message = String.format("%s rested.", user.getName());
     };
 }

@@ -1,5 +1,7 @@
 package com.infinityfortress.utils;
 
+import com.infinityfortress.characters.NCharacter;
+
 public class Utils {
 
     public static void clearConsole() {
@@ -11,11 +13,12 @@ public class Utils {
     }
 
     public static void initiallizeBorders() {
-      StringBuilder frame = new StringBuilder();
-      frame.append("\033[1;1H┌").append("─".repeat(117)).append("┐\n");
-      for (int i = 0; i < 31; i++) frame.append("\033[").append(i+2).append(";1H│").append(" ".repeat(117)).append("│\n");
-      frame.append("\033[33;1H└").append("─".repeat(117)).append("┘");
-      System.out.print(frame.toString());
+        StringBuilder frame = new StringBuilder();
+        frame.append("\033[1;1H┌").append("─".repeat(117)).append("┐\n");
+        for (int i = 0; i < 31; i++)
+            frame.append("\033[").append(i + 2).append(";1H│").append(" ".repeat(117)).append("│\n");
+        frame.append("\033[33;1H└").append("─".repeat(117)).append("┘");
+        System.out.print(frame.toString());
     }
 
     public static void hideCursor() {
@@ -33,7 +36,7 @@ public class Utils {
         if (width < text.length()) {
             return text.substring(0, width);
         }
-        
+
         int padding = width - text.length();
         int padLeft = padding / 2;
         int padRight = padding - padLeft;
@@ -45,7 +48,7 @@ public class Utils {
         if (width < text.length()) {
             return text.substring(0, width);
         }
-        
+
         int padding = width - text.length();
         return text + " ".repeat(padding);
     }
@@ -55,7 +58,7 @@ public class Utils {
         if (width < text.length()) {
             return text.substring(0, width);
         }
-        
+
         int padding = width - text.length();
         return " ".repeat(padding) + text;
     }
@@ -72,7 +75,7 @@ public class Utils {
                 return text1 + text2.substring(0, remainingWidth);
             }
         }
-        
+
         int padding = width - text1.length() - text2.length();
         return text1 + " ".repeat(padding) + text2;
     }
@@ -95,7 +98,7 @@ public class Utils {
             // Add words to current row until column limit is reached
             while (wordIndex < words.length) {
                 String word = words[wordIndex];
-                
+
                 // Handle case where individual word is longer than column width
                 if (word.length() > cols) {
                     word = word.substring(0, cols);
@@ -128,6 +131,29 @@ public class Utils {
         }
 
         return grid;
+    }
+
+    /**
+     * Processes damage calculation and applies it to the target.
+     * Returns a message describing the damage dealt.
+     * 
+     * @param user        The character dealing damage
+     * @param target      The character receiving damage
+     * @param totalDamage The calculated damage before defense
+     * @return A formatted message string
+     */
+    public static String processDamage(NCharacter user, NCharacter target, int totalDamage) {
+        int damageValue = (int) (totalDamage - (0.5 * target.getDefense()));
+        if (damageValue < 0) {
+            damageValue = 0;
+        }
+        target.setHealth(target.getHealth() - damageValue);
+
+        if (damageValue > 0) {
+            return String.format("%s dealt %s damage to %s.", user.getName(), damageValue, target.getName());
+        } else {
+            return String.format("%s dealt no damage to %s.", user.getName(), target.getName());
+        }
     }
 
 }
