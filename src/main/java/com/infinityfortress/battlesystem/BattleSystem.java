@@ -12,7 +12,6 @@ import com.infinityfortress.characters.NCharacterType;
 import com.infinityfortress.effects.summoneffect.SummonEffect;
 import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
-import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
 import com.infinityfortress.utils.ModifiedPriorityQueue;
 
@@ -33,6 +32,7 @@ public class BattleSystem {
         decisionSystem = new DecisionSystem(player, enemy);
         statSystem = new StatSystem(player);
         actionSystem = new ActionSystem(decisionSystem);
+        itemSystem = new ItemSystem(player);
 
         // Gather all characters from player and enemy lists, filtering out null values
         ArrayList<NCharacter> characterList = Stream.concat(player.characters.stream(), enemy.characters.stream())
@@ -83,17 +83,14 @@ public class BattleSystem {
                 if (InputHandler.left.get()) {
                     choice = Math.max(0, choice - 1);
                     InputHandler.left.set(false);
-                    AudioHandler.playSelect();
                 }
                 if (InputHandler.right.get()) {
                     choice = Math.min(2, choice + 1);
                     InputHandler.right.set(false);
-                    AudioHandler.playSelect();
                 }
 
                 if (InputHandler.enter.get()) {
                     boolean actionSuccessful = false;
-                    AudioHandler.playEnter();
                     switch (choice) {
                         case 0 -> {
                             // Action
@@ -106,8 +103,8 @@ public class BattleSystem {
                             }
                         }
                         case 2 -> {
-                            // Equipment
-                            actionSuccessful = true;
+                            // Item
+                            itemSystem.start();
                         }
                     }
 

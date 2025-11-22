@@ -18,10 +18,10 @@ public class Enemy {
 
         NCharacterFactory factory = new NCharacterFactory();
 
-        // characters.set(0, factory.createDwarfTank(NCharacterType.ENEMY));
+        characters.set(0, factory.createDwarfTank(NCharacterType.ENEMY));
         characters.set(1, factory.createBeastkinRogue(NCharacterType.ENEMY));
         characters.set(2, factory.createDragonbornSummoner(NCharacterType.ENEMY));
-        // characters.set(3, factory.createDwarfWarrior(NCharacterType.ENEMY));
+        characters.set(3, factory.createDwarfWarrior(NCharacterType.ENEMY));
         characters.set(4, factory.createOrcWarlock(NCharacterType.ENEMY));
     }
 

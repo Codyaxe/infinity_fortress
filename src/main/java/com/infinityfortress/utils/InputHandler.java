@@ -1,6 +1,8 @@
 package com.infinityfortress.utils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import com.infinityfortress.utils.AudioHandler;
+
 
 public class InputHandler {
     private static final Object lock = new Object();
@@ -34,18 +36,30 @@ public class InputHandler {
             public void onKeyPressed(int keyCode) {
                 if (!isPressed.get()) {
                     switch (keyCode) {
-                        case KeyListenerThread.VK_RETURN ->
+                        case KeyListenerThread.VK_RETURN -> {
+                            AudioHandler.playEnter();
                             enter.set(true);
-                        case KeyListenerThread.VK_RIGHT ->
+                        }
+                        case KeyListenerThread.VK_RIGHT -> {
+                            AudioHandler.playSelect();
                             right.set(true);
-                        case KeyListenerThread.VK_LEFT ->
+                        }
+                        case KeyListenerThread.VK_LEFT -> {
+                            AudioHandler.playSelect();
                             left.set(true);
-                        case KeyListenerThread.VK_UP ->
+                        }
+                        case KeyListenerThread.VK_UP -> {
+                            AudioHandler.playSelect();
                             up.set(true);
-                        case KeyListenerThread.VK_DOWN ->
+                        }
+                        case KeyListenerThread.VK_DOWN -> {
+                            AudioHandler.playSelect();
                             down.set(true);
-                        case KeyListenerThread.VK_ESCAPE ->
+                        }
+                        case KeyListenerThread.VK_ESCAPE -> {
+                            AudioHandler.playBack();
                             back.set(true);
+                        }
                     }
                     notifyInput();
                     isPressed.set(true);

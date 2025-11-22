@@ -9,7 +9,6 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.SubActionComponent;
-import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
 
 public class SubActionSystem {
@@ -39,21 +38,17 @@ public class SubActionSystem {
             if (InputHandler.left.get()) {
                 choice = Math.max(0, choice - 1);
                 InputHandler.left.set(false);
-                AudioHandler.playSelect();
             }
             if (InputHandler.right.get()) {
                 choice = Math.min(maxChoice, choice + 1);
                 InputHandler.right.set(false);
-                AudioHandler.playSelect();
             }
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
-                AudioHandler.playBack();
                 return null;
             }
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
-                AudioHandler.playEnter();
                 if (choice < availableActions.size()) {
                     return availableActions.get(choice);
                 }

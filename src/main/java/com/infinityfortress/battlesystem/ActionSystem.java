@@ -7,7 +7,6 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
 import com.infinityfortress.ui.BattleMenu.ActionComponent;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
-import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
 
 public class ActionSystem {
@@ -41,20 +40,16 @@ public class ActionSystem {
       if (InputHandler.left.get()) {
         choice = Math.max(0, choice - 1);
         InputHandler.left.set(false);
-        AudioHandler.playSelect();
       }
       if (InputHandler.right.get()) {
         choice = Math.min(maxChoice, choice + 1);
         InputHandler.right.set(false);
-        AudioHandler.playSelect();
       }
       if (InputHandler.back.get()) {
         InputHandler.back.set(false);
-        AudioHandler.playBack();
         return false;
       }
       if (InputHandler.enter.get()) {
-        AudioHandler.playEnter();
         switch (choice) {
           case 0 -> {
             if (decisionSystem.start(mainBattleUI, curr, curr.getBasicAction())) {

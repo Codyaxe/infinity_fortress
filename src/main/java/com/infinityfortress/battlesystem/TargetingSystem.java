@@ -12,7 +12,6 @@ import com.infinityfortress.effects.temporaryeffect.RageEffect;
 import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.TargetingComponent;
-import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
 
 public class TargetingSystem {
@@ -51,7 +50,6 @@ public class TargetingSystem {
                     choice++;
                 }
                 InputHandler.right.set(false);
-                AudioHandler.playSelect();
             }
 
             if (InputHandler.left.get()) {
@@ -61,7 +59,6 @@ public class TargetingSystem {
                     choice--;
                 }
                 InputHandler.left.set(false);
-                AudioHandler.playSelect();
             }
 
             if (InputHandler.down.get()) {
@@ -71,7 +68,6 @@ public class TargetingSystem {
                     choice += 3;
                 }
                 InputHandler.down.set(false);
-                AudioHandler.playSelect();
             }
 
             if (InputHandler.up.get()) {
@@ -79,18 +75,15 @@ public class TargetingSystem {
                     choice -= 3;
                 }
                 InputHandler.up.set(false);
-                AudioHandler.playSelect();
             }
 
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
-                AudioHandler.playBack();
                 return null;
             }
 
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
-                AudioHandler.playEnter();
                 return targets.get(choice);
             }
         }

@@ -65,7 +65,6 @@ public class MainBattleUI {
   }
 
   public void display() {
-    // It just looks weird and that's why I like it
     System.out.print(
         this.field.getComponent()
             .append(this.turnOrder.getComponent())

@@ -1,4 +1,4 @@
-package com.infinityfortress.equipments;
+package com.infinityfortress.items.equipments;
 
 public class EquippedSlots {
     Equipment weapon;

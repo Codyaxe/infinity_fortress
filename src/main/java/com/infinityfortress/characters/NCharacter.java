@@ -7,7 +7,7 @@ import java.util.Set;
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.effects.summoneffect.SummonEffect;
 import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
-import com.infinityfortress.equipments.EquippedSlots;
+import com.infinityfortress.items.equipments.EquippedSlots;
 import com.infinityfortress.races.Race;
 import com.infinityfortress.roles.Role;
 

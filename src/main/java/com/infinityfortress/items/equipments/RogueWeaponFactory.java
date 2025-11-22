@@ -1,73 +1,75 @@
-package com.infinityfortress.equipments;
+package com.infinityfortress.items.equipments;
+
+import com.infinityfortress.items.ItemRarity;
 
 public class RogueWeaponFactory {
     Equipment createRustfangDagger() {
         return new Equipment("Rustfang Dagger", "Weapon", "Rogue", 5, 1, 0, 1, 1, 0, 2,
                 "A rusted blade concealing deadly sharpness, striking unseen and leaving foes to wonder what hit them.",
-                EquipmentRarity.FORGED);
+                ItemRarity.FORGED);
     }
 
     Equipment createShadowbiteClaws() {
         return new Equipment("Shadowbite Claws", "Weapon", "Rogue", 9, 2, 0, 1, 1, 1, 4,
                 "Forged in darkness, these claws tear flesh with silent precision, perfect for ambushes.",
-                EquipmentRarity.FORGED);
+                ItemRarity.FORGED);
     }
 
     Equipment createTwinsteelShivs() {
         return new Equipment("Twinsteel Shivs", "Weapon", "Rogue", 11, 1, 0, 2, 1, 2, 5,
                 "Paired blades for swift, twin strikes; each cut quick, silent, and merciless.",
-                EquipmentRarity.FORGED);
+                ItemRarity.FORGED);
     }
 
     Equipment createVenomlashDaggers() {
         return new Equipment("Venomlash Daggers", "Weapon", "Rogue", 15, 4, 0, 1, 2, 1, 7,
-                "Daggers coated in potent toxin, each slash drains life and sows fear.", EquipmentRarity.ENCHANTED);
+                "Daggers coated in potent toxin, each slash drains life and sows fear.", ItemRarity.ENCHANTED);
     }
 
     Equipment createBloodtraceChakrams() {
         return new Equipment("Bloodtrace Chakrams", "Weapon", "Rogue", 17, 3, 0, 1, 2, 4, 7,
                 "Spinning with lethal precision in close quarters, each slash leaves a trail of crimson and fear.",
-                EquipmentRarity.ENCHANTED);
+                ItemRarity.ENCHANTED);
     }
 
     Equipment createWhisperfangBlades() {
         return new Equipment("Whisperfang Blades", "Weapon", "Rogue", 20, 3, 0, 3, 1, 3, 10,
-                "Silent as a shadow, sharp as a fang; every strike whispers death.", EquipmentRarity.ENCHANTED);
+                "Silent as a shadow, sharp as a fang; every strike whispers death.", ItemRarity.ENCHANTED);
     }
 
     Equipment createNightreaverClaws() {
         return new Equipment("Nightreaver Claws", "Weapon", "Rogue", 23, 3, 0, 4, 4, 3, 9,
                 "Perfect for prowling predators, they slice silently and vanish before retaliation.",
-                EquipmentRarity.MYSTIC);
+                ItemRarity.MYSTIC);
     }
 
     Equipment createEclipsingChakrams() {
         return new Equipment("Eclipsing Chakrams", "Weapon", "Rogue", 27, 4, 0, 5, 4, 4, 10,
                 "Moon-forged discs whirling in deadly arcs, striking foes with shadowed elegance.",
-                EquipmentRarity.MYSTIC);
+                ItemRarity.MYSTIC);
     }
 
     Equipment createDreadveilKnives() {
         return new Equipment("Dreadveil Knives", "Weapon", "Rogue", 29, 0, 0, 5, 7, 10, 7,
                 "Every slash siphons the essence of your foe, striking with lethal precision; only the most daring rogues can wield its ruthless edge.",
-                EquipmentRarity.ETHEREAL);
+                ItemRarity.ETHEREAL);
     }
 
     Equipment createGloombiteTalons() {
         return new Equipment("Gloombite Talons", "Weapon", "Rogue", 29, 6, 0, 7, 2, 7, 11,
                 "Forged for the shadows, each claw strikes with cunning force; skill and timing amplify its deadly potential in every encounter.",
-                EquipmentRarity.ETHEREAL);
+                ItemRarity.ETHEREAL);
     }
 
     Equipment createVeilpiercerChakrams() {
         return new Equipment("Veilpiercer Chakrams", "Weapon", "Rogue", 30, 2, 0, 3, 5, 5, 15,
                 "Luck guides each spinning blade, slicing unseen through defenses; a rogue’s touch makes the improbable strike inevitable.",
-                EquipmentRarity.ETHEREAL);
+                ItemRarity.ETHEREAL);
     }
 
     Equipment createAscRhaenKris() {
         return new Equipment("Asc Rhaen Kris", "Weapon", "Rogue", 40, 2, 0, 3, 5, 5, 25,
                 "Whispers of forgotten gods cling to its twin edges; every strike severs not flesh, but the thread of fate that binds one to the living.",
-                EquipmentRarity.ASC);
+                ItemRarity.ASC);
     }
 }
