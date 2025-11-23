@@ -34,7 +34,8 @@ public class Utils {
     public static String center(String text, int width) {
         // Handle case where width is less than text length
         if (width < text.length()) {
-            return text.substring(0, width);
+            int startIndex = (text.length() - width) / 2;
+            return text.substring(startIndex, startIndex + width);
         }
 
         int padding = width - text.length();
@@ -156,4 +157,4 @@ public class Utils {
         }
     }
 
-}
+};

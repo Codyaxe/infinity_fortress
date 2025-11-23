@@ -2,6 +2,7 @@ package com.infinityfortress.ui.ItemMenu;
 
 // import com.infinityfortress.items.Items;
 import java.util.ArrayList;
+
 import com.infinityfortress.items.Items;
 
 public class MainItemMenu {
@@ -15,18 +16,6 @@ public class MainItemMenu {
       System.out.print(ItemSkeleton.getComponent().toString());
     }
 
-    public void updateScroll(int curr) {
-      
-    }
-
-    public void updateItemStat(int curr) {
-      
-    }
-
-    public void updateItemDesc(int curr) {
-      
-    }
-  
     public void display(int curr, int currScroll) {
       System.out.print(
             ListComponent.getComponent(items, currScroll, curr)                        
