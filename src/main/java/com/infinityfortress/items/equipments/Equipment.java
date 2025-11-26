@@ -27,6 +27,8 @@ public class Equipment implements Items {
     String flavorText;
     ItemRarity rarity;
 
+    boolean isUsed;
+
     Equipment() {
         this.name = "";
         this.type = "";
@@ -43,6 +45,7 @@ public class Equipment implements Items {
         this.description = "";
         this.flavorText = "";
         this.rarity = ItemRarity.NONE;
+        this.isUsed = false;
     }
 
     Equipment(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
@@ -63,6 +66,7 @@ public class Equipment implements Items {
         this.description = description;
         this.flavorText = flavorText;
         this.rarity = rarity;
+        this.isUsed = false;
     }
 
     Equipment(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
@@ -160,5 +164,13 @@ public class Equipment implements Items {
     @Override
     public ItemRarity getRarity() {
         return rarity;
+    }
+
+    public boolean getisUsed() {
+        return isUsed;
+    }
+
+    public void setIsUsed(boolean x) {
+        this.isUsed = x;
     }
 }

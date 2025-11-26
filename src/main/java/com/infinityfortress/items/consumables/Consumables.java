@@ -29,6 +29,8 @@ public class Consumables implements Items {
     private ItemRarity rarity;
     private ConsumableTier tier;
 
+    private boolean isConsumed;
+
     Consumables() {
         this.name = "";
         this.type = "";
@@ -46,6 +48,7 @@ public class Consumables implements Items {
         this.flavorText = "";
         this.rarity = ItemRarity.NONE;
         this.tier = ConsumableTier.STANDARD;
+        this.isConsumed = false;
     }
 
     Consumables(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
@@ -67,6 +70,7 @@ public class Consumables implements Items {
         this.flavorText = flavorText;
         this.rarity = rarity;
         this.tier = tier;
+        this.isConsumed = false;
     }
 
     // Getters
@@ -151,5 +155,13 @@ public class Consumables implements Items {
 
     public ConsumableTier getTier() {
         return tier;
+    }
+
+    public boolean getIsConsumed() {
+        return isConsumed;
+    }
+
+    public void setIsConsumed(boolean x) {
+        this.isConsumed = x;
     }
 }

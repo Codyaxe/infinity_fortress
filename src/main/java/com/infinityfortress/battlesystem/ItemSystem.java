@@ -60,7 +60,12 @@ public class ItemSystem {
       }
 
       if (InputHandler.enter.get()) {
-        if (processItems(mainBattleUI, player.inventory.get(curr), current)) {
+        if (processItems(mainBattleUI, inventory.get(curr), current)) {
+          for (Items item : inventory) {
+            if (isItemDeleted(mainBattleUI, item)) {
+              inventory.remove(item);
+            }
+          }
           return;
         }
       }
@@ -84,6 +89,10 @@ public class ItemSystem {
 
       @Override
       public void visit(Equipment equipment) {
+        if (equipment.getisUsed()) {
+          Printbox.showMessage(mainBattleUI, "Equipment is already in use!");
+          return;
+        }
         TargetingSystem targetingSystem = new TargetingSystem(null, current);
         NCharacter curr = targetingSystem.start(mainBattleUI, player.getCharacters());
         if (curr != null) {
@@ -128,29 +137,47 @@ public class ItemSystem {
           return;
         }
 
+        // Replace Logic
         switch (equipment.getType()) {
           case "Accessory":
-            // UI to choose which equipment
+            // UI to choose which equipment accessory
 
             int choice = 1;
             if (InputHandler.enter.get()) {
               if (choice == 1) {
+                if (curr.getEquipment().getAccessory1().getisUsed()) {
+                  curr.getEquipment().getAccessory1().setIsUsed(false);
+                }
                 curr.getEquipment().setAccessory1(equipment);
+                equipment.setIsUsed(true);
               } else if (choice == 2) {
+                if (curr.getEquipment().getAccessory2().getisUsed()) {
+                  curr.getEquipment().getAccessory2().setIsUsed(false);
+                }
                 curr.getEquipment().setAccessory2(equipment);
+                equipment.setIsUsed(true);
               } else {
                 Printbox.showMessage(mainBattleUI, "Error! Invalid Accessory choice.");
               }
             }
+
             break;
           case "Weapon":
+            if (curr.getEquipment().getWeapon().getisUsed()) {
+              curr.getEquipment().getWeapon().setIsUsed(false);
+            }
             curr.getEquipment().setWeapon(equipment);
+            equipment.setIsUsed(true);
             break;
           case "Armor":
+            if (curr.getEquipment().getArmor().getisUsed()) {
+              curr.getEquipment().getArmor().setIsUsed(false);
+            }
             curr.getEquipment().setArmor(equipment);
+            equipment.setIsUsed(true);
             break;
           default:
-            Printbox.showMessage(mainBattleUI, "Error! No Equipment of the type is found.");
+            Printbox.showMessage(mainBattleUI, "Error! No Equipment of that type is found.");
         }
       }
 
@@ -167,14 +194,48 @@ public class ItemSystem {
 
         curr.addTemporaryEffect(effect);
         effect.apply();
+        cons.setIsConsumed(true);
 
       }
     }
+
+    // Restorative
+
+    // Utility
 
     ValidatingVisitor itemVisitor = new ValidatingVisitor();
 
     item.accept(itemVisitor);
     return itemVisitor.getIsValid();
 
+  }
+
+  private boolean isItemDeleted(MainBattleUI mainBattleUI, Visitable item) {
+
+    class GarbageCheckerVisitor implements Visitor {
+      private boolean isDeleted = false;
+
+      public boolean getIsDeleted() {
+        return isDeleted;
+      }
+
+      @Override
+      public void visit(Equipment equipment) {
+        // Logic for removed equipment
+      }
+
+      @Override
+      public void visit(Consumables cons) {
+        if (cons.getIsConsumed()) {
+          isDeleted = true;
+        }
+      }
+
+    }
+
+    // Cute name :>
+    GarbageCheckerVisitor racoon = new GarbageCheckerVisitor();
+    item.accept(racoon);
+    return racoon.getIsDeleted();
   }
 }
