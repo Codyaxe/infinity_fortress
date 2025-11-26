@@ -13,8 +13,11 @@ import com.infinityfortress.items.equipments.Equipment;
 import java.util.ArrayList;
 import com.infinityfortress.utils.InputHandler;
 import com.infinityfortress.utils.Printbox;
+import com.infinityfortress.utils.MutableInt;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.ItemMenu.MainItemMenu;
+
+/*For Modularity and Maintanability Purposes, All Code Shall adhere to this code structure standards */
 
 public class ItemSystem {
 
@@ -27,49 +30,28 @@ public class ItemSystem {
   }
 
   public void start(MainBattleUI mainBattleUI, NCharacter current) {
+    handleItemMenu(mainBattleUI, current);
+  }
+
+  private void handleItemMenu(MainBattleUI mainBattleUI, NCharacter current) {
     ArrayList<Items> inventory = player.inventory;
-    int size = inventory.size(), scrollMin = 2, scrollMax = 12 - 3, curr = 0, currScroll = 0;
+    int size = inventory.size();
+    int scrollMin = 2;
+    int scrollMax = 9;
+    MutableInt currArr = new MutableInt(0);
+    MutableInt scrollArr = new MutableInt(0);
     MainItemMenu itemMenu = new MainItemMenu(inventory, 0);
     while (true) {
-      itemMenu.display(curr, currScroll);
+      itemMenu.display(currArr.value, scrollArr.value);
       InputHandler.waitForInput();
-      if (InputHandler.left.get()) {
-        InputHandler.left.set(false);
-      }
-
-      if (InputHandler.right.get()) {
-        InputHandler.right.set(false);
-      }
-
-      if (InputHandler.up.get()) {
-        if (curr <= scrollMin && currScroll > 0) {
-          currScroll--;
-        } else {
-          curr = Math.max(curr - 1, 0);
-        }
-        InputHandler.up.set(false);
-      }
-
-      if (InputHandler.down.get()) {
-        if (curr >= scrollMax && currScroll + 12 < size) {
-          currScroll++;
-        } else {
-          curr = Math.min(curr + 1, 11);
-        }
-        InputHandler.down.set(false);
-      }
-
+      handleNavigation(currArr, scrollArr, size, scrollMin, scrollMax);
       if (InputHandler.enter.get()) {
-        if (processItems(mainBattleUI, inventory.get(curr), current)) {
-          for (Items item : inventory) {
-            if (isItemDeleted(mainBattleUI, item)) {
-              inventory.remove(item);
-            }
-          }
+        if (processItems(mainBattleUI, inventory.get(currArr.value), current)) {
+          removeDeletedItems(mainBattleUI, inventory);
+          mainBattleUI.updateField(player.getCharacters(), enemy.getCharacters());
           return;
         }
       }
-
       if (InputHandler.back.get()) {
         InputHandler.back.set(false);
         return;
@@ -77,165 +59,195 @@ public class ItemSystem {
     }
   }
 
-  private boolean processItems(MainBattleUI mainBattleUI, Visitable item, NCharacter current) {
-
-    // Visitor Approach
-    class ValidatingVisitor implements Visitor {
-      public boolean isValid = true;
-
-      public boolean getIsValid() {
-        return isValid;
-      }
-
-      @Override
-      public void visit(Equipment equipment) {
-        if (equipment.getisUsed()) {
-          Printbox.showMessage(mainBattleUI, "Equipment is already in use!");
-          return;
-        }
-        TargetingSystem targetingSystem = new TargetingSystem(null, current);
-        NCharacter curr = targetingSystem.start(mainBattleUI, player.getCharacters());
-        if (curr != null) {
-          processEquipment(equipment, curr);
-        }
-      }
-
-      @Override
-      public void visit(Consumables cons) {
-        TargetingSystem targetingSystem = new TargetingSystem(null, current);
-        NCharacter curr;
-
-        switch (cons.getType()) {
-
-          case "Booster":
-            curr = targetingSystem.start(mainBattleUI, player.getCharacters());
-            if (curr != null) {
-              proccessConsumables(cons, curr);
-            }
-            break;
-          case "Debuffer":
-            curr = targetingSystem.start(mainBattleUI, enemy.getCharacters());
-            if (curr != null) {
-              proccessConsumables(cons, curr);
-            }
-            break;
-          case "Restorative":
-            // logic
-            break;
-          case "Utility":
-            // logic
-            break;
-          default:
-            Printbox.showMessage(mainBattleUI, "Error! What type of consumable is this?");
-            break;
-        }
-      }
-
-      private void processEquipment(Equipment equipment, NCharacter curr) {
-        if (equipment.getRole() != "Any" && equipment.getRole() != curr.getRole().getName()) {
-          isValid = false;
-          return;
-        }
-
-        // Replace Logic
-        switch (equipment.getType()) {
-          case "Accessory":
-            // UI to choose which equipment accessory
-
-            int choice = 1;
-            if (InputHandler.enter.get()) {
-              if (choice == 1) {
-                if (curr.getEquipment().getAccessory1().getisUsed()) {
-                  curr.getEquipment().getAccessory1().setIsUsed(false);
-                }
-                curr.getEquipment().setAccessory1(equipment);
-                equipment.setIsUsed(true);
-              } else if (choice == 2) {
-                if (curr.getEquipment().getAccessory2().getisUsed()) {
-                  curr.getEquipment().getAccessory2().setIsUsed(false);
-                }
-                curr.getEquipment().setAccessory2(equipment);
-                equipment.setIsUsed(true);
-              } else {
-                Printbox.showMessage(mainBattleUI, "Error! Invalid Accessory choice.");
-              }
-            }
-
-            break;
-          case "Weapon":
-            if (curr.getEquipment().getWeapon().getisUsed()) {
-              curr.getEquipment().getWeapon().setIsUsed(false);
-            }
-            curr.getEquipment().setWeapon(equipment);
-            equipment.setIsUsed(true);
-            break;
-          case "Armor":
-            if (curr.getEquipment().getArmor().getisUsed()) {
-              curr.getEquipment().getArmor().setIsUsed(false);
-            }
-            curr.getEquipment().setArmor(equipment);
-            equipment.setIsUsed(true);
-            break;
-          default:
-            Printbox.showMessage(mainBattleUI, "Error! No Equipment of that type is found.");
-        }
-      }
-
-      private void proccessConsumables(Consumables cons, NCharacter curr) {
-        if (cons.getRole() != "Any" && cons.getRole() != curr.getRole().getName()) {
-          isValid = false;
-          return;
-        }
-
-        FactoryEffect effect = new FactoryEffect(cons.getName(), cons.getDuration(), curr, cons.getHealth(),
-            cons.getMana(), cons.getDefense(),
-            cons.getStrength(), cons.getCritChance(), cons.getCritStrength(), cons.getLuck(), cons.getSpeed(),
-            TemporaryEffectType.BUFF);
-
-        curr.addTemporaryEffect(effect);
-        effect.apply();
-        cons.setIsConsumed(true);
-
-      }
+  private void handleNavigation(MutableInt currArr, MutableInt scrollArr, int size, int scrollMin, int scrollMax) {
+    if (InputHandler.left.get()) {
+      InputHandler.left.set(false);
     }
+    if (InputHandler.right.get()) {
+      InputHandler.right.set(false);
+    }
+    if (InputHandler.up.get()) {
+      if (currArr.value <= scrollMin && scrollArr.value > 0) {
+        scrollArr.value--;
+      } else {
+        currArr.value = Math.max(currArr.value - 1, 0);
+      }
+      InputHandler.up.set(false);
+    }
+    if (InputHandler.down.get()) {
+      if (currArr.value >= scrollMax && scrollArr.value + 12 < size) {
+        scrollArr.value++;
+      } else {
+        currArr.value = Math.min(currArr.value + 1, 11);
+      }
+      InputHandler.down.set(false);
+    }
+  }
 
-    // Restorative
+  private void removeDeletedItems(MainBattleUI mainBattleUI, ArrayList<Items> inventory) {
+    inventory.removeIf(item -> isItemDeleted(mainBattleUI, item));
+  }
 
-    // Utility
-
-    ValidatingVisitor itemVisitor = new ValidatingVisitor();
-
-    item.accept(itemVisitor);
-    return itemVisitor.getIsValid();
-
+  private boolean processItems(MainBattleUI mainBattleUI, Visitable item, NCharacter current) {
+    ItemProcessingVisitor visitor = new ItemProcessingVisitor(mainBattleUI, current, player, enemy);
+    item.accept(visitor);
+    return visitor.getIsValid();
   }
 
   private boolean isItemDeleted(MainBattleUI mainBattleUI, Visitable item) {
-
-    class GarbageCheckerVisitor implements Visitor {
-      private boolean isDeleted = false;
-
-      public boolean getIsDeleted() {
-        return isDeleted;
-      }
-
-      @Override
-      public void visit(Equipment equipment) {
-        // Logic for removed equipment
-      }
-
-      @Override
-      public void visit(Consumables cons) {
-        if (cons.getIsConsumed()) {
-          isDeleted = true;
-        }
-      }
-
-    }
-
-    // Cute name :>
-    GarbageCheckerVisitor racoon = new GarbageCheckerVisitor();
+    // Racoon deez nuts
+    ItemDeletionVisitor racoon = new ItemDeletionVisitor();
     item.accept(racoon);
     return racoon.getIsDeleted();
+  }
+}
+
+class ItemProcessingVisitor implements Visitor {
+  private final MainBattleUI mainBattleUI;
+  private final NCharacter current;
+  private final Player player;
+  private final Enemy enemy;
+  private boolean isValid = true;
+
+  public ItemProcessingVisitor(MainBattleUI mainBattleUI, NCharacter current, Player player, Enemy enemy) {
+    this.mainBattleUI = mainBattleUI;
+    this.current = current;
+    this.player = player;
+    this.enemy = enemy;
+  }
+
+  public boolean getIsValid() {
+    return isValid;
+  }
+
+  @Override
+  public void visit(Equipment equipment) {
+    if (equipment.getisUsed()) {
+      Printbox.showMessage(mainBattleUI, "Equipment is already in use!");
+      return;
+    }
+    TargetingSystem targetingSystem = new TargetingSystem(null, current);
+    NCharacter target = targetingSystem.start(mainBattleUI, player.getCharacters());
+    if (target != null) {
+      processEquipment(equipment, target);
+    }
+  }
+
+  @Override
+  public void visit(Consumables cons) {
+    TargetingSystem targetingSystem = new TargetingSystem(null, current);
+    NCharacter target = null;
+
+    switch (cons.getType()) {
+      case "Booster":
+        target = targetingSystem.start(mainBattleUI, player.getCharacters());
+        if (target != null) {
+          processStatusBasedConsumables(cons, target);
+        }
+        break;
+      case "Debuffer":
+        target = targetingSystem.start(mainBattleUI, enemy.getCharacters());
+        if (target != null) {
+          processStatusBasedConsumables(cons, target);
+        }
+        break;
+      case "Restorative":
+        target = targetingSystem.start(mainBattleUI, player.getCharacters());
+        if (target != null) {
+          processRestorativeConsumables(cons, target);
+        }
+        break;
+      case "Utility":
+        // logic
+        break;
+      default:
+        Printbox.showMessage(mainBattleUI, "Error! What type of consumable is this?");
+        break;
+    }
+  }
+
+  private void processEquipment(Equipment equipment, NCharacter target) {
+    if (equipment.getRole() != "Any" && equipment.getRole() != target.getRole().getName()) {
+      isValid = false;
+      return;
+    }
+
+    switch (equipment.getType()) {
+      // Will add update stats and remove stats implementation
+      case "Accessory":
+        // For now, equip to slot 1
+        if (target.getEquipment().getAccessory1() != null && target.getEquipment().getAccessory1().getisUsed()) {
+          target.getEquipment().getAccessory1().setIsUsed(false);
+        }
+        target.getEquipment().setAccessory1(equipment);
+        equipment.setIsUsed(true);
+        break;
+      case "Weapon":
+        if (target.getEquipment().getWeapon() != null && target.getEquipment().getWeapon().getisUsed()) {
+          target.getEquipment().getWeapon().setIsUsed(false);
+        }
+        target.getEquipment().setWeapon(equipment);
+        equipment.setIsUsed(true);
+        break;
+      case "Armor":
+        if (target.getEquipment().getArmor() != null && target.getEquipment().getArmor().getisUsed()) {
+          target.getEquipment().getArmor().setIsUsed(false);
+        }
+        target.getEquipment().setArmor(equipment);
+        equipment.setIsUsed(true);
+        break;
+      default:
+        Printbox.showMessage(mainBattleUI, "Error! No Equipment of that type is found.");
+    }
+  }
+
+  private void processStatusBasedConsumables(Consumables cons, NCharacter target) {
+    if (cons.getRole() != "Any" && cons.getRole() != target.getRole().getName()) {
+      isValid = false;
+      return;
+    }
+
+    FactoryEffect effect = new FactoryEffect(cons.getName(), cons.getDuration(), target, cons.getHealth(),
+        cons.getMana(), cons.getDefense(),
+        cons.getStrength(), cons.getCritChance(), cons.getCritStrength(), cons.getLuck(), cons.getSpeed(),
+        TemporaryEffectType.BUFF);
+
+    target.addTemporaryEffect(effect);
+    effect.apply();
+    cons.setIsConsumed(true);
+  }
+
+  private void processRestorativeConsumables(Consumables cons, NCharacter target) {
+    if (cons.getRole() != "Any" && cons.getRole() != target.getRole().getName()) {
+      isValid = false;
+      return;
+    }
+
+    // Restore health and mana
+    int healthRestore = cons.getHealth();
+    int manaRestore = cons.getMana();
+    target.setHealth(Math.min(target.getHealth() + healthRestore, target.getMaxHealth()));
+    target.setMana(Math.min(target.getMana() + manaRestore, target.getMaxMana()));
+    cons.setIsConsumed(true);
+  }
+}
+
+class ItemDeletionVisitor implements Visitor {
+  private boolean isDeleted = false;
+
+  public boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+  @Override
+  public void visit(Equipment equipment) {
+    // Logic for removed equipment if needed
+  }
+
+  @Override
+  public void visit(Consumables cons) {
+    if (cons.getIsConsumed()) {
+      isDeleted = true;
+    }
   }
 }

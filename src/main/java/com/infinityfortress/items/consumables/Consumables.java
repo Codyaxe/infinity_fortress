@@ -51,20 +51,23 @@ public class Consumables implements Items {
         this.isConsumed = false;
     }
 
-    Consumables(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
-            int critStrength, int luck,
+    Consumables(String name, String type, String role, int value, int duration, int health, int mana, int defense,
+            int strength,
+            int critChance,
+            int critStrength, int luck, int speed,
             String description, String flavorText, ItemRarity rarity, ConsumableTier tier) {
         this.name = name;
         this.type = type;
         this.role = role;
         this.value = value;
-        this.health = 0;
+        this.duration = duration;
+        this.health = health;
         this.mana = mana;
         this.defense = defense;
         this.strength = strength;
         this.critChance = critChance;
         this.critStrength = critStrength;
-        this.speed = 0;
+        this.speed = speed;
         this.luck = luck;
         this.description = description;
         this.flavorText = flavorText;
