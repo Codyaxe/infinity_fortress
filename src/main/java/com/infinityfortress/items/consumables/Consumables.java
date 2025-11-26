@@ -2,24 +2,32 @@ package com.infinityfortress.items.consumables;
 
 import com.infinityfortress.items.ItemRarity;
 import com.infinityfortress.items.Items;
+import com.infinityfortress.items.Visitable;
+import com.infinityfortress.items.Visitor;
 
-public class Consumables implements Items {
-    String name;
-    String type;
-    String role;
-    int value;
-    int health;
-    int mana;
-    int defense;
-    int strength;
-    int critChance;
-    int critStrength;
-    int luck;
-    int speed;
-    String description;
-    String flavorText;
-    ItemRarity rarity;
-    ConsumableTier tier;
+public class Consumables implements Items, Visitable {
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    private String name;
+    private String type;
+    private String role;
+    private int value;
+    private int health;
+    private int mana;
+    private int defense;
+    private int strength;
+    private int critChance;
+    private int critStrength;
+    private int luck;
+    private int speed;
+    private String description;
+    private String flavorText;
+    private ItemRarity rarity;
+    private ConsumableTier tier;
 
     Consumables() {
         this.name = "";

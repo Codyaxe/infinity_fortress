@@ -21,9 +21,9 @@ public class App {
         Utils.clearConsole();
         // game.intro();
         Utils.initiallizeBorders();
-        MainPathSystem pathSystem = new MainPathSystem();
-        pathSystem.start();
-        // game.gameLoop();
+        // MainPathSystem pathSystem = new MainPathSystem();
+        // pathSystem.start();
+        game.gameLoop();
         InputHandler.stopKeyListener();
         Utils.showCursor();
     }
@@ -117,13 +117,10 @@ public class App {
 // 0-32
 // 0-118
 
-
 // 3, 25
 // 116, 25
 // 3, 31
 // 116, 31
-
-
 
 // 1-33
 // 1-119

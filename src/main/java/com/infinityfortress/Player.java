@@ -17,7 +17,7 @@ import com.infinityfortress.items.equipments.MageWeaponFactory;
 import com.infinityfortress.items.equipments.WarriorWeaponFactory;
 
 public class Player {
-    public ArrayList<NCharacter> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
+    private ArrayList<NCharacter> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
     public ArrayList<Items> inventory = new ArrayList<>();
 
     public Player() {
@@ -85,5 +85,10 @@ public class Player {
         inventory.add(restorativesFactory.createDualElixir());
         inventory.add(boostersFactory.createCriticalElixir());
         inventory.add(boostersFactory.createCriticalElixir());
+    }
+
+    // Getter
+    public ArrayList<NCharacter> getCharacters() {
+        return characters;
     }
 }

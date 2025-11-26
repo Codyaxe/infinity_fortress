@@ -2,8 +2,16 @@ package com.infinityfortress.items.equipments;
 
 import com.infinityfortress.items.ItemRarity;
 import com.infinityfortress.items.Items;
+import com.infinityfortress.items.Visitor;
+import com.infinityfortress.items.Visitable;
 
-public class Equipment implements Items {
+public class Equipment implements Items, Visitable {
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
     String name;
     String type;
     String role;

@@ -30,7 +30,6 @@ public class NCharacter {
     private Race race;
     private Set<TemporaryEffect> condition;
     private Set<SummonEffect> summons;
-    private EquippedSlots equipments;
     private boolean isEmpty;
     private boolean isDead;
     private boolean hasTakenTurn;

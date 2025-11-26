@@ -19,6 +19,11 @@ public class TargetingSystem {
     private Action selectedAction;
     private NCharacter current;
 
+    public TargetingSystem() {
+        this.selectedAction = null;
+        this.current = null;
+    }
+
     public TargetingSystem(Action selectedAction, NCharacter current) {
         this.selectedAction = selectedAction;
         this.current = current;
@@ -42,9 +47,9 @@ public class TargetingSystem {
         while (true) {
             targetUI.updateChoice(choice);
             InputHandler.waitForInput();
-            // Refinde option traversal
+            // Refined option traversal
             if (InputHandler.right.get()) {
-                if (targets.size() > 2 && choice==targets.size()-1 ) {
+                if (targets.size() > 2 && choice == targets.size() - 1) {
                     choice = 2;
                 } else if (choice % 3 < 2 && choice + 1 <= maxChoice) {
                     choice++;
@@ -53,9 +58,9 @@ public class TargetingSystem {
             }
 
             if (InputHandler.left.get()) {
-                if (targets.size() > 2 && choice==3 ) {
+                if (targets.size() > 2 && choice == 3) {
                     choice = 0;
-                }else if (choice % 3 > 0) {
+                } else if (choice % 3 > 0) {
                     choice--;
                 }
                 InputHandler.left.set(false);

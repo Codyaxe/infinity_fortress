@@ -35,7 +35,8 @@ public class BattleSystem {
         itemSystem = new ItemSystem(player);
 
         // Gather all characters from player and enemy lists, filtering out null values
-        ArrayList<NCharacter> characterList = Stream.concat(player.characters.stream(), enemy.characters.stream())
+        ArrayList<NCharacter> characterList = Stream
+                .concat(player.getCharacters().stream(), enemy.getCharacters().stream())
                 .filter(c -> c != null)
                 .collect(Collectors.toCollection(ArrayList::new));
 
@@ -104,7 +105,7 @@ public class BattleSystem {
                         }
                         case 2 -> {
                             // Item
-                            itemSystem.start();
+                            itemSystem.start(mainBattleUI);
                         }
                     }
 
@@ -173,7 +174,7 @@ public class BattleSystem {
 
     private void updateDeathStatus(ArrayList<NCharacter> characters) {
         for (NCharacter c : characters) {
-            if (c!=null && c.getHealth() <= 0) {
+            if (c != null && c.getHealth() <= 0) {
                 c.setIsDead(true);
             }
         }

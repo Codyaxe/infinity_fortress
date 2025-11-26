@@ -28,4 +28,20 @@ public class EquippedSlots {
     public String getAccessory2Name() {
         return accessory2.getName();
     }
+
+    public void setWeapon(Equipment weapon) {
+        this.weapon = weapon;
+    }
+
+    public void setArmor(Equipment armor) {
+        this.armor = armor;
+    }
+
+    public void setAccessory1(Equipment accessory1) {
+        this.accessory1 = accessory1;
+    }
+
+    public void setAccessory2(Equipment accessory2) {
+        this.accessory2 = accessory2;
+    }
 }
