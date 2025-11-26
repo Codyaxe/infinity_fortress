@@ -11,6 +11,9 @@ import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.TargetingComponent;
 import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.MutableInt;
+
+/* Changed the code so it follows a Strategy Pattern */
 
 public class TargetingSystem {
 
@@ -28,58 +31,33 @@ public class TargetingSystem {
     }
 
     public NCharacter start(MainBattleUI battleUI, ArrayList<NCharacter> targets) {
+        TargetProcessor processor = current.getType() == NCharacterType.ALLY
+                ? new PlayerTargetProcessor(selectedAction, current)
+                : new EnemyTargetProcessor(selectedAction, current);
+        return processor.process(battleUI, targets);
+    }
+}
 
-        if (current.getType() == NCharacterType.ALLY) {
-            return processPlayer(battleUI, targets);
-        } else {
-            return processEnemy(targets);
-        }
+interface TargetProcessor {
+    NCharacter process(MainBattleUI battleUI, ArrayList<NCharacter> targets);
+}
 
+class PlayerTargetProcessor implements TargetProcessor {
+
+    public PlayerTargetProcessor(Action selectedAction, NCharacter current) {
+        // Not used for player
     }
 
-    private NCharacter processPlayer(MainBattleUI battleUI, ArrayList<NCharacter> targets) {
+    @Override
+    public NCharacter process(MainBattleUI battleUI, ArrayList<NCharacter> targets) {
         MainBattleUI targetUI = new MainBattleUI(battleUI, new TargetingComponent(targets));
-        int choice = 0;
+        MutableInt choice = new MutableInt(0);
         int maxChoice = targets.size() - 1;
         targetUI.updateSelection();
         while (true) {
-            targetUI.updateChoice(choice);
+            targetUI.updateChoice(choice.value);
             InputHandler.waitForInput();
-            // Refined option traversal
-            if (InputHandler.right.get()) {
-                if (targets.size() > 2 && choice == targets.size() - 1) {
-                    choice = 2;
-                } else if (choice % 3 < 2 && choice + 1 <= maxChoice) {
-                    choice++;
-                }
-                InputHandler.right.set(false);
-            }
-
-            if (InputHandler.left.get()) {
-                if (targets.size() > 2 && choice == 3) {
-                    choice = 0;
-                } else if (choice % 3 > 0) {
-                    choice--;
-                }
-                InputHandler.left.set(false);
-            }
-
-            if (InputHandler.down.get()) {
-                if (choice <= 2 && choice + 3 >= targets.size() - 1 && targets.size() > 3) {
-                    choice = targets.size() - 1;
-                } else if (choice + 3 <= maxChoice) {
-                    choice += 3;
-                }
-                InputHandler.down.set(false);
-            }
-
-            if (InputHandler.up.get()) {
-                if (choice >= 3) {
-                    choice -= 3;
-                }
-                InputHandler.up.set(false);
-            }
-
+            handleNavigation(choice, maxChoice, targets);
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
                 return null;
@@ -87,12 +65,59 @@ public class TargetingSystem {
 
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
-                return targets.get(choice);
+                return targets.get(choice.value);
             }
         }
     }
 
-    private NCharacter processEnemy(ArrayList<NCharacter> targets) {
+    private void handleNavigation(MutableInt choice, int maxChoice, ArrayList<NCharacter> targets) {
+        if (InputHandler.right.get()) {
+            if (targets.size() > 2 && choice.value == targets.size() - 1) {
+                choice.value = 2;
+            } else if (choice.value % 3 < 2 && choice.value + 1 <= maxChoice) {
+                choice.value++;
+            }
+            InputHandler.right.set(false);
+        }
+
+        if (InputHandler.left.get()) {
+            if (targets.size() > 2 && choice.value == 3) {
+                choice.value = 0;
+            } else if (choice.value % 3 > 0) {
+                choice.value--;
+            }
+            InputHandler.left.set(false);
+        }
+
+        if (InputHandler.down.get()) {
+            if (choice.value <= 2 && choice.value + 3 >= targets.size() - 1 && targets.size() > 3) {
+                choice.value = targets.size() - 1;
+            } else if (choice.value + 3 <= maxChoice) {
+                choice.value += 3;
+            }
+            InputHandler.down.set(false);
+        }
+
+        if (InputHandler.up.get()) {
+            if (choice.value >= 3) {
+                choice.value -= 3;
+            }
+            InputHandler.up.set(false);
+        }
+    }
+}
+
+class EnemyTargetProcessor implements TargetProcessor {
+    private Action selectedAction;
+    private NCharacter current;
+
+    public EnemyTargetProcessor(Action selectedAction, NCharacter current) {
+        this.selectedAction = selectedAction;
+        this.current = current;
+    }
+
+    @Override
+    public NCharacter process(MainBattleUI battleUI, ArrayList<NCharacter> targets) {
         int maxChoice = targets.size() - 1;
         int[] scores = new int[targets.size()];
 
@@ -236,5 +261,4 @@ public class TargetingSystem {
         }
         return false;
     }
-
 }

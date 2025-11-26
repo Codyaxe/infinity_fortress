@@ -14,6 +14,9 @@ import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.utils.InputHandler;
 import com.infinityfortress.utils.ModifiedPriorityQueue;
+import com.infinityfortress.utils.MutableInt;
+
+/* Changed the code so it follows a Strategy Pattern */
 
 public class BattleSystem {
 
@@ -54,7 +57,6 @@ public class BattleSystem {
                 turnQueue.getCurrentQueue());
         while (true) {
             mainBattleUI.display();
-            boolean turnComplete = false;
 
             // Process Summon Effects at start of turn
             processSummonEffects(currentCharacter, player.getCharacters(), enemy.getCharacters(), mainBattleUI);
@@ -76,55 +78,11 @@ public class BattleSystem {
                 conditions.removeIf(effect -> effect.getDuration() == 0);
             }
 
-            while (!turnComplete && currentCharacter.getType() == NCharacterType.ALLY) {
-                mainBattleUI.updateChoice(choice);
-                InputHandler.waitForInput();
+            TurnHandler turnHandler = currentCharacter.getType() == NCharacterType.ALLY
+                    ? new PlayerTurnHandler(actionSystem, statSystem, itemSystem)
+                    : new EnemyTurnHandler(actionSystem);
+            turnHandler.handle(mainBattleUI, currentCharacter, choice);
 
-                if (InputHandler.left.get()) {
-                    choice = Math.max(0, choice - 1);
-                    InputHandler.left.set(false);
-                }
-                if (InputHandler.right.get()) {
-                    choice = Math.min(2, choice + 1);
-                    InputHandler.right.set(false);
-                }
-
-                if (InputHandler.enter.get()) {
-                    boolean actionSuccessful = false;
-                    switch (choice) {
-                        case 0 -> {
-                            // Action
-                            actionSuccessful = actionSystem.start(mainBattleUI, currentCharacter);
-                        }
-                        case 1 -> {
-                            // Stat
-                            if (currentCharacter.getType() == NCharacterType.ALLY) {
-                                statSystem.start(currentCharacter);
-                            }
-                        }
-                        case 2 -> {
-                            // Item
-                            itemSystem.start(mainBattleUI, currentCharacter);
-                        }
-                    }
-
-                    if (actionSuccessful) {
-                        turnComplete = true;
-                        InputHandler.enter.set(false);
-
-                    }
-
-                    mainBattleUI.display();
-                }
-            }
-
-            while (!turnComplete && currentCharacter.getType() == NCharacterType.ENEMY) {
-                boolean actionSuccessful = false;
-                actionSuccessful = actionSystem.start(mainBattleUI, currentCharacter);
-                if (actionSuccessful) {
-                    turnComplete = true;
-                }
-            }
             processEnd(mainBattleUI, characterList, currentCharacter);
             currentCharacter = turnQueue.getCurrCharAndUpdate();
             mainBattleUI.updateTurnOrder(turnQueue.getCurrentQueue());
@@ -177,5 +135,82 @@ public class BattleSystem {
                 c.setIsDead(true);
             }
         }
+    }
+}
+
+interface TurnHandler {
+    boolean handle(MainBattleUI mainBattleUI, NCharacter currentCharacter, int choice);
+}
+
+class PlayerTurnHandler implements TurnHandler {
+    private final ActionSystem actionSystem;
+    private final StatSystem statSystem;
+    private final ItemSystem itemSystem;
+
+    public PlayerTurnHandler(ActionSystem actionSystem, StatSystem statSystem, ItemSystem itemSystem) {
+        this.actionSystem = actionSystem;
+        this.statSystem = statSystem;
+        this.itemSystem = itemSystem;
+    }
+
+    @Override
+    public boolean handle(MainBattleUI mainBattleUI, NCharacter currentCharacter, int choice) {
+        MutableInt mutableChoice = new MutableInt(choice);
+        while (true) {
+            mainBattleUI.updateChoice(mutableChoice.value);
+            InputHandler.waitForInput();
+            handleNavigation(mutableChoice);
+            if (InputHandler.enter.get()) {
+                boolean actionSuccessful = false;
+                switch (mutableChoice.value) {
+                    case 0 -> {
+                        // Action
+                        actionSuccessful = actionSystem.start(mainBattleUI, currentCharacter);
+                    }
+                    case 1 -> {
+                        // Stat
+                        if (currentCharacter.getType() == NCharacterType.ALLY) {
+                            statSystem.start(currentCharacter);
+                        }
+                    }
+                    case 2 -> {
+                        // Item
+                        itemSystem.start(mainBattleUI, currentCharacter);
+                    }
+                }
+
+                if (actionSuccessful) {
+                    InputHandler.enter.set(false);
+                    return true;
+                }
+
+                mainBattleUI.display();
+            }
+        }
+    }
+
+    private void handleNavigation(MutableInt choice) {
+        if (InputHandler.left.get()) {
+            choice.value = Math.max(0, choice.value - 1);
+            InputHandler.left.set(false);
+        }
+        if (InputHandler.right.get()) {
+            choice.value = Math.min(2, choice.value + 1);
+            InputHandler.right.set(false);
+        }
+    }
+}
+
+class EnemyTurnHandler implements TurnHandler {
+    private final ActionSystem actionSystem;
+
+    public EnemyTurnHandler(ActionSystem actionSystem) {
+        this.actionSystem = actionSystem;
+    }
+
+    @Override
+    public boolean handle(MainBattleUI mainBattleUI, NCharacter currentCharacter, int choice) {
+        boolean actionSuccessful = actionSystem.start(mainBattleUI, currentCharacter);
+        return actionSuccessful;
     }
 }

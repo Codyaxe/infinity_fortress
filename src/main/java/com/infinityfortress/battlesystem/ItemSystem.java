@@ -17,7 +17,7 @@ import com.infinityfortress.utils.MutableInt;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.ItemMenu.MainItemMenu;
 
-/*For Modularity and Maintanability Purposes, All Code Shall adhere to this code structure standards */
+/* Visitor and Strategy Pattern */
 
 public class ItemSystem {
 
