@@ -42,7 +42,7 @@ public class FactoryEffect extends TemporaryEffect {
         this.target.setLuck((this.target.getLuck() + luck));
         if (speed != 0) {
             this.target.setSpeed((this.target.getSpeed() + speed));
-            notifySpeedChange();
+            target.notifySpeedChange();
         }
 
     }
@@ -58,7 +58,7 @@ public class FactoryEffect extends TemporaryEffect {
         this.target.setLuck((this.target.getLuck() - luck));
         if (speed != 0) {
             this.target.setSpeed((this.target.getSpeed() - speed));
-            notifySpeedChange();
+            target.notifySpeedChange();
         }
     }
 

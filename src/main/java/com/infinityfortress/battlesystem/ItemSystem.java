@@ -46,7 +46,7 @@ public class ItemSystem {
       InputHandler.waitForInput();
       handleNavigation(currArr, scrollArr, size, scrollMin, scrollMax);
       if (InputHandler.enter.get()) {
-        if (processItems(mainBattleUI, inventory.get(currArr.value), current)) {
+        if (processItems(mainBattleUI, inventory.get(scrollArr.value + currArr.value), current)) {
           removeDeletedItems(mainBattleUI, inventory);
           mainBattleUI.updateField(player.getCharacters(), enemy.getCharacters());
           return;
@@ -173,27 +173,40 @@ class ItemProcessingVisitor implements Visitor {
     }
 
     switch (equipment.getType()) {
-      // Will add update stats and remove stats implementation
       case "Accessory":
-        // For now, equip to slot 1
-        if (target.getEquipment().getAccessory1() != null && target.getEquipment().getAccessory1().getisUsed()) {
+        // Equip to first available slot, proper selector will be implemented later
+        if (!target.getEquipment().getAccessory1().getisUsed()) {
+          target.getEquipment().setAccessory1(equipment);
+          target.updateStatFromEquipment(equipment);
+          equipment.setIsUsed(true);
+        } else if (!target.getEquipment().getAccessory2().getisUsed()) {
+          target.getEquipment().setAccessory2(equipment);
+          target.updateStatFromEquipment(equipment);
+          equipment.setIsUsed(true);
+        } else {
           target.getEquipment().getAccessory1().setIsUsed(false);
+          target.removeStatsFromEquipment(target.getEquipment().getAccessory1());
+          target.getEquipment().setAccessory1(equipment);
+          target.updateStatFromEquipment(equipment);
+          equipment.setIsUsed(true);
         }
-        target.getEquipment().setAccessory1(equipment);
-        equipment.setIsUsed(true);
         break;
       case "Weapon":
         if (target.getEquipment().getWeapon() != null && target.getEquipment().getWeapon().getisUsed()) {
           target.getEquipment().getWeapon().setIsUsed(false);
+          target.removeStatsFromEquipment(target.getEquipment().getWeapon());
         }
         target.getEquipment().setWeapon(equipment);
+        target.updateStatFromEquipment(equipment);
         equipment.setIsUsed(true);
         break;
       case "Armor":
         if (target.getEquipment().getArmor() != null && target.getEquipment().getArmor().getisUsed()) {
           target.getEquipment().getArmor().setIsUsed(false);
+          target.removeStatsFromEquipment(target.getEquipment().getArmor());
         }
         target.getEquipment().setArmor(equipment);
+        target.updateStatFromEquipment(equipment);
         equipment.setIsUsed(true);
         break;
       default:

@@ -45,8 +45,7 @@ public class BattleSystem {
         // Sets up a callback that reacts to speed changes, allows for priority queue to
         // react.
         for (NCharacter character : characterList) {
-            character.getAllTemporaryEffect()
-                    .forEach(effect -> effect.setOnSpeedChange(() -> turnQueue.refreshQueueOrder()));
+            character.setSpeedChange(() -> turnQueue.refreshQueueOrder());
         }
 
         NCharacter currentCharacter = turnQueue.peekCurrChar();
@@ -64,7 +63,6 @@ public class BattleSystem {
             if (!currentCharacter.getAllTemporaryEffect().isEmpty()) {
                 Set<TemporaryEffect> conditions = currentCharacter.getAllTemporaryEffect();
                 for (TemporaryEffect effect : conditions) {
-                    effect.setOnSpeedChange(() -> turnQueue.refreshQueueOrder());
 
                     if (effect.isJustApplied()) {
                         effect.setJustApplied(false);
