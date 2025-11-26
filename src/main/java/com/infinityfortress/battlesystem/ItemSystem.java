@@ -86,7 +86,9 @@ public class ItemSystem {
       public void visit(Equipment equipment) {
         TargetingSystem targetingSystem = new TargetingSystem(null, current);
         NCharacter curr = targetingSystem.start(mainBattleUI, player.getCharacters());
-        processEquipment(equipment, curr);
+        if (curr != null) {
+          processEquipment(equipment, curr);
+        }
       }
 
       @Override
@@ -104,7 +106,9 @@ public class ItemSystem {
             break;
           case "Debuffer":
             curr = targetingSystem.start(mainBattleUI, enemy.getCharacters());
-
+            if (curr != null) {
+              proccessConsumables(cons, curr);
+            }
             break;
           case "Restorative":
             // logic
