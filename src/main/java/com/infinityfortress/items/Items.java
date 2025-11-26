@@ -1,6 +1,6 @@
 package com.infinityfortress.items;
 
-public interface Items {
+public interface Items extends Visitable {
     public String getName();
 
     public String getType();

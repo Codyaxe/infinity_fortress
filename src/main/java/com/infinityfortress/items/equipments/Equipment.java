@@ -3,9 +3,8 @@ package com.infinityfortress.items.equipments;
 import com.infinityfortress.items.ItemRarity;
 import com.infinityfortress.items.Items;
 import com.infinityfortress.items.Visitor;
-import com.infinityfortress.items.Visitable;
 
-public class Equipment implements Items, Visitable {
+public class Equipment implements Items {
 
     @Override
     public void accept(Visitor visitor) {

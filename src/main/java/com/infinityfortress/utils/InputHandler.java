@@ -1,8 +1,6 @@
 package com.infinityfortress.utils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import com.infinityfortress.utils.AudioHandler;
-
 
 public class InputHandler {
     private static final Object lock = new Object();

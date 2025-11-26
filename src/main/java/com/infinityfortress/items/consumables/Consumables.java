@@ -2,10 +2,9 @@ package com.infinityfortress.items.consumables;
 
 import com.infinityfortress.items.ItemRarity;
 import com.infinityfortress.items.Items;
-import com.infinityfortress.items.Visitable;
 import com.infinityfortress.items.Visitor;
 
-public class Consumables implements Items, Visitable {
+public class Consumables implements Items {
 
     @Override
     public void accept(Visitor visitor) {
@@ -16,6 +15,7 @@ public class Consumables implements Items, Visitable {
     private String type;
     private String role;
     private int value;
+    private int duration;
     private int health;
     private int mana;
     private int defense;
@@ -88,6 +88,10 @@ public class Consumables implements Items, Visitable {
     @Override
     public int getValue() {
         return value;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     @Override

@@ -14,9 +14,10 @@ public class FactoryEffect extends TemporaryEffect {
     private int critStrength;
     private int luck;
     private int speed;
+    private TemporaryEffectType type;
 
     public FactoryEffect(String name, int duration, NCharacter target, int health, int mana, int defense, int strength,
-            int critChance, int critStrength, int luck, int speed) {
+            int critChance, int critStrength, int luck, int speed, TemporaryEffectType type) {
         super(duration, target);
         this.name = name;
         this.health = health;
@@ -27,10 +28,7 @@ public class FactoryEffect extends TemporaryEffect {
         this.critStrength = critStrength;
         this.luck = luck;
         this.speed = speed;
-    }
-
-    public FactoryEffect(int duration, NCharacter target) {
-        super(duration, target);
+        this.type = type;
     }
 
     @Override
@@ -71,6 +69,6 @@ public class FactoryEffect extends TemporaryEffect {
 
     @Override
     public TemporaryEffectType getType() {
-        return TemporaryEffectType.DEBUFF;
+        return this.type;
     }
 }

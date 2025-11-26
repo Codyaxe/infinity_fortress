@@ -2,6 +2,8 @@ package com.infinityfortress.battlesystem;
 
 import com.infinityfortress.*;
 import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.effects.temporaryeffect.FactoryEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffectType;
 import com.infinityfortress.items.Visitor;
 import com.infinityfortress.items.Items;
 import com.infinityfortress.items.Visitable;
@@ -17,12 +19,14 @@ import com.infinityfortress.ui.ItemMenu.MainItemMenu;
 public class ItemSystem {
 
   private final Player player;
+  private final Enemy enemy;
 
-  public ItemSystem(Player player) {
+  public ItemSystem(Player player, Enemy enemy) {
     this.player = player;
+    this.enemy = enemy;
   }
 
-  public void start(MainBattleUI mainBattleUI) {
+  public void start(MainBattleUI mainBattleUI, NCharacter current) {
     ArrayList<Items> inventory = player.inventory;
     int size = inventory.size(), scrollMin = 2, scrollMax = 12 - 3, curr = 0, currScroll = 0;
     MainItemMenu itemMenu = new MainItemMenu(inventory, 0);
@@ -56,7 +60,9 @@ public class ItemSystem {
       }
 
       if (InputHandler.enter.get()) {
-        // Process Item
+        if (processItems(mainBattleUI, player.inventory.get(curr), current)) {
+          return;
+        }
       }
 
       if (InputHandler.back.get()) {
@@ -66,9 +72,7 @@ public class ItemSystem {
     }
   }
 
-  private boolean processItems(MainBattleUI mainBattleUI, Player player, Visitable item) {
-    TargetingSystem targetingSystem = new TargetingSystem();
-    NCharacter curr = targetingSystem.start(mainBattleUI, player.getCharacters());
+  private boolean processItems(MainBattleUI mainBattleUI, Visitable item, NCharacter current) {
 
     // Visitor Approach
     class ValidatingVisitor implements Visitor {
@@ -80,6 +84,41 @@ public class ItemSystem {
 
       @Override
       public void visit(Equipment equipment) {
+        TargetingSystem targetingSystem = new TargetingSystem(null, current);
+        NCharacter curr = targetingSystem.start(mainBattleUI, player.getCharacters());
+        processEquipment(equipment, curr);
+      }
+
+      @Override
+      public void visit(Consumables cons) {
+        TargetingSystem targetingSystem = new TargetingSystem(null, current);
+        NCharacter curr;
+
+        switch (cons.getType()) {
+
+          case "Booster":
+            curr = targetingSystem.start(mainBattleUI, player.getCharacters());
+            if (curr != null) {
+              proccessConsumables(cons, curr);
+            }
+            break;
+          case "Debuffer":
+            curr = targetingSystem.start(mainBattleUI, enemy.getCharacters());
+
+            break;
+          case "Restorative":
+            // logic
+            break;
+          case "Utility":
+            // logic
+            break;
+          default:
+            Printbox.showMessage(mainBattleUI, "Error! What type of consumable is this?");
+            break;
+        }
+      }
+
+      private void processEquipment(Equipment equipment, NCharacter curr) {
         if (equipment.getRole() != "Any" && equipment.getRole() != curr.getRole().getName()) {
           isValid = false;
           return;
@@ -111,12 +150,19 @@ public class ItemSystem {
         }
       }
 
-      @Override
-      public void visit(Consumables consumable) {
-        if (consumable.getRole() != "Any" && consumable.getRole() != curr.getRole().getName()) {
+      private void proccessConsumables(Consumables cons, NCharacter curr) {
+        if (cons.getRole() != "Any" && cons.getRole() != curr.getRole().getName()) {
           isValid = false;
           return;
         }
+
+        FactoryEffect effect = new FactoryEffect(cons.getName(), cons.getDuration(), curr, cons.getHealth(),
+            cons.getMana(), cons.getDefense(),
+            cons.getStrength(), cons.getCritChance(), cons.getCritStrength(), cons.getLuck(), cons.getSpeed(),
+            TemporaryEffectType.BUFF);
+
+        curr.addTemporaryEffect(effect);
+        effect.apply();
 
       }
     }
@@ -127,17 +173,4 @@ public class ItemSystem {
     return itemVisitor.getIsValid();
 
   }
-
-  // private boolean isEquipment(Equipment item) {
-  // return item.getType().equals("Weapon") || item.getType().equals("Armor") ||
-  // item.getType().equals("Accessory");
-  // }
-
-  // private boolean isConsumables(Consumables item) {
-  // return item.getType().equals("Boosters") ||
-  // item.getType().equals("Debuffers")
-  // || item.getType().equals("Restoratives") ||
-  // item.getType().equals("Utilities");
-  // }
-
 }

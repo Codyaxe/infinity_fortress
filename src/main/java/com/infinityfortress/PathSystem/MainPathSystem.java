@@ -1,7 +1,6 @@
 package com.infinityfortress.PathSystem;
 
 import com.infinityfortress.utils.InputHandler;
-import com.infinityfortress.utils.Utils;
 import com.infinityfortress.ui.PathMenu.PathUI;
 
 public class MainPathSystem {

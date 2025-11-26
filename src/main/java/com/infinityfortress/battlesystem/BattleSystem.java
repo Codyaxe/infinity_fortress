@@ -32,7 +32,7 @@ public class BattleSystem {
         decisionSystem = new DecisionSystem(player, enemy);
         statSystem = new StatSystem(player);
         actionSystem = new ActionSystem(decisionSystem);
-        itemSystem = new ItemSystem(player);
+        itemSystem = new ItemSystem(player, enemy);
 
         // Gather all characters from player and enemy lists, filtering out null values
         ArrayList<NCharacter> characterList = Stream
@@ -106,7 +106,7 @@ public class BattleSystem {
                         }
                         case 2 -> {
                             // Item
-                            itemSystem.start(mainBattleUI);
+                            itemSystem.start(mainBattleUI, currentCharacter);
                         }
                     }
 
