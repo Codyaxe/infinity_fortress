@@ -4,7 +4,8 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.temporaryeffect.WeakenEffect;
+import com.infinityfortress.effects.temporaryeffect.FactoryEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffectsFactory;
 
 public class Weaken implements Action {
     private String message;
@@ -49,7 +50,7 @@ public class Weaken implements Action {
     }
 
     public void execute(NCharacter user, NCharacter target) {
-        WeakenEffect weakenEffect = new WeakenEffect(5, target);
+        FactoryEffect weakenEffect = TemporaryEffectsFactory.createWeakened(5, target);
 
         weakenEffect.apply();
         target.addTemporaryEffect(weakenEffect);

@@ -4,7 +4,8 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.temporaryeffect.RageEffect;
+import com.infinityfortress.effects.temporaryeffect.FactoryEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffectsFactory;
 
 public class Enrage implements Action {
 
@@ -50,7 +51,7 @@ public class Enrage implements Action {
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        RageEffect rageEffect = new RageEffect(5, target);
+        FactoryEffect rageEffect = TemporaryEffectsFactory.createRage(5, target);
 
         if (user == target) {
             rageEffect.setJustApplied(false);

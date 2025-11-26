@@ -129,11 +129,11 @@ public class DecisionSystem {
     // pool.
     private ArrayList<NCharacter> getAliveEnemies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
-            return enemy.characters.stream()
+            return enemy.getCharacters().stream()
                     .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
-            return player.characters.stream()
+            return player.getCharacters().stream()
                     .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
@@ -144,11 +144,11 @@ public class DecisionSystem {
     // pool.
     private ArrayList<NCharacter> getAliveAllies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
-            return player.characters.stream()
+            return player.getCharacters().stream()
                     .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
-            return enemy.characters.stream()
+            return enemy.getCharacters().stream()
                     .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         }

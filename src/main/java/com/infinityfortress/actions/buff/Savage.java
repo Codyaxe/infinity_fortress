@@ -4,7 +4,8 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.temporaryeffect.SavageEffect;
+import com.infinityfortress.effects.temporaryeffect.FactoryEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffectsFactory;
 
 public class Savage implements Action {
 
@@ -50,7 +51,7 @@ public class Savage implements Action {
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        SavageEffect savageEffect = new SavageEffect(5, target);
+        FactoryEffect savageEffect = TemporaryEffectsFactory.createSavage(5, target);
 
         savageEffect.apply();
         target.addTemporaryEffect(savageEffect);

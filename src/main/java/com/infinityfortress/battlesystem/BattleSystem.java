@@ -51,13 +51,14 @@ public class BattleSystem {
 
         NCharacter currentCharacter = turnQueue.peekCurrChar();
 
-        MainBattleUI mainBattleUI = new MainBattleUI(player.characters, enemy.characters, turnQueue.getCurrentQueue());
+        MainBattleUI mainBattleUI = new MainBattleUI(player.getCharacters(), enemy.getCharacters(),
+                turnQueue.getCurrentQueue());
         while (true) {
             mainBattleUI.display();
             boolean turnComplete = false;
 
             // Process Summon Effects at start of turn
-            processSummonEffects(currentCharacter, player.characters, enemy.characters, mainBattleUI);
+            processSummonEffects(currentCharacter, player.getCharacters(), enemy.getCharacters(), mainBattleUI);
 
             // Handles Temporary Effects
             if (!currentCharacter.getAllTemporaryEffect().isEmpty()) {
@@ -136,7 +137,7 @@ public class BattleSystem {
     public void processEnd(MainBattleUI mainBattleUI, ArrayList<NCharacter> characterList,
             NCharacter currentCharacter) {
         processSummonDurations(currentCharacter, characterList);
-        mainBattleUI.updateField(player.characters, enemy.characters);
+        mainBattleUI.updateField(player.getCharacters(), enemy.getCharacters());
         mainBattleUI.display();
     }
 
@@ -150,7 +151,7 @@ public class BattleSystem {
 
         updateDeathStatus(allies);
         updateDeathStatus(enemies);
-        battleUI.updateField(player.characters, enemy.characters);
+        battleUI.updateField(player.getCharacters(), enemy.getCharacters());
         battleUI.display();
     }
 

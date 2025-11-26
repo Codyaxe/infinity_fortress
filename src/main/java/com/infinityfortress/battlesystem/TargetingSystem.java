@@ -7,8 +7,6 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
-import com.infinityfortress.effects.temporaryeffect.ProtectEffect;
-import com.infinityfortress.effects.temporaryeffect.RageEffect;
 import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.TargetingComponent;
@@ -142,12 +140,12 @@ public class TargetingSystem {
                         scores[i] += 75;
                     }
 
-                    if (!hasCondition(target, new ProtectEffect())) {
+                    if (!hasCondition(target, "Protect")) {
                         scores[i] -= 200;
                     }
                 }
                 case STRENGTH -> {
-                    if (attackDominant(target) && !hasCondition(target, new RageEffect())) {
+                    if (attackDominant(target) && !hasCondition(target, "Rage")) {
                         scores[i] += 50;
                     }
                 }
@@ -230,9 +228,9 @@ public class TargetingSystem {
                 || role.equals("Summoner");
     }
 
-    private boolean hasCondition(NCharacter character, TemporaryEffect status) {
+    private boolean hasCondition(NCharacter character, String effectName) {
         for (TemporaryEffect condition : character.getAllTemporaryEffect()) {
-            if (condition.equals(status)) {
+            if (condition.getName().equals(effectName)) {
                 return true;
             }
         }
