@@ -89,9 +89,10 @@ public final class ModifiedPriorityQueue {
       }
     }
 
-    // If queue has less than 3, preview who's next in the upcoming round. Happens
-    // in a scenario when there are less than 3 people left who haven't taken their
-    // turn or there are less than 3 characters left alive.
+    // If queue has less than 3, preview who's next in the upcoming round. This
+    // happens in a scenario where there are less than 3 people left who hasn't
+    // taken their turn or there are less than 3 characters left alive. Their turn
+    // has taken once their turn starts
     if (turnOrder.size() < 3) {
       ArrayList<NCharacter> nextRoundPreview = fullTurnOrder.stream()
           .filter(c -> !c.isDead() && c.hasTakenTurn())
