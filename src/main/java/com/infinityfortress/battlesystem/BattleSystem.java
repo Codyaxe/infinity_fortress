@@ -2,6 +2,9 @@ package com.infinityfortress.battlesystem;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,6 +22,20 @@ import com.infinityfortress.utils.MutableInt;
 /* Changed the code so it follows a Strategy Pattern */
 
 public class BattleSystem {
+
+    private static final Logger logger = Logger.getLogger(BattleSystem.class.getName());
+
+    static {
+        try {
+            FileHandler fh = new FileHandler("debug.log", true);
+            logger.addHandler(fh);
+            logger.setUseParentHandlers(false);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     Player player = new Player();
     Enemy enemy = new Enemy();
@@ -48,14 +65,17 @@ public class BattleSystem {
         // Sets up a callback that reacts to speed changes, allows for priority queue to
         // react.
         for (NCharacter character : characterList) {
-            character.setSpeedChange(() -> turnQueue.refreshQueueOrder());
+            character.setSpeedChange(() -> turnQueue.refreshQueueOrder(character));
         }
-
-        NCharacter currentCharacter = turnQueue.peekCurrChar();
 
         MainBattleUI mainBattleUI = new MainBattleUI(player.getCharacters(), enemy.getCharacters(),
                 turnQueue.getCurrentQueue());
         while (true) {
+            NCharacter currentCharacter = turnQueue.getCurrCharAndUpdate(); // MOVE THIS HERE
+
+            if (currentCharacter == null)
+                break; // Handle null case
+            logger.info("It's " + currentCharacter.getName() + "'s turn.");
             mainBattleUI.display();
 
             // Process Summon Effects at start of turn
@@ -84,7 +104,6 @@ public class BattleSystem {
             turnHandler.handle(mainBattleUI, currentCharacter, choice);
 
             processEnd(mainBattleUI, characterList, currentCharacter);
-            currentCharacter = turnQueue.getCurrCharAndUpdate();
             mainBattleUI.updateTurnOrder(turnQueue.getCurrentQueue());
 
         }
