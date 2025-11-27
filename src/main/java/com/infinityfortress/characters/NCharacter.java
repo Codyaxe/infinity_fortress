@@ -329,7 +329,7 @@ public class NCharacter {
 
         this.luck += equipment.getLuck();
         if (equipment.getSpeed() != 0) {
-            this.speed -= equipment.getSpeed();
+            this.speed += equipment.getSpeed();
             notifySpeedChange();
         }
 
@@ -362,6 +362,7 @@ public class NCharacter {
     }
 
     public void notifySpeedChange() {
+        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
         if (isSpeedChanged != null) {
             isSpeedChanged.run();
         }

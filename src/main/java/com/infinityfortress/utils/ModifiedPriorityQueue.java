@@ -51,18 +51,14 @@ public final class ModifiedPriorityQueue {
   }
 
   public void refreshQueueOrder() {
-    refreshQueueOrder(null);
-  }
-
-  public void refreshQueueOrder(NCharacter exclude) {
 
     List<NCharacter> notYetActed = fullTurnOrder.stream()
-        .filter(c -> !c.isDead() && !c.hasTakenTurn() && c != exclude)
+        .filter(c -> !c.isDead() && !c.hasTakenTurn())
         .sorted((a, b) -> b.getSpeed() - a.getSpeed())
         .collect(Collectors.toList());
 
     List<NCharacter> alreadyActed = fullTurnOrder.stream()
-        .filter(c -> c.hasTakenTurn() || c == exclude)
+        .filter(c -> c.hasTakenTurn())
         .sorted((a, b) -> b.getSpeed() - a.getSpeed())
         .collect(Collectors.toList());
 
@@ -92,7 +88,7 @@ public final class ModifiedPriorityQueue {
     // If queue has less than 3, preview who's next in the upcoming round. This
     // happens in a scenario where there are less than 3 people left who hasn't
     // taken their turn or there are less than 3 characters left alive. Their turn
-    // has taken once their turn starts
+    // has taken once their turn starts.
     if (turnOrder.size() < 3) {
       ArrayList<NCharacter> nextRoundPreview = fullTurnOrder.stream()
           .filter(c -> !c.isDead() && c.hasTakenTurn())

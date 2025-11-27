@@ -69,6 +69,48 @@ public class Equipment implements Items {
         this.isUsed = false;
     }
 
+    Equipment(String name, String type, String role, int value, int health, int mana, int defense, int strength,
+            int critChance, int critStrength, int luck,
+            String description, String flavorText, ItemRarity rarity) {
+        this.name = name;
+        this.type = type;
+        this.role = role;
+        this.value = value;
+        this.health = health;
+        this.mana = mana;
+        this.defense = defense;
+        this.strength = strength;
+        this.critChance = critChance;
+        this.critStrength = critStrength;
+        this.speed = 0;
+        this.luck = luck;
+        this.description = description;
+        this.flavorText = flavorText;
+        this.rarity = rarity;
+        this.isUsed = false;
+    }
+
+    Equipment(String name, String type, String role, int value, int health, int mana, int defense, int strength,
+            int speed, int critChance, int critStrength, int luck,
+            String description, String flavorText, ItemRarity rarity) {
+        this.name = name;
+        this.type = type;
+        this.role = role;
+        this.value = value;
+        this.health = health;
+        this.mana = mana;
+        this.defense = defense;
+        this.strength = strength;
+        this.critChance = critChance;
+        this.critStrength = critStrength;
+        this.speed = speed;
+        this.luck = luck;
+        this.description = description;
+        this.flavorText = flavorText;
+        this.rarity = rarity;
+        this.isUsed = false;
+    }
+
     Equipment(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
             int critStrength, int luck,
             String description, ItemRarity rarity) {

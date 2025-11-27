@@ -45,6 +45,7 @@ public class Player {
         Utilities utilitiesFactory = new Utilities();
 
         // Add random items to inventory
+        inventory.add(accessoryFactory.createWhizzapEmber());
         inventory.add(armorFactory.createLeatherVestment());
         inventory.add(armorFactory.createLeatherVestment());
         inventory.add(warriorWeaponFactory.createRustbiteLongSword());

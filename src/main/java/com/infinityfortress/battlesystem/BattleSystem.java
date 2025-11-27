@@ -48,7 +48,7 @@ public class BattleSystem {
         // Sets up a callback that reacts to speed changes, allows for priority queue to
         // react.
         for (NCharacter character : characterList) {
-            character.setSpeedChange(() -> turnQueue.refreshQueueOrder(character));
+            character.setSpeedChange(() -> turnQueue.refreshQueueOrder());
         }
 
         MainBattleUI mainBattleUI = new MainBattleUI(player.getCharacters(), enemy.getCharacters(),
