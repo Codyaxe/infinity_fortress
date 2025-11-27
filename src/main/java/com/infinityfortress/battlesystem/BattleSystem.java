@@ -83,7 +83,7 @@ public class BattleSystem {
             }
 
             TurnHandler turnHandler = currentCharacter.getType() == NCharacterType.ALLY
-                    ? new PlayerTurnHandler(actionSystem, statSystem, itemSystem)
+                    ? new PlayerTurnHandler(actionSystem, statSystem, itemSystem, turnQueue)
                     : new EnemyTurnHandler(actionSystem);
             turnHandler.handle(mainBattleUI, currentCharacter, choice);
 
@@ -149,11 +149,14 @@ class PlayerTurnHandler implements TurnHandler {
     private final ActionSystem actionSystem;
     private final StatSystem statSystem;
     private final ItemSystem itemSystem;
+    private final ModifiedPriorityQueue turnQueue;
 
-    public PlayerTurnHandler(ActionSystem actionSystem, StatSystem statSystem, ItemSystem itemSystem) {
+    public PlayerTurnHandler(ActionSystem actionSystem, StatSystem statSystem, ItemSystem itemSystem,
+            ModifiedPriorityQueue turnQueue) {
         this.actionSystem = actionSystem;
         this.statSystem = statSystem;
         this.itemSystem = itemSystem;
+        this.turnQueue = turnQueue;
     }
 
     @Override
@@ -179,6 +182,7 @@ class PlayerTurnHandler implements TurnHandler {
                     case 2 -> {
                         // Item
                         itemSystem.start(mainBattleUI, currentCharacter);
+                        mainBattleUI.updateTurnOrder(turnQueue.getCurrentQueue(currentCharacter));
                     }
                 }
 

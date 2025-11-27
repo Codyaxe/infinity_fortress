@@ -73,10 +73,20 @@ public final class ModifiedPriorityQueue {
   }
 
   public ArrayList<String> getCurrentQueue() {
+    return getCurrentQueue(null);
+  }
+
+  public ArrayList<String> getCurrentQueue(NCharacter curr) {
     this.displayQueue.removeIf(c -> c.isDead());
     updateVisibleQueue();
 
+    // UI display handling for cases when using items/changing equipment that
+    // changes speed midaction
     ArrayList<String> turnOrder = new ArrayList<>();
+    if (curr != null) {
+      turnOrder.add("\033[32m" + curr.getRace().getName() + " " + curr.getRole().getName() + "\u001B[0m");
+    }
+
     for (NCharacter c : this.displayQueue) {
       if (c.getType() == NCharacterType.ALLY) {
         turnOrder.add("\033[32m" + c.getRace().getName() + " " + c.getRole().getName() + "\u001B[0m");
