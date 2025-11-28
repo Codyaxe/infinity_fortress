@@ -2,30 +2,37 @@ package com.infinityfortress;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.infinityfortress.PathSystem.MainPathSystem;
+import com.infinityfortress.gachaSystem.MainGachaSystem;
 import com.infinityfortress.battlesystem.BattleSystem;
 import com.infinityfortress.ui.IntroTestUI;
 import com.infinityfortress.ui.SetupMenu;
+import com.infinityfortress.utils.ArtManager;
 import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
 import com.infinityfortress.utils.Utils;
 import com.sun.jna.Platform;
+import com.infinityfortress.utils.Animate;
+import java.util.Random;
 
 public class App {
+  static Player player = new Player();
+  static Enemy enemy = new Enemy();
 
     public static void main(String[] args) {
         App game = new App();
 
         InputHandler.setupKeyListener();
+        Utils.hideCursor();
         game.setup();
         Utils.clearConsole();
         // game.intro();
         Utils.initiallizeBorders();
-        MainPathSystem pathSystem = new MainPathSystem();
-        pathSystem.start();
+        
+        MainGachaSystem gachaSystem = new MainGachaSystem(player);
+        gachaSystem.start();
         // game.gameLoop();
         InputHandler.stopKeyListener();
-        Utils.showCursor();
+        // Utils.showCursor();
     }
 
     public void intro() {
@@ -49,7 +56,6 @@ public class App {
             t.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            e.printStackTrace();
         }
     }
 
@@ -96,7 +102,7 @@ public class App {
     }
 
     public void gameLoop() {
-        BattleSystem battle = new BattleSystem();
+        BattleSystem battle = new BattleSystem(this.player, this.enemy);
 
         // Ang lakas + d bagay sa intro
         // AudioHandler.playBattle();

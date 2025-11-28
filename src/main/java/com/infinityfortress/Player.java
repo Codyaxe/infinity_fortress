@@ -19,6 +19,7 @@ import com.infinityfortress.items.equipments.WarriorWeaponFactory;
 public class Player {
     public ArrayList<NCharacter> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
     public ArrayList<Items> inventory = new ArrayList<>();
+    public int gems = 0;
 
     public Player() {
         // Generate random number of characters (1-5)

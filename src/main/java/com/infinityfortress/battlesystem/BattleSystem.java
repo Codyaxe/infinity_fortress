@@ -17,12 +17,17 @@ import com.infinityfortress.utils.ModifiedPriorityQueue;
 
 public class BattleSystem {
 
-    Player player = new Player();
-    Enemy enemy = new Enemy();
+    Player player;
+    Enemy enemy;
     DecisionSystem decisionSystem;
     StatSystem statSystem;
     ActionSystem actionSystem;
     ItemSystem itemSystem;
+
+    public BattleSystem(Player player, Enemy enemy) {
+        this.player = player;
+        this.enemy = enemy;
+    }
 
     public void start() {
         int choice = 0;
