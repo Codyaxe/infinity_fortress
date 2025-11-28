@@ -1,8 +1,8 @@
 package com.infinityfortress.PathSystem;
 
-import com.infinityfortress.utils.InputHandler;
-import com.infinityfortress.utils.Utils;
 import com.infinityfortress.ui.PathMenu.PathUI;
+import com.infinityfortress.utils.Animate;
+import com.infinityfortress.utils.InputHandler;
 
 public class MainPathSystem {
 
@@ -24,17 +24,17 @@ public class MainPathSystem {
                 InputHandler.right.set(false);
             }
 
+            // !Character setup(changing positions, equipment, etc) can only be done when in a refuge
             if (InputHandler.enter.get()) {
+                Animate.flashBlock("Path-Flash",mainPathUI.getFrame(choice));
                 switch (choice) {
-                    case 0 -> {
-                        // Action
-                        // System.out.println();
+                  case 0 -> {
+                      // System.out.println("Taken Left");
                     }
                     case 1 -> {
-                        // Stat
-                        // System.out.println();
+                      // System.out.println("Taken Right");
                     }
-                }
+                  }
             }
         }
     }
