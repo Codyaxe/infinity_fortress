@@ -155,8 +155,6 @@ class SingleAllyHandler extends TargetingHandlerBase {
 ```
 ## Program Structure
 
-A concise visual of the top-level project layout. This helps you quickly find major packages and assets:
-
 ```text
 📂 src/
 └── 📂 main/
