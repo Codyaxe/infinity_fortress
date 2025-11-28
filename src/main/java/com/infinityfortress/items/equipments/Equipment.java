@@ -11,21 +11,21 @@ public class Equipment implements Items {
         visitor.visit(this);
     }
 
-    String name;
-    String type;
-    String role;
-    int value;
-    int health;
-    int mana;
-    int defense;
-    int strength;
-    int critChance;
-    int critStrength;
-    int speed;
-    int luck;
-    String description;
-    String flavorText;
-    ItemRarity rarity;
+    private String name;
+    private String type;
+    private String role;
+    private int value;
+    private int health;
+    private int mana;
+    private int defense;
+    private int strength;
+    private int critChance;
+    private int critStrength;
+    private int speed;
+    private int luck;
+    private String description;
+    private String flavorText;
+    private ItemRarity rarity;
 
     boolean isUsed;
 
