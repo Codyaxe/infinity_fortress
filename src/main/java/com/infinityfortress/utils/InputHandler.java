@@ -1,7 +1,6 @@
 package com.infinityfortress.utils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import com.infinityfortress.utils.AudioHandler;
 
 
 public class InputHandler {
@@ -16,6 +15,9 @@ public class InputHandler {
     public static AtomicBoolean down = new AtomicBoolean(false);
     public static AtomicBoolean isPressed = new AtomicBoolean(false);
     public static AtomicBoolean back = new AtomicBoolean(false);
+    
+    // Flag to temporarily disable input processing
+    private static final AtomicBoolean isListenerDisabled = new AtomicBoolean(false);
 
     // Made a class to simplify things. This sets up all the keys we are going to
     // use at start up. This is initiated at the start of the game.
@@ -34,6 +36,11 @@ public class InputHandler {
         keyListener.addKeyEventListener(new KeyListenerThread.KeyEventListener() {
             @Override
             public void onKeyPressed(int keyCode) {
+                // Skip processing if listener is temporarily disabled
+                if (isListenerDisabled.get()) {
+                    return;
+                }
+                
                 if (!isPressed.get()) {
                     switch (keyCode) {
                         case KeyListenerThread.VK_RETURN -> {
@@ -68,6 +75,11 @@ public class InputHandler {
 
             @Override
             public void onKeyReleased(int keyCode) {
+                // Skip processing if listener is temporarily disabled
+                if (isListenerDisabled.get()) {
+                    return;
+                }
+                
                 isPressed.set(false);
                 switch (keyCode) {
                     case KeyListenerThread.VK_RETURN ->
@@ -115,6 +127,51 @@ public class InputHandler {
         synchronized (lock) {
             lock.notifyAll();
         }
+    }
+
+    // Listener Control Methods
+    
+    /**
+     * Temporarily disable input processing (inputs will be ignored)
+     */
+    public static void disableListener() {
+        isListenerDisabled.set(true);
+        resetInputFlags(); // Clear any pending inputs
+    }
+    
+    /**
+     * Re-enable input processing after being disabled
+     */
+    public static void enableListener() {
+        isListenerDisabled.set(false);
+    }
+    
+    /**
+     * Check if the listener is currently disabled
+     * @return true if disabled, false if enabled
+     */
+    public static boolean isListenerDisabled() {
+        return isListenerDisabled.get();
+    }
+    
+    /**
+     * Temporarily disable input for a specific duration
+     * @param milliseconds Duration to disable input
+     */
+    public static void disableListenerTemporarily(int milliseconds) {
+        disableListener();
+        
+        // Use a separate thread to re-enable after delay
+        Thread enableThread = new Thread(() -> {
+            try {
+                Thread.sleep(milliseconds);
+                enableListener();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        enableThread.setDaemon(true); // Don't prevent JVM shutdown
+        enableThread.start();
     }
 
     // Reset Methods

@@ -2,8 +2,13 @@ package com.infinityfortress.characters;
 
 import com.infinityfortress.roles.*;
 import com.infinityfortress.races.*;
+import java.util.Random;
+import java.lang.reflect.Method;
+
 
 public class NCharacterFactory {
+
+    private static final Random random = new Random();
 
     // Based to sa stats dun sa ating table
 
@@ -410,5 +415,35 @@ public class NCharacterFactory {
     public NCharacter createSpiritbornWarlock(NCharacterType type) {
         return new NCharacter(type, 40, 50, 0, 2, 5, 4,
                 20, 5, 15, new Warlock(), new Spiritborn());
+    }
+
+    /**
+     * Creates a random character with a random race and role combination
+     * @param type The character type (PLAYER, ENEMY, NPC, etc.)
+     * @return A randomly generated NCharacter
+     */
+    public NCharacter createRandomCharacter(NCharacterType type) {
+        // All available races
+        String[] races = {"Beastkin", "Demon", "Dragonborn", "Dwarf", "Elf", "Human", "Nephilim", "Orc", "Spiritborn"};
+        
+        // All available roles
+        String[] roles = {"Warrior", "Archer", "Mage", "Tank", "Rogue", "Healer", "Summoner", "Cleric", "Warlock"};
+        
+        // Pick random race and role
+        String randomRace = races[random.nextInt(races.length)];
+        String randomRole = roles[random.nextInt(roles.length)];
+        
+        // Create method name and invoke the corresponding creation method
+        String methodName = "create" + randomRace + randomRole;
+        
+        try {
+            // Use reflection to call the appropriate method
+            Method method = this.getClass().getMethod(methodName, NCharacterType.class);
+            return (NCharacter) method.invoke(this, type);
+        } catch (Exception e) {
+            // Fallback to a default character if reflection fails
+            System.out.println("Error creating random character: " + e.getMessage());
+            return createHumanWarrior(type);
+        }
     }
 }

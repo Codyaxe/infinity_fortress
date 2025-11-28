@@ -21,6 +21,16 @@ public class Utils {
         System.out.print(frame.toString());
     }
 
+    public static StringBuilder getInnerBorder() {
+        StringBuilder frame = new StringBuilder();
+        frame.append("\033[3;4H┌").append("─".repeat(111)).append("┐");
+        for (int i = 0; i < 27; i++) {
+            frame.append("\033[").append(i + 4).append(";4H│").append(" ".repeat(111)).append("│");
+        }
+        frame.append("\033[31;4H└").append("─".repeat(111)).append("┘");
+        return frame;
+    }
+
     public static void hideCursor() {
         System.out.print("\u001B[?25l");
         System.out.flush();
@@ -57,7 +67,7 @@ public class Utils {
     public static String rightAlign(String text, int width) {
         // Handle case where width is less than text length
         if (width < text.length()) {
-            return text.substring(0, width);
+            return text.substring(width);
         }
 
         int padding = width - text.length();

@@ -1,7 +1,7 @@
 package com.infinityfortress.ui.PathMenu;
 
 import com.infinityfortress.utils.Utils;
-import com.infinityfortress.utils.ArtBank;
+import com.infinityfortress.utils.ArtManager;
 
 class Path {
   String name;
@@ -10,7 +10,7 @@ class Path {
   int[] coords;
 
   public Path(String name, String description, int[] coords) {
-    String[] art = ArtBank.getArt(name, 35, 16);
+    String[] art = ArtManager.getFormattedArt(name, 35, 16);
     StringBuilder frame = new StringBuilder();
     int width = 35, height = 18;
     
@@ -59,6 +59,10 @@ public class PathUI {
     System.out.print(frame.toString());
   }
   
+  public StringBuilder getFrame(int curr) {
+    return this.paths[curr].frame;
+  }
+
   public void updateChoice(int choice) {
     StringBuilder frame = new StringBuilder();
     int startX = 25, startY = 28, width = 71;
