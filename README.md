@@ -17,7 +17,7 @@ This is a (definitely simple) turn-based battle game with fantasy elements. Play
 - **ASCII ART!!??**: VISUALIZE YOUR CHARACTERS IN BEAUTIFUL TEXT GLORY!! YOUR EYES AREN’T READY!!!  
 - **Features Audio and Music**: Wait—we have sound now? Are we… game developers??
 
-### Object-oriented Principles
+## Object-oriented Principles
 
 This project follows core object‑oriented principles to keep the codebase modular, maintainable, and easy to extend. Key practices and examples:
 
@@ -153,6 +153,41 @@ class SingleAllyHandler extends TargetingHandlerBase {
     }
 }
 ```
+## Program Structure
+
+A concise visual of the top-level project layout. This helps you quickly find major packages and assets:
+
+```text
+📂 src/
+└── 📂 main/
+    └── 📂 java/
+        └── 📂 com/
+            └── 📂 infinityfortress/
+                ├── ☕ App.java
+                ├── ☕ Player.java
+                ├── ☕ Enemy.java
+                ├── 📂 actions/
+                │   ├── ☕ Action.java
+                │   ├── ☕ AttackAction.java
+                │   └── ☕ ...
+                ├── 📂 battlesystem/
+                │   ├── ☕ BattleSystem.java
+                │   └── ☕ ActionSystem.java
+                ├── 📂 characters/
+                ├── 📂 effects/
+                ├── 📂 items/
+                ├── 📂 races/
+                ├── 📂 roles/
+                ├── 📂 ui/
+                └── 📂 utils/
+
+📂 src/main/resources/  — runtime assets (audio/*.wav)
+📂 static/              — screenshots and README images (e.g., `static/battle.png`)
+```
+
+## Sample Output
+
+![Battle screen](static/battle.png)
 
 ## System Requirements
 
@@ -187,7 +222,7 @@ Ensure you have the following installed on your system:
    mvn clean install
    ```
 
-## Running the Game
+## Running the Program
 
 1. Use a terminal and navigate to the `target` directory:
    ```bash
@@ -215,3 +250,7 @@ The drunk devs that made this repo possible is brought to you by:
 - **@Trill1um**: UI and System Programmer
 
 - **@HoYeJi**: Game Balance and Designer
+
+## Acknowledgements
+
+This project was created as part of an Object-Oriented Programming course. Special thanks to our OOP instructor for guidance during development.
