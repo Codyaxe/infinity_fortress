@@ -243,7 +243,7 @@ Ensure you have the following installed on your system:
    ```
 ## Contributors
 The drunk devs that made this repo possible is brought to you by:
-- **@codyxe**: System and Utility Programmer
+- **@Codyaxe**: System and Utility Programmer
 
 - **@Trill1um**: UI and System Programmer
 
