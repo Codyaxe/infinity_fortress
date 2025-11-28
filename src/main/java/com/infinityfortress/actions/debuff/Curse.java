@@ -4,7 +4,8 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.temporaryeffect.CurseEffect;
+import com.infinityfortress.effects.temporaryeffect.FactoryEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffectsFactory;
 
 public class Curse implements Action {
     private String message;
@@ -49,7 +50,7 @@ public class Curse implements Action {
     }
 
     public void execute(NCharacter user, NCharacter target) {
-        CurseEffect curseEffect = new CurseEffect(3, target);
+        FactoryEffect curseEffect = TemporaryEffectsFactory.createCursed(3, target);
 
         curseEffect.apply();
         target.addTemporaryEffect(curseEffect);

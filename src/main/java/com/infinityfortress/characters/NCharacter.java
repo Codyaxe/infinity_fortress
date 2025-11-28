@@ -7,7 +7,8 @@ import java.util.Set;
 import com.infinityfortress.actions.Action;
 import com.infinityfortress.effects.summoneffect.SummonEffect;
 import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
-import com.infinityfortress.equipments.Equipment;
+import com.infinityfortress.items.equipments.Equipment;
+import com.infinityfortress.items.equipments.EquippedSlots;
 import com.infinityfortress.races.Race;
 import com.infinityfortress.roles.Role;
 
@@ -33,11 +34,12 @@ public class NCharacter {
     private boolean isEmpty;
     private boolean isDead;
     private boolean hasTakenTurn;
+    private Runnable isSpeedChanged;
 
     // Temp
-    private Equipment equipment = new Equipment();
+    private EquippedSlots equipment = new EquippedSlots();
 
-    public Equipment getEquipment() {
+    public EquippedSlots getEquipment() {
         return equipment;
     }
 
@@ -64,6 +66,8 @@ public class NCharacter {
         this.condition = new HashSet<>();
         this.summons = new HashSet<>();
 
+        this.isSpeedChanged = null;
+
     }
 
     public NCharacter(NCharacterType type, int health, int mana, int exp, int defense,
@@ -89,6 +93,8 @@ public class NCharacter {
         this.hasTakenTurn = false;
         this.condition = new HashSet<>();
         this.summons = new HashSet<>();
+
+        this.isSpeedChanged = null;
     }
 
     // Getters
@@ -305,6 +311,61 @@ public class NCharacter {
 
     public int getActionCount() {
         return role.getActions().size();
+    }
+
+    // Update Stats From Equipment
+
+    public void updateStatFromEquipment(Equipment equipment) {
+        this.maxHealth += equipment.getHealth();
+        this.health += equipment.getHealth();
+        this.maxMana += equipment.getMana();
+        this.mana += equipment.getHealth();
+
+        this.defense += equipment.getDefense();
+        this.strength += equipment.getStrength();
+
+        this.critChance += equipment.getCritChance();
+        this.critStrength += equipment.getCritStrength();
+
+        this.luck += equipment.getLuck();
+        if (equipment.getSpeed() != 0) {
+            this.speed += equipment.getSpeed();
+            notifySpeedChange();
+        }
+
+    }
+
+    public void removeStatsFromEquipment(Equipment equipment) {
+        this.maxHealth -= equipment.getHealth();
+        this.health -= equipment.getHealth();
+        this.maxMana -= equipment.getMana();
+        this.mana -= equipment.getHealth();
+
+        this.defense -= equipment.getDefense();
+        this.strength -= equipment.getStrength();
+
+        this.critChance -= equipment.getCritChance();
+        this.critStrength -= equipment.getCritStrength();
+
+        this.luck -= equipment.getLuck();
+        if (equipment.getSpeed() != 0) {
+            this.speed -= equipment.getSpeed();
+            notifySpeedChange();
+        }
+
+    }
+
+    // Speed Change
+
+    public void setSpeedChange(Runnable speedChange) {
+        this.isSpeedChanged = speedChange;
+    }
+
+    public void notifySpeedChange() {
+        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+        if (isSpeedChanged != null) {
+            isSpeedChanged.run();
+        }
     }
 
 }

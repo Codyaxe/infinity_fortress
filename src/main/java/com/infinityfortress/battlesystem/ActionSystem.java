@@ -7,8 +7,10 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
 import com.infinityfortress.ui.BattleMenu.ActionComponent;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
-import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.MutableInt;
+
+/* Changed the code so it follows a Strategy Pattern */
 
 public class ActionSystem {
   private final DecisionSystem decisionSystem;
@@ -18,44 +20,41 @@ public class ActionSystem {
   }
 
   public boolean start(MainBattleUI battleUI, NCharacter curr) {
+    ActionProcessor processor = curr.getType() == NCharacterType.ALLY ? new PlayerActionProcessor(decisionSystem)
+        : new EnemyActionProcessor(decisionSystem);
+    return processor.process(battleUI, curr);
+  }
+}
 
-    if (curr.getType() == NCharacterType.ALLY) {
-      return processPlayer(battleUI, curr);
-    }
-    return processEnemy(battleUI, curr);
+interface ActionProcessor {
+  boolean process(MainBattleUI battleUI, NCharacter curr);
+}
 
+class PlayerActionProcessor implements ActionProcessor {
+  private final DecisionSystem decisionSystem;
+
+  public PlayerActionProcessor(DecisionSystem decisionSystem) {
+    this.decisionSystem = decisionSystem;
   }
 
-  private boolean processPlayer(MainBattleUI battleUI, NCharacter curr) {
-
+  @Override
+  public boolean process(MainBattleUI battleUI, NCharacter curr) {
     MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
 
-    int choice = 0;
+    MutableInt choice = new MutableInt(0);
     int maxChoice = 3;
 
     mainBattleUI.updateSelection();
     while (true) {
-      mainBattleUI.updateChoice(choice);
+      mainBattleUI.updateChoice(choice.value);
       InputHandler.waitForInput();
-
-      if (InputHandler.left.get()) {
-        choice = Math.max(0, choice - 1);
-        InputHandler.left.set(false);
-        AudioHandler.playSelect();
-      }
-      if (InputHandler.right.get()) {
-        choice = Math.min(maxChoice, choice + 1);
-        InputHandler.right.set(false);
-        AudioHandler.playSelect();
-      }
+      handleNavigation(choice, maxChoice);
       if (InputHandler.back.get()) {
         InputHandler.back.set(false);
-        AudioHandler.playBack();
         return false;
       }
       if (InputHandler.enter.get()) {
-        AudioHandler.playEnter();
-        switch (choice) {
+        switch (choice.value) {
           case 0 -> {
             if (decisionSystem.start(mainBattleUI, curr, curr.getBasicAction())) {
               return true;
@@ -88,8 +87,27 @@ public class ActionSystem {
     }
   }
 
-  private boolean processEnemy(MainBattleUI battleUI, NCharacter curr) {
+  private void handleNavigation(MutableInt choice, int maxChoice) {
+    if (InputHandler.left.get()) {
+      choice.value = Math.max(0, choice.value - 1);
+      InputHandler.left.set(false);
+    }
+    if (InputHandler.right.get()) {
+      choice.value = Math.min(maxChoice, choice.value + 1);
+      InputHandler.right.set(false);
+    }
+  }
+}
 
+class EnemyActionProcessor implements ActionProcessor {
+  private final DecisionSystem decisionSystem;
+
+  public EnemyActionProcessor(DecisionSystem decisionSystem) {
+    this.decisionSystem = decisionSystem;
+  }
+
+  @Override
+  public boolean process(MainBattleUI battleUI, NCharacter curr) {
     MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new ActionComponent());
 
     int[] scores = { 50, 0, 0, 0 };
@@ -169,7 +187,6 @@ public class ActionSystem {
     }
 
     return true;
-
   }
 
   private boolean specialDominant(NCharacter curr) {

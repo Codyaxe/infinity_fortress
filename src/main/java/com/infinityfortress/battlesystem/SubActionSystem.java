@@ -9,8 +9,10 @@ import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.SubActionComponent;
-import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.MutableInt;
+
+/* Changed the code so it follows a Strategy Pattern */
 
 public class SubActionSystem {
 
@@ -18,50 +20,59 @@ public class SubActionSystem {
     }
 
     public Action start(MainBattleUI battleUI, NCharacter curr, ArrayList<Action> availableActions) {
-        if (curr.getType() == NCharacterType.ALLY) {
-            return processPlayer(battleUI, curr, availableActions);
-        } else {
-            return processEnemy(curr, availableActions);
-        }
+        SubActionProcessor processor = curr.getType() == NCharacterType.ALLY ? new PlayerSubActionProcessor()
+                : new EnemySubActionProcessor();
+        return processor.process(battleUI, curr, availableActions);
     }
+}
 
-    private Action processPlayer(MainBattleUI battleUI, NCharacter curr, ArrayList<Action> availableActions) {
+interface SubActionProcessor {
+    Action process(MainBattleUI battleUI, NCharacter curr, ArrayList<Action> availableActions);
+}
+
+class PlayerSubActionProcessor implements SubActionProcessor {
+
+    @Override
+    public Action process(MainBattleUI battleUI, NCharacter curr, ArrayList<Action> availableActions) {
         MainBattleUI mainBattleUI = new MainBattleUI(battleUI, new SubActionComponent(availableActions));
 
-        int choice = 0;
+        MutableInt choice = new MutableInt(0);
         int maxChoice = availableActions.size() - 1;
 
         mainBattleUI.updateSelection();
         while (true) {
-            mainBattleUI.updateChoice(choice);
+            mainBattleUI.updateChoice(choice.value);
             InputHandler.waitForInput();
-
-            if (InputHandler.left.get()) {
-                choice = Math.max(0, choice - 1);
-                InputHandler.left.set(false);
-                AudioHandler.playSelect();
-            }
-            if (InputHandler.right.get()) {
-                choice = Math.min(maxChoice, choice + 1);
-                InputHandler.right.set(false);
-                AudioHandler.playSelect();
-            }
+            handleNavigation(choice, maxChoice);
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
-                AudioHandler.playBack();
                 return null;
             }
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
-                AudioHandler.playEnter();
-                if (choice < availableActions.size()) {
-                    return availableActions.get(choice);
+                if (choice.value < availableActions.size()) {
+                    return availableActions.get(choice.value);
                 }
             }
         }
     }
 
-    private Action processEnemy(NCharacter curr, ArrayList<Action> availableActions) {
+    private void handleNavigation(MutableInt choice, int maxChoice) {
+        if (InputHandler.left.get()) {
+            choice.value = Math.max(0, choice.value - 1);
+            InputHandler.left.set(false);
+        }
+        if (InputHandler.right.get()) {
+            choice.value = Math.min(maxChoice, choice.value + 1);
+            InputHandler.right.set(false);
+        }
+    }
+}
+
+class EnemySubActionProcessor implements SubActionProcessor {
+
+    @Override
+    public Action process(MainBattleUI battleUI, NCharacter curr, ArrayList<Action> availableActions) {
         int[] scores = new int[availableActions.size()];
 
         for (int i = 0; i < availableActions.size(); i++) {
@@ -82,11 +93,9 @@ public class SubActionSystem {
                 .orElse(-1);
 
         return availableActions.get(choice);
-
     }
 
     private boolean isCastable(NCharacter curr, Action action) {
         return curr.getMana() >= action.getManaCost();
     }
-
 }

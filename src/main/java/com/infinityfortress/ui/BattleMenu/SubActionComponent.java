@@ -15,8 +15,7 @@ public class SubActionComponent extends SelectionUI {
             this.choiceCoords = new int[0][0];
         } else {
             StringBuilder frame = new StringBuilder();
-            int width = 111;
-            int startX = 4, startY = 26;
+            int width = 111, startX = 4, startY = 26;
             int[] sizes = new int[subActions.size()];
             int totalSize = 0;
             for (int i = 0; i < subActions.size(); i++) {

@@ -7,17 +7,23 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
-import com.infinityfortress.effects.temporaryeffect.ProtectEffect;
-import com.infinityfortress.effects.temporaryeffect.RageEffect;
 import com.infinityfortress.effects.temporaryeffect.TemporaryEffect;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.ui.BattleMenu.TargetingComponent;
-import com.infinityfortress.utils.AudioHandler;
 import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.utils.MutableInt;
+
+/* Changed the code so it follows a Strategy Pattern */
 
 public class TargetingSystem {
+
     private Action selectedAction;
     private NCharacter current;
+
+    public TargetingSystem() {
+        this.selectedAction = null;
+        this.current = null;
+    }
 
     public TargetingSystem(Action selectedAction, NCharacter current) {
         this.selectedAction = selectedAction;
@@ -25,71 +31,93 @@ public class TargetingSystem {
     }
 
     public NCharacter start(MainBattleUI battleUI, ArrayList<NCharacter> targets) {
+        TargetProcessor processor = current.getType() == NCharacterType.ALLY
+                ? new PlayerTargetProcessor(selectedAction, current)
+                : new EnemyTargetProcessor(selectedAction, current);
+        return processor.process(battleUI, targets);
+    }
+}
 
-        if (current.getType() == NCharacterType.ALLY) {
-            return processPlayer(battleUI, targets);
-        } else {
-            return processEnemy(targets);
-        }
+interface TargetProcessor {
+    NCharacter process(MainBattleUI battleUI, ArrayList<NCharacter> targets);
+}
 
+class PlayerTargetProcessor implements TargetProcessor {
+
+    public PlayerTargetProcessor(Action selectedAction, NCharacter current) {
+        // Not used for player
     }
 
-    private NCharacter processPlayer(MainBattleUI battleUI, ArrayList<NCharacter> targets) {
+    @Override
+    public NCharacter process(MainBattleUI battleUI, ArrayList<NCharacter> targets) {
         MainBattleUI targetUI = new MainBattleUI(battleUI, new TargetingComponent(targets));
-        int choice = 0;
+        MutableInt choice = new MutableInt(0);
         int maxChoice = targets.size() - 1;
         targetUI.updateSelection();
         while (true) {
-            targetUI.updateChoice(choice);
+            targetUI.updateChoice(choice.value);
             InputHandler.waitForInput();
-
-            if (InputHandler.right.get()) {
-                if (choice % 3 < 2 && choice + 1 <= maxChoice) {
-                    choice++;
-                }
-                InputHandler.right.set(false);
-                AudioHandler.playSelect();
-            }
-
-            if (InputHandler.left.get()) {
-                if (choice % 3 > 0) {
-                    choice--;
-                }
-                InputHandler.left.set(false);
-                AudioHandler.playSelect();
-            }
-
-            if (InputHandler.down.get()) {
-                if (choice + 3 <= maxChoice) {
-                    choice += 3;
-                }
-                InputHandler.down.set(false);
-                AudioHandler.playSelect();
-            }
-
-            if (InputHandler.up.get()) {
-                if (choice >= 3) {
-                    choice -= 3;
-                }
-                InputHandler.up.set(false);
-                AudioHandler.playSelect();
-            }
-
+            handleNavigation(choice, maxChoice, targets);
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
-                AudioHandler.playBack();
                 return null;
             }
 
             if (InputHandler.enter.get()) {
                 InputHandler.enter.set(false);
-                AudioHandler.playEnter();
-                return targets.get(choice);
+                return targets.get(choice.value);
             }
         }
     }
 
-    private NCharacter processEnemy(ArrayList<NCharacter> targets) {
+    private void handleNavigation(MutableInt choice, int maxChoice, ArrayList<NCharacter> targets) {
+        if (InputHandler.right.get()) {
+            if (targets.size() > 2 && choice.value == targets.size() - 1) {
+                choice.value = 2;
+            } else if (choice.value % 3 < 2 && choice.value + 1 <= maxChoice) {
+                choice.value++;
+            }
+            InputHandler.right.set(false);
+        }
+
+        if (InputHandler.left.get()) {
+            if (targets.size() > 2 && choice.value == 3) {
+                choice.value = 0;
+            } else if (choice.value % 3 > 0) {
+                choice.value--;
+            }
+            InputHandler.left.set(false);
+        }
+
+        if (InputHandler.down.get()) {
+            if (choice.value <= 2 && choice.value + 3 >= targets.size() - 1 && targets.size() > 3) {
+                choice.value = targets.size() - 1;
+            } else if (choice.value + 3 <= maxChoice) {
+                choice.value += 3;
+            }
+            InputHandler.down.set(false);
+        }
+
+        if (InputHandler.up.get()) {
+            if (choice.value >= 3) {
+                choice.value -= 3;
+            }
+            InputHandler.up.set(false);
+        }
+    }
+}
+
+class EnemyTargetProcessor implements TargetProcessor {
+    private Action selectedAction;
+    private NCharacter current;
+
+    public EnemyTargetProcessor(Action selectedAction, NCharacter current) {
+        this.selectedAction = selectedAction;
+        this.current = current;
+    }
+
+    @Override
+    public NCharacter process(MainBattleUI battleUI, ArrayList<NCharacter> targets) {
         int maxChoice = targets.size() - 1;
         int[] scores = new int[targets.size()];
 
@@ -99,7 +127,7 @@ public class TargetingSystem {
             NCharacter target = targets.get(i);
 
             switch (actionType) {
-                case DAMAGE:
+                case DAMAGE -> {
                     if (target.getHealth() <= (int) (0.10 * target.getMaxHealth())) {
                         scores[i] += 100;
                     } else if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
@@ -111,9 +139,8 @@ public class TargetingSystem {
                     if (isSquishy(current)) {
                         scores[i] += (int) ((target.getMaxHealth() / target.getHealth()) * 2);
                     }
-
-                    break;
-                case HEAL:
+                }
+                case HEAL -> {
                     if (target.getHealth() <= (int) (0.25 * target.getMaxHealth())) {
                         scores[i] += 100;
                     } else if (target.getHealth() <= (int) (0.50 * target.getMaxHealth())) {
@@ -121,8 +148,8 @@ public class TargetingSystem {
                     } else if (target.getHealth() <= (int) (0.75 * target.getMaxHealth())) {
                         scores[i] += 50;
                     }
-                    break;
-                case RESTORATION:
+                }
+                case RESTORATION -> {
                     if (target.getMana() <= (int) (0.25 * target.getMaxMana())) {
                         scores[i] += 100;
                     } else if (target.getMana() <= (int) (0.50 * target.getMaxMana())) {
@@ -130,47 +157,47 @@ public class TargetingSystem {
                     } else if (target.getMana() <= (int) (0.75 * target.getMaxMana())) {
                         scores[i] += 50;
                     }
-                    break;
-                case PROTECTION:
+                }
+                case PROTECTION -> {
                     if (defenseDominant(target)) {
                         scores[i] += 50;
                     } else if (isSquishy(target)) {
                         scores[i] += 75;
                     }
 
-                    if (!hasCondition(target, new ProtectEffect())) {
+                    if (!hasCondition(target, "Protect")) {
                         scores[i] -= 200;
                     }
-                    break;
-                case STRENGTH:
-                    if (attackDominant(target) && !hasCondition(target, new RageEffect())) {
+                }
+                case STRENGTH -> {
+                    if (attackDominant(target) && !hasCondition(target, "Rage")) {
                         scores[i] += 50;
                     }
-                    break;
-                case SPEED:
+                }
+                case SPEED -> {
                     if (speedDominant(target)) {
                         scores[i] += 50;
                     }
-                    break;
-                case CRITICAL:
+                }
+                case CRITICAL -> {
                     if (criticalDominant(target)) {
                         scores[i] += 50;
                     }
-                    break;
-                case HEALTH:
+                }
+                case HEALTH -> {
                     if (healthDominant(target)) {
                         scores[i] += 50;
                     } else if (isSquishy(target)) {
                         scores[i] += 75;
                     }
-                    break;
-                case UTILITY:
+                }
+                case UTILITY -> {
                     if (utilityDependent(target)) {
                         scores[i] += 50;
                     }
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
 
@@ -226,13 +253,12 @@ public class TargetingSystem {
                 || role.equals("Summoner");
     }
 
-    private boolean hasCondition(NCharacter character, TemporaryEffect status) {
+    private boolean hasCondition(NCharacter character, String effectName) {
         for (TemporaryEffect condition : character.getAllTemporaryEffect()) {
-            if (condition.equals(status)) {
+            if (condition.getName().equals(effectName)) {
                 return true;
             }
         }
         return false;
     }
-
 }

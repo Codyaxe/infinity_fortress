@@ -4,7 +4,8 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.temporaryeffect.SlowEffect;
+import com.infinityfortress.effects.temporaryeffect.FactoryEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffectsFactory;
 
 public class Slow implements Action {
     private String message;
@@ -49,7 +50,7 @@ public class Slow implements Action {
     }
 
     public void execute(NCharacter user, NCharacter target) {
-        SlowEffect slowEffect = new SlowEffect(5, target);
+        FactoryEffect slowEffect = TemporaryEffectsFactory.createSlowed(5, target);
 
         slowEffect.apply();
         target.addTemporaryEffect(slowEffect);

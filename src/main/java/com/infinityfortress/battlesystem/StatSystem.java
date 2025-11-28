@@ -7,7 +7,6 @@ import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.ui.StatsMenu.MainStatMenu;
 import com.infinityfortress.utils.InputHandler;
-import com.infinityfortress.utils.AudioHandler;
 
 public class StatSystem {
     private final Player player;
@@ -17,7 +16,7 @@ public class StatSystem {
     }
 
     public void start(NCharacter currentCharacter) {
-        ArrayList<NCharacter> characterList = player.characters.stream().filter(c -> c != null)
+        ArrayList<NCharacter> characterList = player.getCharacters().stream().filter(c -> c != null)
                 .collect(Collectors.toCollection(ArrayList::new));
 
         MainStatMenu menu = new MainStatMenu(characterList, characterList.indexOf(currentCharacter), 0);
@@ -28,29 +27,24 @@ public class StatSystem {
                 menu.leftCharacter();
                 InputHandler.left.set(false);
                 menu.updateCharacter();
-                AudioHandler.playSelect();
             }
             if (InputHandler.right.get()) {
                 menu.rightCharacter();
                 InputHandler.right.set(false);
                 menu.updateCharacter();
-                AudioHandler.playSelect();
             }
             if (InputHandler.up.get()) {
                 menu.upChoice();
                 InputHandler.up.set(false);
                 menu.updateInfo();
-                AudioHandler.playSelect();
             }
             if (InputHandler.down.get()) {
                 menu.downChoice();
                 InputHandler.down.set(false);
                 menu.updateInfo();
-                AudioHandler.playSelect();
             }
             if (InputHandler.back.get()) {
                 InputHandler.back.set(false);
-                AudioHandler.playBack();
                 return;
             }
         }

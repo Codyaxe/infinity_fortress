@@ -2,11 +2,13 @@ package com.infinityfortress;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-// import java.util.Random;
-import com.infinityfortress.characters.*;
+
+import com.infinityfortress.characters.NCharacter;
+import com.infinityfortress.characters.NCharacterFactory;
+import com.infinityfortress.characters.NCharacterType;
 
 public class Enemy {
-    public ArrayList<NCharacter> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
+    private ArrayList<NCharacter> characters = new ArrayList<>(Arrays.asList(null, null, null, null, null));
 
     public Enemy() {
         // Generate random number of characters (1-5)
@@ -23,4 +25,8 @@ public class Enemy {
         characters.set(4, factory.createOrcWarlock(NCharacterType.ENEMY));
     }
 
+    // Getter
+    public ArrayList<NCharacter> getCharacters() {
+        return characters;
+    }
 }
