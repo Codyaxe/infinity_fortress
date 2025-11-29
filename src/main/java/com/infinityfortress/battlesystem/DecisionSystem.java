@@ -13,6 +13,8 @@ import com.infinityfortress.ui.BattleMenu.ActionComponent;
 import com.infinityfortress.ui.BattleMenu.MainBattleUI;
 import com.infinityfortress.utils.Printbox;
 
+/* Changed the code so it follows a Strategy Pattern */
+
 public class DecisionSystem {
     private final Player player;
     private final Enemy enemy;
@@ -28,130 +30,170 @@ public class DecisionSystem {
         TargetingType targetType = selectedAction.getTargetingType();
 
         mainBattleUI.display();
-        switch (targetType) {
-            case TargetingType.SINGLE_ENEMY -> {
-                ArrayList<NCharacter> enemies = getAliveEnemies(curr);
-                if (enemies.isEmpty()) {
-                    Printbox.showMessage(mainBattleUI, "No valid ally targets available!");
-                    return false;
-                }
-                TargetingSystem targetingSystem = new TargetingSystem(selectedAction, curr);
-                NCharacter target = targetingSystem.start(mainBattleUI, enemies);
-                if (target != null && processMP(curr, selectedAction, mainBattleUI)) {
-                    selectedAction.execute(curr, target);
-                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
-                    return true;
-                }
-                return false;
-            }
-            case SINGLE_ALLY -> {
-                ArrayList<NCharacter> allies = getAliveAllies(curr);
-                if (allies.isEmpty()) {
-                    Printbox.showMessage(mainBattleUI, "No valid ally targets available!");
-                    return false;
-                }
-                TargetingSystem targetingSystem = new TargetingSystem(selectedAction, curr);
-                NCharacter target = targetingSystem.start(mainBattleUI, allies);
-                if (target != null && processMP(curr, selectedAction, mainBattleUI)) {
-                    selectedAction.execute(curr, target);
-                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
-                    return true;
-                }
-                return false;
-            }
-            case ALL_ENEMIES -> {
-                ArrayList<NCharacter> enemies = getAliveEnemies(curr);
-                if (processMP(curr, selectedAction, mainBattleUI)) {
-                    for (NCharacter enemy : enemies) {
-                        selectedAction.execute(curr, enemy);
-                    }
-                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
-                    return true;
-                }
-                return false;
-            }
-            case ALL_ALLIES -> {
-                ArrayList<NCharacter> allies = getAliveAllies(curr);
-                if (processMP(curr, selectedAction, mainBattleUI)) {
-                    for (NCharacter ally : allies) {
-                        selectedAction.execute(curr, ally);
-                    }
-                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
-                    return true;
-                }
-                return false;
-            }
-            case SELF -> {
-                if (processMP(curr, selectedAction, mainBattleUI)) {
-                    selectedAction.execute(curr, curr);
-                    Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
-                    return true;
-                }
-                return false;
-            }
-            case NONE -> {
-                selectedAction.execute(curr, null);
-                return true;
-            }
-            case RANDOM -> {
-                ArrayList<NCharacter> possibleTargets = getAliveEnemies(curr);
-                if (!possibleTargets.isEmpty() && processMP(curr, selectedAction, mainBattleUI)) {
-                    int randomIndex = (int) (Math.random() * possibleTargets.size());
-                    selectedAction.execute(curr, possibleTargets.get(randomIndex));
-                    return true;
-                }
-                Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
-                return false;
-            }
-            case TargetingType.CHOOSE_SUBACTION -> {
-                SubActionSystem subActionSystem = new SubActionSystem();
-                while (true) {
-                    Action subAction = subActionSystem.start(battleUI, curr, selectedAction.getAllSubActions());
-
-                    if (subAction == null) {
-                        return false;
-                    }
-
-                    if (start(battleUI, curr, subAction)) {
-                        return true;
-                    }
-                }
-            }
-            default -> {
-                Printbox.showMessage(battleUI, "Unknown Targeting Type" + targetType);
-                return false;
-            }
-        }
+        TargetingHandler handler = getHandler(targetType);
+        return handler != null ? handler.handle(mainBattleUI, curr, selectedAction) : false;
     }
 
-    // Helper method to get alive enemies based on current character's type. If it's
-    // a player's turn, send enemy's pool. If it's an enemy's turn, send ally's
-    // pool.
-    private ArrayList<NCharacter> getAliveEnemies(NCharacter curr) {
+    private TargetingHandler getHandler(TargetingType targetType) {
+        return switch (targetType) {
+            case SINGLE_ENEMY -> new SingleEnemyHandler(player, enemy);
+            case SINGLE_ALLY -> new SingleAllyHandler(player, enemy);
+            case ALL_ENEMIES -> new AllEnemiesHandler(player, enemy);
+            case ALL_ALLIES -> new AllAlliesHandler(player, enemy);
+            case SELF -> new SelfHandler();
+            case NONE -> new NoneHandler();
+            case RANDOM -> new RandomHandler(player, enemy);
+            case CHOOSE_SUBACTION -> new ChooseSubActionHandler(player, enemy);
+            default -> null;
+        };
+    }
+}
+
+interface TargetingHandler {
+    boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction);
+}
+
+abstract class TargetingHandlerBase implements TargetingHandler {
+    protected final Player player;
+    protected final Enemy enemy;
+
+    public TargetingHandlerBase(Player player, Enemy enemy) {
+        this.player = player;
+        this.enemy = enemy;
+    }
+
+    protected boolean processMP(NCharacter curr, Action selectedAction, MainBattleUI battleUI) {
+        int currentMana = curr.getMana() - selectedAction.getManaCost();
+        if (currentMana < 0) {
+            Printbox.showMessage(battleUI, "You do not have enough mana!");
+            return false;
+        }
+        curr.setMana(currentMana);
+        return true;
+    }
+
+    protected ArrayList<NCharacter> getAliveEnemies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
-            return enemy.characters.stream()
+            return enemy.getCharacters().stream()
                     .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
-            return player.characters.stream()
+            return player.getCharacters().stream()
                     .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
     }
 
-    // Helper method to get alive allies based on current character's type. If it's
-    // a player's turn, send ally's pool. If it's an enemy's turn, send enemy's
-    // pool.
-    private ArrayList<NCharacter> getAliveAllies(NCharacter curr) {
+    protected ArrayList<NCharacter> getAliveAllies(NCharacter curr) {
         if (curr.getType() == NCharacterType.ALLY) {
-            return player.characters.stream()
+            return player.getCharacters().stream()
                     .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         } else {
-            return enemy.characters.stream()
+            return enemy.getCharacters().stream()
                     .filter(c -> c != null && !c.isDead())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
+    }
+}
+
+class SingleEnemyHandler extends TargetingHandlerBase {
+
+    public SingleEnemyHandler(Player player, Enemy enemy) {
+        super(player, enemy);
+    }
+
+    @Override
+    public boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        ArrayList<NCharacter> enemies = getAliveEnemies(curr);
+        if (enemies.isEmpty()) {
+            Printbox.showMessage(battleUI, "No valid enemy targets available!");
+            return false;
+        }
+        TargetingSystem targetingSystem = new TargetingSystem(selectedAction, curr);
+        NCharacter target = targetingSystem.start(battleUI, enemies);
+        if (target != null && processMP(curr, selectedAction, battleUI)) {
+            selectedAction.execute(curr, target);
+            Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+            return true;
+        }
+        return false;
+    }
+}
+
+class SingleAllyHandler extends TargetingHandlerBase {
+
+    public SingleAllyHandler(Player player, Enemy enemy) {
+        super(player, enemy);
+    }
+
+    @Override
+    public boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        ArrayList<NCharacter> allies = getAliveAllies(curr);
+        if (allies.isEmpty()) {
+            Printbox.showMessage(battleUI, "No valid ally targets available!");
+            return false;
+        }
+        TargetingSystem targetingSystem = new TargetingSystem(selectedAction, curr);
+        NCharacter target = targetingSystem.start(battleUI, allies);
+        if (target != null && processMP(curr, selectedAction, battleUI)) {
+            selectedAction.execute(curr, target);
+            Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+            return true;
+        }
+        return false;
+    }
+}
+
+class AllEnemiesHandler extends TargetingHandlerBase {
+
+    public AllEnemiesHandler(Player player, Enemy enemy) {
+        super(player, enemy);
+    }
+
+    @Override
+    public boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        ArrayList<NCharacter> enemies = getAliveEnemies(curr);
+        if (processMP(curr, selectedAction, battleUI)) {
+            for (NCharacter enemy : enemies) {
+                selectedAction.execute(curr, enemy);
+            }
+            Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+            return true;
+        }
+        return false;
+    }
+}
+
+class AllAlliesHandler extends TargetingHandlerBase {
+
+    public AllAlliesHandler(Player player, Enemy enemy) {
+        super(player, enemy);
+    }
+
+    @Override
+    public boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        ArrayList<NCharacter> allies = getAliveAllies(curr);
+        if (processMP(curr, selectedAction, battleUI)) {
+            for (NCharacter ally : allies) {
+                selectedAction.execute(curr, ally);
+            }
+            Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+            return true;
+        }
+        return false;
+    }
+}
+
+class SelfHandler implements TargetingHandler {
+    @Override
+    public boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        if (processMP(curr, selectedAction, battleUI)) {
+            selectedAction.execute(curr, curr);
+            Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+            return true;
+        }
+        return false;
     }
 
     private boolean processMP(NCharacter curr, Action selectedAction, MainBattleUI battleUI) {
@@ -162,5 +204,56 @@ public class DecisionSystem {
         }
         curr.setMana(currentMana);
         return true;
+    }
+}
+
+class NoneHandler implements TargetingHandler {
+    @Override
+    public boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        selectedAction.execute(curr, null);
+        return true;
+    }
+}
+
+class RandomHandler extends TargetingHandlerBase {
+
+    public RandomHandler(Player player, Enemy enemy) {
+        super(player, enemy);
+    }
+
+    @Override
+    public boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        ArrayList<NCharacter> possibleTargets = getAliveEnemies(curr);
+        if (!possibleTargets.isEmpty() && processMP(curr, selectedAction, battleUI)) {
+            int randomIndex = (int) (Math.random() * possibleTargets.size());
+            selectedAction.execute(curr, possibleTargets.get(randomIndex));
+            return true;
+        }
+        Printbox.showMessage(battleUI, selectedAction.getBattleMessage());
+        return false;
+    }
+}
+
+class ChooseSubActionHandler extends TargetingHandlerBase {
+
+    public ChooseSubActionHandler(Player player, Enemy enemy) {
+        super(player, enemy);
+    }
+
+    @Override
+    public boolean handle(MainBattleUI battleUI, NCharacter curr, Action selectedAction) {
+        SubActionSystem subActionSystem = new SubActionSystem();
+        while (true) {
+            Action subAction = subActionSystem.start(battleUI, curr, selectedAction.getAllSubActions());
+
+            if (subAction == null) {
+                return false;
+            }
+
+            DecisionSystem decisionSystem = new DecisionSystem(player, enemy);
+            if (decisionSystem.start(battleUI, curr, subAction)) {
+                return true;
+            }
+        }
     }
 }

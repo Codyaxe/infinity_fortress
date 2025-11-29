@@ -2,24 +2,34 @@ package com.infinityfortress.items.consumables;
 
 import com.infinityfortress.items.ItemRarity;
 import com.infinityfortress.items.Items;
+import com.infinityfortress.items.Visitor;
 
 public class Consumables implements Items {
-    String name;
-    String type;
-    String role;
-    int value;
-    int health;
-    int mana;
-    int defense;
-    int strength;
-    int critChance;
-    int critStrength;
-    int luck;
-    int speed;
-    String description;
-    String flavorText;
-    ItemRarity rarity;
-    ConsumableTier tier;
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    private String name;
+    private String type;
+    private String role;
+    private int value;
+    private int duration;
+    private int health;
+    private int mana;
+    private int defense;
+    private int strength;
+    private int critChance;
+    private int critStrength;
+    private int luck;
+    private int speed;
+    private String description;
+    private String flavorText;
+    private ItemRarity rarity;
+    private ConsumableTier tier;
+
+    private boolean isConsumed;
 
     Consumables() {
         this.name = "";
@@ -38,27 +48,32 @@ public class Consumables implements Items {
         this.flavorText = "";
         this.rarity = ItemRarity.NONE;
         this.tier = ConsumableTier.STANDARD;
+        this.isConsumed = false;
     }
 
-    Consumables(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
-            int critStrength, int luck,
+    Consumables(String name, String type, String role, int value, int duration, int health, int mana, int defense,
+            int strength,
+            int critChance,
+            int critStrength, int luck, int speed,
             String description, String flavorText, ItemRarity rarity, ConsumableTier tier) {
         this.name = name;
         this.type = type;
         this.role = role;
         this.value = value;
-        this.health = 0;
+        this.duration = duration;
+        this.health = health;
         this.mana = mana;
         this.defense = defense;
         this.strength = strength;
         this.critChance = critChance;
         this.critStrength = critStrength;
-        this.speed = 0;
+        this.speed = speed;
         this.luck = luck;
         this.description = description;
         this.flavorText = flavorText;
         this.rarity = rarity;
         this.tier = tier;
+        this.isConsumed = false;
     }
 
     // Getters
@@ -80,6 +95,10 @@ public class Consumables implements Items {
     @Override
     public int getValue() {
         return value;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     @Override
@@ -139,5 +158,13 @@ public class Consumables implements Items {
 
     public ConsumableTier getTier() {
         return tier;
+    }
+
+    public boolean getIsConsumed() {
+        return isConsumed;
+    }
+
+    public void setIsConsumed(boolean x) {
+        this.isConsumed = x;
     }
 }

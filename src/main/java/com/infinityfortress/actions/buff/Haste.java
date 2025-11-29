@@ -4,7 +4,8 @@ import com.infinityfortress.actions.Action;
 import com.infinityfortress.actions.ActionType;
 import com.infinityfortress.actions.TargetingType;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.effects.temporaryeffect.HasteEffect;
+import com.infinityfortress.effects.temporaryeffect.FactoryEffect;
+import com.infinityfortress.effects.temporaryeffect.TemporaryEffectsFactory;
 
 public class Haste implements Action {
 
@@ -50,7 +51,7 @@ public class Haste implements Action {
     };
 
     public void execute(NCharacter user, NCharacter target) {
-        HasteEffect hasteEffect = new HasteEffect(5, target);
+        FactoryEffect hasteEffect = TemporaryEffectsFactory.createHaste(5, target);
 
         hasteEffect.apply();
         target.addTemporaryEffect(hasteEffect);

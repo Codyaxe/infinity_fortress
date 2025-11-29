@@ -8,7 +8,6 @@ public class TemporaryEffect implements Effects {
     private int duration;
     private int strength;
     private boolean justApplied;
-    private Runnable onSpeedChange;
 
     public TemporaryEffect(int d, NCharacter t) {
         this.duration = d;
@@ -55,17 +54,6 @@ public class TemporaryEffect implements Effects {
 
     public int getStrength() {
         return strength;
-    }
-
-    // Speed Change Callback
-    public void setOnSpeedChange(Runnable callback) {
-        this.onSpeedChange = callback;
-    }
-
-    protected void notifySpeedChange() {
-        if (onSpeedChange != null) {
-            onSpeedChange.run();
-        }
     }
 
     // Effect Override

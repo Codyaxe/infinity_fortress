@@ -2,23 +2,32 @@ package com.infinityfortress.items.equipments;
 
 import com.infinityfortress.items.ItemRarity;
 import com.infinityfortress.items.Items;
+import com.infinityfortress.items.Visitor;
 
 public class Equipment implements Items {
-    String name;
-    String type;
-    String role;
-    int value;
-    int health;
-    int mana;
-    int defense;
-    int strength;
-    int critChance;
-    int critStrength;
-    int speed;
-    int luck;
-    String description;
-    String flavorText;
-    ItemRarity rarity;
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    private String name;
+    private String type;
+    private String role;
+    private int value;
+    private int health;
+    private int mana;
+    private int defense;
+    private int strength;
+    private int critChance;
+    private int critStrength;
+    private int speed;
+    private int luck;
+    private String description;
+    private String flavorText;
+    private ItemRarity rarity;
+
+    boolean isUsed;
 
     Equipment() {
         this.name = "";
@@ -36,6 +45,7 @@ public class Equipment implements Items {
         this.description = "";
         this.flavorText = "";
         this.rarity = ItemRarity.NONE;
+        this.isUsed = false;
     }
 
     Equipment(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
@@ -56,6 +66,49 @@ public class Equipment implements Items {
         this.description = description;
         this.flavorText = flavorText;
         this.rarity = rarity;
+        this.isUsed = false;
+    }
+
+    Equipment(String name, String type, String role, int value, int health, int mana, int defense, int strength,
+            int critChance, int critStrength, int luck,
+            String description, String flavorText, ItemRarity rarity) {
+        this.name = name;
+        this.type = type;
+        this.role = role;
+        this.value = value;
+        this.health = health;
+        this.mana = mana;
+        this.defense = defense;
+        this.strength = strength;
+        this.critChance = critChance;
+        this.critStrength = critStrength;
+        this.speed = 0;
+        this.luck = luck;
+        this.description = description;
+        this.flavorText = flavorText;
+        this.rarity = rarity;
+        this.isUsed = false;
+    }
+
+    Equipment(String name, String type, String role, int value, int health, int mana, int defense, int strength,
+            int speed, int critChance, int critStrength, int luck,
+            String description, String flavorText, ItemRarity rarity) {
+        this.name = name;
+        this.type = type;
+        this.role = role;
+        this.value = value;
+        this.health = health;
+        this.mana = mana;
+        this.defense = defense;
+        this.strength = strength;
+        this.critChance = critChance;
+        this.critStrength = critStrength;
+        this.speed = speed;
+        this.luck = luck;
+        this.description = description;
+        this.flavorText = flavorText;
+        this.rarity = rarity;
+        this.isUsed = false;
     }
 
     Equipment(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
@@ -153,5 +206,13 @@ public class Equipment implements Items {
     @Override
     public ItemRarity getRarity() {
         return rarity;
+    }
+
+    public boolean getisUsed() {
+        return isUsed;
+    }
+
+    public void setIsUsed(boolean x) {
+        this.isUsed = x;
     }
 }

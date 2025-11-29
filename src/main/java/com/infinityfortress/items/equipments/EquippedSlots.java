@@ -1,5 +1,8 @@
 package com.infinityfortress.items.equipments;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class EquippedSlots {
     Equipment weapon;
     Equipment armor;
@@ -13,19 +16,48 @@ public class EquippedSlots {
         this.accessory2 = new Equipment();
     }
 
-    public String getWeaponName() {
-        return weapon.getName();
+    public Equipment getWeapon() {
+        return weapon;
     }
 
-    public String getArmorName() {
-        return armor.getName();
+    public Equipment getArmor() {
+        return armor;
     }
 
-    public String getAccessory1Name() {
-        return accessory1.getName();
+    public Equipment getAccessory1() {
+        return accessory1;
     }
 
-    public String getAccessory2Name() {
-        return accessory2.getName();
+    public Equipment getAccessory2() {
+        return accessory2;
+    }
+
+    public void setWeapon(Equipment weapon) {
+        this.weapon = weapon;
+    }
+
+    public void setArmor(Equipment armor) {
+        this.armor = armor;
+    }
+
+    public void setAccessory1(Equipment accessory1) {
+        this.accessory1 = accessory1;
+    }
+
+    public void setAccessory2(Equipment accessory2) {
+        this.accessory2 = accessory2;
+    }
+
+    // Equals implementation
+    public boolean equals(Equipment equipment) {
+        ArrayList<Equipment> equipments = new ArrayList<>(
+                Arrays.asList(this.accessory1, this.accessory2, this.armor, this.weapon));
+
+        for (Equipment eq : equipments) {
+            if (eq.getName() == equipment.getName()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

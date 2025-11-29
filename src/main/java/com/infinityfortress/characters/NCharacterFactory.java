@@ -52,7 +52,7 @@ public class NCharacterFactory {
                 20, 5, 15, new Cleric(), new Beastkin());
     }
 
-        public NCharacter createBeastkinWarlock(NCharacterType type) {
+    public NCharacter createBeastkinWarlock(NCharacterType type) {
         return new NCharacter(type, 20, 40, 0, 2, 5, 2,
                 20, 5, 10, new Warlock(), new Beastkin());
     }
@@ -101,7 +101,7 @@ public class NCharacterFactory {
         return new NCharacter(type, 40, 50, 0, 2, 5, 4,
                 20, 5, 15, new Warlock(), new Demon());
     }
- 
+
     public NCharacter createDragonbornWarrior(NCharacterType type) {
         return new NCharacter(type, 50, 30, 0, 5, 8, 5,
                 20, 7, 7, new Warrior(), new Dragonborn());

@@ -1,8 +1,9 @@
 package com.infinityfortress.utils;
 
-import java.util.ArrayList;
 import java.util.Queue;
+import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterType;
@@ -10,16 +11,17 @@ import com.infinityfortress.characters.NCharacterType;
 public final class ModifiedPriorityQueue {
 
   private ArrayList<NCharacter> allCharacters;
-  final private Queue<NCharacter> queue = new LinkedList<>();
+  private List<NCharacter> fullTurnOrder;
+  private final Queue<NCharacter> displayQueue = new LinkedList<>(); // UI display only
 
   public ModifiedPriorityQueue(ArrayList<NCharacter> characters) {
     this.allCharacters = characters.stream()
         .filter(c -> c != null)
         .collect(Collectors.toCollection(ArrayList::new));
 
-    // Initialize the first round
+    this.fullTurnOrder = new ArrayList<>();
+
     resetRound();
-    fillQueue();
   }
 
   // Reset all characters' turn flags for a new round
@@ -29,51 +31,63 @@ public final class ModifiedPriorityQueue {
         c.setHasTakenTurn(false);
       }
     }
+
+    // Rebuild full turn order for the new round
+    fullTurnOrder = this.allCharacters.stream()
+        .filter(c -> !c.isDead())
+        .sorted((a, b) -> b.getSpeed() - a.getSpeed())
+        .collect(Collectors.toCollection(ArrayList::new));
+
+    updateVisibleQueue();
   }
 
-  // Fill the queue with up to 3 characters who haven't taken their turn yet
-  private void fillQueue() {
-    this.queue.removeIf(c -> c.isDead());
-
-    while (this.queue.size() < 3) {
-      // Get alive characters who haven't taken their turn, sorted by speed
-      ArrayList<NCharacter> availableCharacters = this.allCharacters.stream()
-          .filter(c -> !c.isDead() && !c.hasTakenTurn() && !this.queue.contains(c))
-          .sorted((a, b) -> b.getSpeed() - a.getSpeed())
-          .collect(Collectors.toCollection(ArrayList::new));
-
-      if (availableCharacters.isEmpty()) {
-        // All characters have taken their turn, start a new round
-        resetRound();
-        availableCharacters = this.allCharacters.stream()
-            .filter(c -> !c.isDead() && !c.hasTakenTurn() && !this.queue.contains(c))
-            .sorted((a, b) -> b.getSpeed() - a.getSpeed())
-            .collect(Collectors.toCollection(ArrayList::new));
-
-        if (availableCharacters.isEmpty()) {
-          break; // No more characters available
-        }
-      }
-
-      this.queue.add(availableCharacters.get(0));
-    }
+  // Update the visible queue (first 3 from full turn order)
+  private void updateVisibleQueue() {
+    displayQueue.clear();
+    fullTurnOrder.stream()
+        .filter(c -> !c.isDead() && !c.hasTakenTurn())
+        .limit(3)
+        .forEach(displayQueue::add);
   }
 
   public void refreshQueueOrder() {
-    ArrayList<NCharacter> queuedCharacters = new ArrayList<>(this.queue);
-    this.queue.clear();
 
-    queuedCharacters.stream()
+    List<NCharacter> notYetActed = fullTurnOrder.stream()
+        .filter(c -> !c.isDead() && !c.hasTakenTurn())
         .sorted((a, b) -> b.getSpeed() - a.getSpeed())
-        .forEach(this.queue::add);
+        .collect(Collectors.toList());
+
+    List<NCharacter> alreadyActed = fullTurnOrder.stream()
+        .filter(c -> c.hasTakenTurn())
+        .sorted((a, b) -> b.getSpeed() - a.getSpeed())
+        .collect(Collectors.toList());
+
+    // Rebuild full turn order: not-yet-acted first (sorted by speed), then
+    // already-acted
+    fullTurnOrder.clear();
+    fullTurnOrder.addAll(notYetActed);
+    fullTurnOrder.addAll(alreadyActed);
+
+    // Update the visible queue
+    updateVisibleQueue();
   }
 
   public ArrayList<String> getCurrentQueue() {
-    this.queue.removeIf(c -> c.isDead());
-    fillQueue();
+    return getCurrentQueue(null);
+  }
 
+  public ArrayList<String> getCurrentQueue(NCharacter curr) {
+    this.displayQueue.removeIf(c -> c.isDead());
+    updateVisibleQueue();
+
+    // UI display handling for cases when using items/changing equipment that
+    // changes speed midaction
     ArrayList<String> turnOrder = new ArrayList<>();
-    for (NCharacter c : this.queue) {
+    if (curr != null) {
+      turnOrder.add("\033[32m" + curr.getRace().getName() + " " + curr.getRole().getName() + "\u001B[0m");
+    }
+
+    for (NCharacter c : this.displayQueue) {
       if (c.getType() == NCharacterType.ALLY) {
         turnOrder.add("\033[32m" + c.getRace().getName() + " " + c.getRole().getName() + "\u001B[0m");
       } else {
@@ -81,9 +95,12 @@ public final class ModifiedPriorityQueue {
       }
     }
 
-    // If queue has less than 3, preview who's next in the upcoming round
+    // If queue has less than 3, preview who's next in the upcoming round. This
+    // happens in a scenario where there are less than 3 people left who hasn't
+    // taken their turn or there are less than 3 characters left alive. Their turn
+    // has taken once their turn starts.
     if (turnOrder.size() < 3) {
-      ArrayList<NCharacter> nextRoundPreview = this.allCharacters.stream()
+      ArrayList<NCharacter> nextRoundPreview = fullTurnOrder.stream()
           .filter(c -> !c.isDead() && c.hasTakenTurn())
           .sorted((a, b) -> b.getSpeed() - a.getSpeed())
           .limit(3 - turnOrder.size())
@@ -102,16 +119,32 @@ public final class ModifiedPriorityQueue {
   }
 
   public NCharacter getCurrCharAndUpdate() {
-    NCharacter current = this.queue.poll();
+    // Get next character from full turn orders
+    NCharacter current = fullTurnOrder.stream()
+        .filter(c -> !c.isDead() && !c.hasTakenTurn())
+        .findFirst()
+        .orElse(null);
+
     if (current != null) {
       current.setHasTakenTurn(true);
     }
-    fillQueue();
-    return peekCurrChar();
+
+    // Check if round is complete
+    boolean allActed = fullTurnOrder.stream()
+        .filter(c -> !c.isDead())
+        .allMatch(NCharacter::hasTakenTurn);
+
+    if (allActed) {
+      resetRound();
+    }
+
+    updateVisibleQueue();
+
+    return current;
   }
 
   public NCharacter peekCurrChar() {
-    this.queue.removeIf(c -> c.isDead());
-    return this.queue.peek();
+    this.displayQueue.removeIf(c -> c.isDead());
+    return this.displayQueue.peek();
   }
 }

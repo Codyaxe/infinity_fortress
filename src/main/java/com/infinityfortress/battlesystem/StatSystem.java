@@ -16,7 +16,7 @@ public class StatSystem {
     }
 
     public void start(NCharacter currentCharacter) {
-        ArrayList<NCharacter> characterList = player.characters.stream().filter(c -> c != null)
+        ArrayList<NCharacter> characterList = player.getCharacters().stream().filter(c -> c != null)
                 .collect(Collectors.toCollection(ArrayList::new));
 
         MainStatMenu menu = new MainStatMenu(characterList, characterList.indexOf(currentCharacter), 0);
