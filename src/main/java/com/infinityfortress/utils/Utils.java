@@ -1,6 +1,8 @@
 package com.infinityfortress.utils;
 
 import com.infinityfortress.characters.NCharacter;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Utils {
 
@@ -142,6 +144,57 @@ public class Utils {
         }
 
         return grid;
+    }
+
+    /**
+     * Creates a dynamic text grid suitable for exception messages.
+     * @param cols The maximum number of characters per row.
+     * @param text The input text to be formatted into the grid.
+     * @return An array of strings with n amount of rows
+     */
+    public static String[] createExceptionGrid(String text) {
+      if (text == null || text.isEmpty()) {
+        return new String[]{" "};
+      }
+      ArrayList<String> grid = new ArrayList<>();
+      String[] lines = text.split("\\n");
+
+      // Dynamically determine max cols from the longest line
+      int maxCols = lines[0].length();
+      for (String line : Arrays.copyOfRange(lines, 1, lines.length)) {
+        maxCols = Math.min(115, Math.max(maxCols, line.length()));
+      }
+      for (String line : lines) {
+        String[] words = line.split("\\s+");
+        int wordIndex = 0;
+        while (wordIndex < words.length) {
+          StringBuilder currentRow = new StringBuilder();
+          while (wordIndex < words.length) {
+            String word = words[wordIndex];
+            if (word.length() > maxCols) {
+              word = word.substring(0, maxCols);
+            }
+
+            // Check if adding this word would exceed column limit
+            String testLine = currentRow.length() == 0 ? word : currentRow + " " + word;
+            if (testLine.length() <= maxCols) {
+              if (currentRow.length() > 0) {
+                currentRow.append(" ");
+              }
+              currentRow.append(word);
+              wordIndex++;
+            } else {
+              break;
+            }
+          }
+          grid.add(Utils.leftAlign(currentRow.toString(), maxCols));
+        }
+        // If the line was empty, add a blank row
+        if (words.length == 0) {
+          grid.add(" ");
+        }
+      }
+      return grid.toArray(new String[0]);
     }
 
     /**
