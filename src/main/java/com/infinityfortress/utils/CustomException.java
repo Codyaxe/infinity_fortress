@@ -26,6 +26,7 @@ public class CustomException extends Exception {
     }
   
     public void renderException() {
+        InputHandler.enableListener();
         StringBuilder frame = new StringBuilder();
         
         
