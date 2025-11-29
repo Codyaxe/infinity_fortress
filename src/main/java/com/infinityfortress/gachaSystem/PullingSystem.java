@@ -55,9 +55,9 @@ public class PullingSystem {
                   InputHandler.down.set(false);
               }
               if (InputHandler.enter.get()) {
-                  if (player.characters.get(choice) == null) {
+                  if (player.getCharacters().get(choice) == null) {
                       NCharacterFactory factory = new NCharacterFactory();
-                      player.characters.set(choice, factory.createRandomCharacter(NCharacterType.ALLY));
+                      player.getCharacters().set(choice, factory.createRandomCharacter(NCharacterType.ALLY));
                   } else {
                       // Handle case where slot is already filled
                   }

@@ -238,7 +238,6 @@ public class Animate {
             // for (String[] art : asciiArts) {
             //   System.out.print("\033[" + tempDx++ + ";1H" + art.length);
             // }
-            // Syste
 
             while (true) {
                 StringBuilder frame = new StringBuilder();
