@@ -1,8 +1,10 @@
 package com.infinityfortress.utils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,17 +13,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import java.util.Random;
-import java.util.Arrays;
-import java.util.Collections;
-
 /**
  * Animation handler that supports multiple concurrent animations with unique
  * IDs
  */
 public class Animate {
 
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(5);
     private static final Map<String, AnimationData> activeAnimations = new ConcurrentHashMap<>();
 
     private static class AnimationData {
@@ -209,34 +207,38 @@ public class Animate {
      * @param asciiArts ArrayList of String arrays containing ASCII art frames
      * @param finalArtIndex Index of the art to land on (-1 for random)
      */
-    public static void gachaBlock(String id, ArrayList<String[]> asciiArts, int finalArtIndex, int startX, int startY) {
+    public static void gachaBlock(String id, String[][] asciiArts, String[] chosenArt, int startX, int startY) {
         try {
-            if (activeAnimations.containsKey(id) || asciiArts.isEmpty()) {
+            if (activeAnimations.containsKey(id) || asciiArts.length==0) {
                 return;
             }
             activeAnimations.put(id, new AnimationData(null, null, new AtomicBoolean(true)));
             InputHandler.disableListener();
 
-            int duration = 5000, cycles = 5, height = asciiArts.get(0).length;
+            int duration = 5000, cycles = 5, height = asciiArts[0].length;
             final long startTime = System.currentTimeMillis();
 
             ArrayList<String[]> baseArts = new ArrayList<>();
             for (int i = 0; i < cycles; i++) {
-                baseArts.addAll(asciiArts);
+                baseArts.addAll(new ArrayList<>(Arrays.asList(asciiArts)));
             }
 
             Collections.shuffle(baseArts);
-            baseArts.add(0, asciiArts.get(finalArtIndex));
-            asciiArts = baseArts;
+            baseArts.add(0, chosenArt);
 
             ArrayList<String> scrollBuffer = new ArrayList<>();
 
-            for (int artIdx = 0; artIdx < asciiArts.size(); artIdx++) {
-                String[] art = asciiArts.get(artIdx);
+            for (int artIdx = 0; artIdx < baseArts.size(); artIdx++) {
+                String[] art = baseArts.get(artIdx);
                 for (String line : art) {
                     scrollBuffer.add(line != null ? line : "");
                 }
             }
+            // int tempDx=1;
+            // for (String[] art : asciiArts) {
+            //   System.out.print("\033[" + tempDx++ + ";1H" + art.length);
+            // }
+            // Syste
 
             while (true) {
                 StringBuilder frame = new StringBuilder();
@@ -265,63 +267,79 @@ public class Animate {
                 Thread.sleep(16); // ~60fps
             }
         } catch (InterruptedException e) {
+            CustomException ce = new CustomException(e);
+            ce.renderException();
             Thread.currentThread().interrupt();
         } finally {
-            stopAnimation(id);
             InputHandler.enableListener();
+            stopAnimation(id);
         }
     }
 
-    public static void gachaIdle(String id, ArrayList<String[]> asciiArts, AtomicInteger startX, AtomicInteger startY) {
+    public static void gachaIdle(String id, String[][] asciiArts, AtomicInteger startX) {
+      int[] bannerCoords = { 5, 38, 93 };
+      int[] widthAtX = { 23, 45, 23 };
+      int artHeight = 18;
+      int startY = 8;
+      int fpms = 1000/15;
       try {
-            // input validation
-            if (id.isBlank() || asciiArts==null || asciiArts.isEmpty()) {
-              throw new Exception("Invalid Parameters for Gacha Idle Animation");
-            }
+          // input validation
+          if (id.isBlank() || asciiArts==null || asciiArts.length==0) throw new Exception("Invalid Parameters for Gacha Idle Animation");
+            
+            if (startX == null) throw new Exception("Invalid startX AtomicInteger for Gacha Idle Animation");
 
-            // check if art is empty
-            if (asciiArts.isEmpty()) {
-                throw new Exception("Animation with ID already active or no ASCII art provided");
-            }
+            if (activeAnimations.containsKey(id)) throw new Exception("Animation with ID already active: " + id);
 
-            if (activeAnimations.containsKey(id)) return;
-
-            AtomicInteger artHeight = new AtomicInteger(asciiArts.get(0).length);
-            AtomicInteger artWidth = new AtomicInteger(asciiArts.get(0)[0].length());
             ArrayList<String> artScroll = new ArrayList<>();
+
             for (String[] art : asciiArts) {
-              for (String line: art) {
+              for (String line: ArtManager.formatArt(art, widthAtX[1], artHeight)) {
                 artScroll.add(line != null ? line : "");
               }
-              artScroll.add(" ".repeat(artWidth.get()));
+              artScroll.add(" ".repeat(widthAtX[1]));
             }
             
             // Add first art at the end to create seamless loop
-            for (String line: asciiArts.get(0)) {
+            for (String line: ArtManager.formatArt(asciiArts[0], widthAtX[1], artHeight)) {
               artScroll.add(line != null ? line : "");
             }
-            // artScroll.add(" ".repeat(artWidth.get()));
+
             Random rand = new Random();
-            AtomicInteger frameIndex = new AtomicInteger(rand.nextInt(0, artScroll.size() - artHeight.get()));
+            AtomicInteger frameIndex = new AtomicInteger(rand.nextInt(0, artScroll.size() - artHeight));
             
             ScheduledFuture<?> task = scheduler.scheduleAtFixedRate(() -> {
-                StringBuilder frame = new StringBuilder();
-                for (int i=0; i<artHeight.get(); i++) {
-                    frame.append("\033[").append(startY.get() + i).append(";").append(startX.get()).append("H").append(artScroll.get(frameIndex.get() + i));
-                }
-                // Get current frame and cycle to next
-                frameIndex.getAndUpdate(i -> (i - 1 + (artScroll.size()-artHeight.get())) % (artScroll.size()-artHeight.get()));
-                System.out.print(frame.toString());
-            }, 0, 1000/15, TimeUnit.MILLISECONDS);
+              String[] temp = artScroll.subList(frameIndex.get(), frameIndex.get() + artHeight).toArray(String[]::new);
+              String[] artFrame = switch (startX.get()) {
+                case 0 -> ArtManager.formatArtRightAlign(temp, widthAtX[0], artHeight);
+                case 1 -> ArtManager.formatArt(temp, widthAtX[1], artHeight);
+                case 2 -> ArtManager.formatArtLeftAlign(temp, widthAtX[2], artHeight);
+                default -> new String[0];
+              };
+              
+              // Don't render if art frame is invisible
+              if (artFrame.length == 0) {
+                return;
+              }
+              
+              StringBuilder frame = new StringBuilder();
+              for (int i=0; i<artFrame.length; i++) {
+                frame.append("\033[").append(startY + i).append(";").append(bannerCoords[startX.get()]).append("H").append(artFrame[i]);
+              }
+              frameIndex.getAndUpdate(i-> ( i-1+ (artScroll.size()- artHeight) ) % (artScroll.size()- artHeight));
+              System.out.print(frame.toString());
+            }, 0, fpms, TimeUnit.MILLISECONDS);
 
             activeAnimations.put(id, new AnimationData(task, null, new AtomicBoolean(true)));
         } catch (Exception e) {
-          StringBuilder frame = new StringBuilder();
-          for (int i=0; i<18; i++) {
-            frame.append("\033[").append(startY.get() + i).append(";").append(startX.get()).append("H").append(" ".repeat(45));
-          }
-          frame.append("\033[").append(startY.get() + 9).append(";").append(startX.get() + 20).append("H").append("ERROR");
-          System.out.print(frame.toString());
+            try {
+              StringBuilder frame = new StringBuilder();
+              for (int i=0; i<artHeight; i++) {
+                frame.append("\033[").append(startY + i).append(";").append(bannerCoords[Math.min(2,Math.max(0, startX.get()))]).append("H").append(" ".repeat(widthAtX[Math.min(2,Math.max(0, startX.get()))]));
+              }
+              System.out.print(frame.toString());
+            } catch (Exception ex) {}
+            CustomException ce = new CustomException(e);
+            ce.renderException();
         }
-    }
+      }
 }

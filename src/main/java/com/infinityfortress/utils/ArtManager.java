@@ -1,7 +1,7 @@
 package com.infinityfortress.utils;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class ArtManager {
@@ -225,39 +225,43 @@ public class ArtManager {
   );
 
 
-    private final static String[] hardGate = {
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣰⣶⣶⣦⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⣀⠀⡀⠀⠀⣴⣿⠟⠛⠉⠉⠉⠉⠛⠻⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⣤⣠⣼⠁⢠⣷⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⣿⡆⠀⠒⢂⡀⠀⠀⠀",
-        "⠀⠀⠀⠶⣶⡄⢀⣚⣛⠀⠀⠀⡀⠀⠀⠀⠀⢀⠀⠀⠈⣛⣚⡀⢃⡛⢃⠀⠀⠀",
-        "⠀⠀⢤⣭⣍⡄⠈⢿⣻⠀⠀⢀⣿⣶⡄⢠⣴⣿⡀⠀⠈⣿⡿⠁⠌⠟⠨⠀⠀⠀",
-        "⠀⠀⣨⢉⣵⣯⠀⣿⣿⠀⠀⢰⣍⡋⠀⠈⢙⣩⡆⠀⠀⣿⣿⠀⡗⠾⠟⠀⠀⠀",
-        "⠀⠀⣨⣬⣭⣿⠀⡹⣿⠀⠀⠀⠻⣿⣿⣿⣿⠟⠀⠀⠀⣿⣯⠀⢿⠟⠸⠀⠀⠀",
-        "⠀⠀⢉⣩⣭⣛⠀⣵⣿⠠⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⣿⣛⠀⣿⣿⣧⠀⠀⠀",
-        "⠀⠀⢘⣀⣟⣟⠀⣾⣿⢰⠀⠀⠀⠰⠒⠓⠆⠀⠀⠀⡇⣿⣿⠀⣶⣶⡶⠀⠀⠀",
-        "⠀⠀⠈⢛⣯⣻⠀⣿⣿⢸⠀⠀⠀⠹⢦⡴⠎⠀⠀⠀⡇⣿⣿⠀⣿⣶⠀⠀⠀⠀",
-        "⠀⠀⠀⠘⢛⡛⠀⡾⣯⢸⠀⠀⠀⡄⢰⢀⢠⠀⠀⠀⡅⣿⣯⠀⠗⠁⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⢐⣚⣻⣻⠀⠠⠀⡥⢸⠊⢸⠰⠀⡀⣿⣷⣒⠂⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠂⠀⠘⠿⣿⣿⣀⣐⣒⣓⣾⣒⣾⣒⣒⣀⣿⣿⠟⠇⠀⠀⠄⠀⠀⠀",
-        "⠀⠀⠀⣠⣴⣤⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⣶⣦⠄⠀⠀⠀",
-        "⠀⠀⠀⠀⠁⠈⠃⠺⠋⠟⠻⠿⠿⠽⠿⠿⠹⠟⠛⠛⠚⠛⠈⠛⠀⠀⠀⠀⠀⠀",};
 
-    private final static String[] fire = {
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠀⠀⠀⠠⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡇⠀⡀⠀⢰⢧⠀⠚⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠱⣀⢠⢀⢀⠇⢇⢔⠀⠀⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡄⠀⠀⢠⢹⢀⡆⠎⣈⠂⡔⠙⠊⠀⠰⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⡘⢜⠇⠰⠁⡈⠄⠡⠰⠑⡄⢆⢇⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣀⡆⡆⠀⣑⠘⠊⠀⠀⠀⠣⠁⠘⠁⣋⣘⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⡀⠠⠙⠥⣕⣡⠡⠀⠀⠠⢄⠂⡇⠄⠆⢘⠣⣛⣏⠀⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⢀⠀⠑⢠⣶⣷⣤⠑⢭⠈⡄⠈⡀⠄⢃⢡⠄⠀⢨⢳⣿⣿⣆⣠⣴⣦⠀⠄⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⡦⠜⢿⣿⣿⣯⡿⡤⢞⠩⠲⣁⡎⡎⠀⠀⠤⠸⡉⣏⣠⣶⣮⣿⡇⠄⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⢀⡠⢤⢤⣾⣿⣾⣷⡿⢛⠻⡉⢤⣂⣵⣴⣏⢧⡀⢨⠵⡢⢄⣴⣿⣿⣿⡿⢯⣁⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⣠⡞⠉⠡⣼⣝⣟⣁⣘⣌⣦⣵⣾⣿⣟⠻⢿⣿⣜⣗⣶⣦⣄⣐⣀⠹⡿⠿⣿⡖⠮⠁⣒⣒⢤⢄⠀⠀⠀",
-        "⠐⠒⠟⣿⢟⣾⣿⣮⣯⣾⡿⣾⣿⣿⣟⣿⠿⢾⡍⠟⡼⠁⢐⠽⣿⢿⣿⣶⣥⣹⣿⣿⣷⣷⣦⢀⣄⣀⡨⡇⠀⠀",
-        "⠀⠀⠴⠾⠉⣷⠶⡟⠋⠤⢍⣤⣽⣛⠻⣅⡈⣀⣈⣻⣳⣌⠈⠠⠊⢻⣿⣿⣿⣿⣿⡟⣛⣿⡿⢿⠿⠛⠻⠛⠛⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠛⠒⣺⡿⠛⠻⠵⣦⠬⠿⠿⠿⠿⠿⠿⠿⠿⠿⢛⡻⠟⠟⠃⠁⠩⠿⠉⠈⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",};
+    private static final Map<String, String[]> gateBank = Map.of(
+        "hardGate", new String[] {
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣰⣶⣶⣦⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣀⠀⡀⠀⠀⣴⣿⠟⠛⠉⠉⠉⠉⠛⠻⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⣤⣠⣼⠁⢠⣷⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⣿⡆⠀⠒⢂⡀⠀⠀⠀",
+            "⠀⠀⠀⠶⣶⡄⢀⣚⣛⠀⠀⠀⡀⠀⠀⠀⠀⢀⠀⠀⠈⣛⣚⡀⢃⡛⢃⠀⠀⠀",
+            "⠀⠀⢤⣭⣍⡄⠈⢿⣻⠀⠀⢀⣿⣶⡄⢠⣴⣿⡀⠀⠈⣿⡿⠁⠌⠟⠨⠀⠀⠀",
+            "⠀⠀⣨⢉⣵⣯⠀⣿⣿⠀⠀⢰⣍⡋⠀⠈⢙⣩⡆⠀⠀⣿⣿⠀⡗⠾⠟⠀⠀⠀",
+            "⠀⠀⣨⣬⣭⣿⠀⡹⣿⠀⠀⠀⠻⣿⣿⣿⣿⠟⠀⠀⠀⣿⣯⠀⢿⠟⠸⠀⠀⠀",
+            "⠀⠀⢉⣩⣭⣛⠀⣵⣿⠠⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⣿⣛⠀⣿⣿⣧⠀⠀⠀",
+            "⠀⠀⢘⣀⣟⣟⠀⣾⣿⢰⠀⠀⠀⠰⠒⠓⠆⠀⠀⠀⡇⣿⣿⠀⣶⣶⡶⠀⠀⠀",
+            "⠀⠀⠈⢛⣯⣻⠀⣿⣿⢸⠀⠀⠀⠹⢦⡴⠎⠀⠀⠀⡇⣿⣿⠀⣿⣶⠀⠀⠀⠀",
+            "⠀⠀⠀⠘⢛⡛⠀⡾⣯⢸⠀⠀⠀⡄⢰⢀⢠⠀⠀⠀⡅⣿⣯⠀⠗⠁⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⢐⣚⣻⣻⠀⠠⠀⡥⢸⠊⢸⠰⠀⡀⣿⣷⣒⠂⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠂⠀⠘⠿⣿⣿⣀⣐⣒⣓⣾⣒⣾⣒⣒⣀⣿⣿⠟⠇⠀⠀⠄⠀⠀⠀",
+            "⠀⠀⠀⣠⣴⣤⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⣶⣦⠄⠀⠀⠀",
+            "⠀⠀⠀⠀⠁⠈⠃⠺⠋⠟⠻⠿⠿⠽⠿⠿⠹⠟⠛⠛⠚⠛⠈⠛⠀⠀⠀⠀⠀⠀",
+        },
+        "fire", new String[] {
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠀⠀⠀⠠⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡇⠀⡀⠀⢰⢧⠀⠚⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠱⣀⢠⢀⢀⠇⢇⢔⠀⠀⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡄⠀⠀⢠⢹⢀⡆⠎⣈⠂⡔⠙⠊⠀⠰⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⡘⢜⠇⠰⠁⡈⠄⠡⠰⠑⡄⢆⢇⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣀⡆⡆⠀⣑⠘⠊⠀⠀⠀⠣⠁⠘⠁⣋⣘⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⡀⠠⠙⠥⣕⣡⠡⠀⠀⠠⢄⠂⡇⠄⠆⢘⠣⣛⣏⠀⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⢀⠀⠑⢠⣶⣷⣤⠑⢭⠈⡄⠈⡀⠄⢃⢡⠄⠀⢨⢳⣿⣿⣆⣠⣴⣦⠀⠄⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⡦⠜⢿⣿⣿⣯⡿⡤⢞⠩⠲⣁⡎⡎⠀⠀⠤⠸⡉⣏⣠⣶⣮⣿⡇⠄⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢀⡠⢤⢤⣾⣿⣾⣷⡿⢛⠻⡉⢤⣂⣵⣴⣏⢧⡀⢨⠵⡢⢄⣴⣿⣿⣿⡿⢯⣁⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⣠⡞⠉⠡⣼⣝⣟⣁⣘⣌⣦⣵⣾⣿⣟⠻⢿⣿⣜⣗⣶⣦⣄⣐⣀⠹⡿⠿⣿⡖⠮⠁⣒⣒⢤⢄⠀⠀⠀",
+            "⠐⠒⠟⣿⢟⣾⣿⣮⣯⣾⡿⣾⣿⣿⣟⣿⠿⢾⡍⠟⡼⠁⢐⠽⣿⢿⣿⣶⣥⣹⣿⣿⣷⣷⣦⢀⣄⣀⡨⡇⠀⠀",
+            "⠀⠀⠴⠾⠉⣷⠶⡟⠋⠤⢍⣤⣽⣛⠻⣅⡈⣀⣈⣻⣳⣌⠈⠠⠊⢻⣿⣿⣿⣿⣿⡟⣛⣿⡿⢿⠿⠛⠻⠛⠛⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠛⠒⣺⡿⠛⠻⠵⣦⠬⠿⠿⠿⠿⠿⠿⠿⠿⠿⢛⡻⠟⠟⠃⠁⠩⠿⠉⠈⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        }
+    );
 
       private static final Map<String, String[]> itemBank = Map.of(
 
@@ -303,7 +307,468 @@ public class ArtManager {
         }
       );
 
+    private static final Map<String, String[]> accessoryBank = Map.of(
+      "healing potion", new String[] {
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⢢⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⣝⠢⣎⠱⢫⠔⡀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠂⢻⣜⡳⢮⣑⡣⢎⠕⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⡉⠄⡌⠙⠧⢯⠝⠁⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣙⠢⢤⡁⢢⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠉⠂⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠄⠀⠠⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠌⠀⠀⠀⠀⠀⢀⠠⠀⠂⠀⠀⠀⢀⠀⠀⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⢀⠈⠀⠠⠐⠠⣈⠐⡀⢂⠡⠈⠤⠁⠌⡀⠂⠄⠠⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⡀⠀⠀⠤⢁⠂⠄⢂⠐⠠⢂⠁⢂⠁⢂⠄⠡⠈⠠⢁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠄⠠⡘⢠⠁⡊⢌⢂⠩⠄⣃⠘⢄⡉⢂⠌⠂⡅⠢⢁⠀⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠠⠁⡘⠤⡑⢠⠂⡌⢰⢫⠐⣈⠂⡄⢃⠌⡐⠄⢃⠂⢀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠡⠈⢆⠱⣈⠙⠶⣉⣎⠳⣆⠻⢐⠨⠐⢌⡈⠆⡁⢂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠡⠈⠒⠤⢩⠖⡭⠜⡳⢦⡁⠎⠤⡉⢆⠘⡀⠄⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠁⠌⠠⠁⠎⠰⠡⢌⠡⢋⠜⠠⠑⢀⠂⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠁⠂⠈⠄⢁⠂⠡⢀⠈⠐⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+      },
+      "Mana Potion", new String[] {
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⢶⣙⡟⢽⣓⠶⢦⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡷⣮⢷⡙⣳⣌⡟⣹⢎⡗⢢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣞⣾⠙⣗⢮⣍⢳⡭⢎⡭⢳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠂⢠⢂⠘⢯⣟⢮⣓⠾⣭⠞⢦⠳⣤⠳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒⢤⠂⠠⠣⢌⠠⠙⢾⣍⡹⣎⡟⢮⡳⣌⢳⡁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠉⢆⡉⢆⠉⠦⡱⢈⡄⡙⠽⣧⡽⡧⢧⣮⢱⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠐⠈⠀⠀⠐⠌⡜⢢⢀⠁⠣⠜⡬⠑⠈⠒⠿⠾⠱⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠐⠀⠀⠠⠐⠀⠀⠀⢈⠰⣈⠜⡰⢠⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢈⡀⣄⡠⣀⢄⡀⣀⠠⠈⠀⠀⠠⠈⠐⠡⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⡀⠄⣡⢖⡡⠞⢦⠱⡌⢆⡳⣌⢳⠲⡄⢁⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⣀⢒⡰⢎⡵⢎⡝⡹⢆⣳⠸⢧⡳⣬⠳⢋⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⡐⢠⡞⣵⢫⠞⡴⣨⢕⣫⢎⣃⠜⣶⠉⠡⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠐⡀⢿⡜⣣⠏⢮⣱⢣⣎⢧⡻⣜⠯⡐⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠐⡀⠳⣎⠵⣫⠶⣭⡳⣏⡾⡳⢉⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠠⢁⠈⠓⡍⠻⠱⠛⡌⠡⠁⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠈⠐⠠⢁⠁⠂⠄⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+      },
+      "Ring of Power", new String[] {
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠠⡴⣂⢗⡺⡔⠦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡞⡱⢓⠳⡸⠎⡗⣭⣙⢬⡑⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠰⡈⢶⡛⣼⢣⢏⡱⡽⡩⠖⣦⢍⠲⣍⠧⢏⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⣀⠒⡄⢣⡘⣿⣇⠼⣹⡜⣥⢳⡙⢯⡜⢼⢣⢮⡙⡮⢼⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⢀⠔⡀⠃⢌⠠⡙⣿⣾⣎⠱⡽⣆⡏⢞⡱⢮⠹⣎⠖⣧⢡⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⡐⢈⠰⢠⠍⠀⠀⠁⠙⣿⣾⣷⣽⡸⡍⣯⣱⢫⡷⢎⣛⣴⣻⣎⠱⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⡐⠠⣁⠎⡥⠎⠀⠀⠀⠀⠈⠹⢿⣿⣿⣿⣶⣷⣶⣾⣿⣽⡾⠟⡤⢣⠑⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠐⠠⡑⣌⢚⡼⢱⠀⠀⠀⠀⠀⠀⠀⠈⠉⠓⠛⠛⠛⣛⡉⠧⡘⠱⡈⢆⠱⡐⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⢈⠡⠰⢎⡣⣜⠣⣃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⢀⠡⢃⡘⠀⠢⠑⡂⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⢀⠂⡙⣎⠵⢊⠵⣘⠦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠌⣀⠣⡐⢡⢊⠱⡀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⢂⠡⢘⡌⢣⢞⡡⢎⡱⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⡀⢢⠑⠢⢌⠢⠁⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠒⡀⠚⡕⠪⡔⢣⡜⢦⢛⡤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠐⢂⠍⡒⢌⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠡⠌⡈⢳⡘⣇⢺⣡⠳⣌⢣⠓⡴⢠⣄⣀⣀⡀⣀⠄⡑⢈⠆⡑⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⢁⠂⡑⠪⡕⢦⠛⡤⢃⢳⡘⢇⢦⠣⢆⡱⠌⡐⢠⠃⠌⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠡⢈⠌⠓⠌⢣⠳⡸⢩⠖⡉⠆⡐⠐⠠⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠂⠘⠀⠆⡐⠠⠂⠐⠂⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+      },
+      "tnt", new String[] {
+        
+          "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡄⠐⠀⠂⠐⠀⠁⠂⠄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡟⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠡⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⠀⢀⡀⣀⣠⣀⣼⣏⣠⣀⣀⡀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⡼⣡⢛⣼⠳⢎⠷⣛⠶⠳⣮⢱⣉⢶⡀⠀⠀⠀⠀⠀⠀⡁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠐⣧⢣⢏⡾⣙⢮⣹⣏⢞⡹⢼⡗⡜⢦⡃⠀⠀⠀⠀⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⡘⠦⢋⢾⢧⡙⣦⢹⡗⢮⡱⣋⡿⡘⢇⠣⠀⠀⠀⠀⠀⢈⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⢱⡈⢆⠂⢆⡘⢄⠣⡉⢆⠱⡀⢆⠱⡈⢆⠁⠀⠀⠀⢀⡀⢂⠌⢢⢀⠴⠂⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⢰⣙⠮⣵⢦⣘⢦⣱⣌⢦⡱⡜⣦⠳⣜⠦⠀⠀⠀⠀⢀⠱⡈⠌⡀⠎⢬⣀⡀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⢸⣌⠳⣞⢧⡚⢦⣹⡞⢦⠳⣍⣿⢱⢫⡓⠀⠀⠀⠈⠁⢒⠰⢠⠑⡌⢢⠂⠉⠁⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⢸⣌⠳⣽⡲⣍⠳⡼⣟⣌⠓⢌⣼⢫⣳⢹⠀⠀⠀⠀⠘⠁⠉⢆⠓⢌⡣⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⡸⣌⠷⣹⠳⣌⠻⡼⣷⡘⣤⢊⡾⢣⠧⣏⠀⠀⠀⠀⠀⠀⠀⠊⠀⠀⠈⠁⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⣱⢎⡳⣽⢫⣜⡳⢽⡳⣎⡳⣭⢻⣭⢳⡹⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⢠⠙⢮⢳⣽⡓⣮⠝⣞⡷⢣⠷⣱⢿⣒⠯⡙⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠠⡍⢂⠆⡌⣉⠒⡙⢊⠛⣉⠣⡉⢌⡐⢢⡑⡌⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠹⣆⡜⡰⢄⢣⠘⡄⢣⢄⢣⠘⡤⣘⢦⠵⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⠈⠘⠻⠙⠶⢛⠼⡗⢺⠲⠫⠝⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+      },
+      "life shroom", new String[] {
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠐⠀⢂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠈⠀⡐⠀⠌⡐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠄⠁⠀⢀⠠⠀⠂⠁⢀⠠⠁⡔⠀⢂⠠⢁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠄⢀⠠⠀⠀⢀⠀⠄⠂⣔⠀⠸⡀⠄⠂⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠠⠀⠀⠄⠀⢦⠀⠠⢀⠀⡃⢰⠁⢚⠠⠈⢀⠐⠈⢀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠄⠁⡀⠂⠈⡄⠀⢃⠀⡐⠄⡈⠔⠠⠁⠂⠌⠰⠄⠀⢀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⢂⠠⠀⡁⠘⢄⡈⡔⢤⠓⣌⠐⠀⠈⢰⠈⠆⡘⠀⡀⠀⠀⠂⢀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠠⠁⠂⣜⣘⢦⡻⣜⠂⠀⠀⠂⡌⢒⠀⡀⠄⠃⡄⠀⠄⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⢮⢳⠄⠀⠀⠀⢸⣌⢇⠦⠀⠅⢊⠀⠄⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡎⠧⠀⠀⠀⠀⢘⢮⠋⠀⠁⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⢸⡁⠀⠀⠀⠀⠈⢮⢅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⣘⢣⠆⠀⠀⠀⠀⠀⢸⣊⢆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡷⣩⠞⢦⠀⠀⠀⠀⠀⣞⡰⢋⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣤⢰⡚⡵⣡⠻⡜⢦⣀⠀⢀⡸⢦⡹⣙⢦⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠶⠒⠶⠡⠧⡙⢶⡡⢟⣜⢣⠊⠙⢣⡝⣦⠳⣍⠖⢣⠞⡴⠤⡄⠀⠀⠀⠀⠀⠀",
 
+      },
+      "death shroom", new String[] {
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠤⡐⢤⠀⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡄⢫⠐⠁⢠⡌⠰⡁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡰⢈⠆⡀⠀⣏⡇⠀⢘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⢠⠔⡮⣜⢣⢩⡝⣆⢣⠐⣀⠿⢁⠰⣨⢄⣀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠃⠙⠐⡉⠆⠳⡜⡥⢏⡻⢌⢏⡳⢺⡥⣻⢬⣋⠆⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⠐⠠⠁⠌⡐⠈⠄⡙⢧⢚⡵⢪⢼⡩⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⢀⢠⡠⢄⡀⠀⠈⠄⠁⡀⠄⠈⡐⢀⠂⠄⠘⠥⢎⠕⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⡴⣯⢏⠶⡙⠌⠀⠀⠠⠐⠀⡀⠠⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⢀⡼⣱⢏⠞⡱⢀⠂⠀⠀⠀⠀⠂⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⣸⢣⡝⡶⢈⠐⠀⠂⢀⠀⠀⠀⠁⠠⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠘⣧⢚⠁⠂⠐⠀⠐⠀⡀⠀⡀⠁⠠⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠁⡀⠄⠀⠠⢁⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡈⠀⠄⢀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⡐⠠⢈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣈⠀⠠⢁⠂⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢀⠂⡐⠠⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+      },
+      "glove", new String[] {
+        "⠀⠀⠀⠀⠀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⢸⡱⢎⡳⢆⡀⠀⠀⠀⠀⣀⠀⡤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠻⣧⣙⢮⡙⢦⡐⡖⢦⣍⣛⡐⣇⠺⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠈⠳⣎⡝⡲⠭⡙⡖⢆⡵⣚⢬⡓⣎⢧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⣣⢓⡥⣛⡜⡲⣍⠶⡹⡜⢦⣳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣧⢚⡵⢪⡕⡎⣳⢱⣋⢗⠦⣏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⡾⣙⠳⠶⣤⣀⣠⢿⡱⢎⡳⣜⡱⠈⠗⡬⣋⠾⡜⣆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠱⢍⣏⢳⠬⣭⡙⢦⣙⢮⡱⣒⠖⡌⣝⠲⣍⢞⡱⢎⡝⠒⡀⢆⡠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠈⠱⣋⠶⣩⠳⣜⡲⢣⡝⢮⡱⢎⡽⣘⠮⠑⠡⢠⡵⡺⣍⢳⠲⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠢⠛⠼⣱⢣⠞⣥⡛⣜⠲⠉⠄⣣⡝⢧⢳⡱⢎⢧⣛⠴⢋⠒⠠⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⢟⡶⡹⠌⠡⣨⢞⡵⣙⢎⢧⣙⠮⠖⡡⠊⣄⡥⢂⠡⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠶⠁⣌⠶⡝⣎⠶⣩⠞⡦⢋⠄⢡⣴⣿⠏⠴⠁⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣁⢒⣮⢻⡱⢎⡳⡥⢋⠔⢡⣼⣿⠟⣡⠚⠀⠁⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠚⣼⢣⡝⣎⠗⡡⢈⣴⣿⠿⣉⠖⠠⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⡸⢃⠘⣠⡿⢟⠡⠚⠠⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⡌⢐⢋⡑⠊⠄⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+      },
+      "eyescream", new String[] {
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⠄⢀⠡⠡⠀⢂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠠⡁⠄⠰⢈⠄⡘⡐⠄⢣⢂⠅⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠠⣁⠡⢌⠤⢈⠒⡥⣜⣚⣴⣪⢄⠊⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⢒⡄⠡⣄⣁⢂⡞⡱⣾⣷⣴⠋⠙⣧⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠂⠄⠡⠴⢠⠄⡿⣑⢿⣿⣿⣶⣼⢣⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⡈⠜⡤⢂⠉⠄⣏⢷⢪⣍⠻⣍⠖⡃⠘⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⢐⠢⠐⠢⢌⠑⡎⣌⢱⣌⣹⠈⠄⢡⠐⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠈⢆⠡⢃⠄⠐⡈⠞⡡⢌⡘⠠⠆⡐⢢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⢊⠀⡃⠆⠱⡈⢆⡑⠢⢄⡑⠂⡑⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠈⠦⡑⢢⠑⡌⢢⠐⡅⠢⢌⠱⣈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠢⡑⢢⠑⡌⢢⢁⠈⡔⣈⠒⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠱⣂⠱⡈⠆⡌⢒⠰⣀⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢂⡓⠜⡰⢌⠦⡑⡌⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡑⣊⠒⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢢⠔⣌⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+      }
+    );
+
+
+    private static final Map<String, String[]> armorBank = Map.of(
+      "helmet 1", new String[] {
+          "⠀⠀⠀⢀⣴⣤⡀⠀⠀⠀⠀",
+          "⠀⠀⢠⣿⢛⢛⣷⡀⠀⠀⠀",
+          "⠀⠀⣘⢛⢸⢘⡛⡃⠀⠀⠀",
+          "⠀⠀⠉⠙⢸⠘⠉⠉⠀⠀⠀",
+          "⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀",
+      },
+      "helmet 2", new String[] {
+          "⠀⠀⠀⣠⣴⡖⣶⣄⠀⠀⠀",
+          "⠀⠀⢀⣿⡿⣧⠿⣿⡇⠀⠀",
+          "⠀⠀⢸⣿⣤⡤⣤⣼⡇⠀⠀",
+          "⠀⠀⠸⣟⣿⣷⣿⣻⡇⠀⠀",
+          "⠀⠀⠀⠀⠛⠛⠛⠁⠀⠀⠀",
+      },
+      "helmet 3", new String[] {
+          "⠀⠀⠀⢀⣾⣿⣦⠀⠀⠀⠀",
+          "⠀⠀⠀⣾⡏⠖⣽⣧⠀⠀⠀",
+          "⠀⠀⠀⠉⠉⠀⠉⠉⠀⠀⠀",
+          "⠀⠀⢰⣖⣧⠀⣵⣶⡆⠀⠀",
+          "⠀⠀⠰⡯⣿⠀⣿⢽⠇⠀⠀",
+          "⠀⠀⠀⠉⠛⠁⠋⠁⠀⠀⠀",
+      },
+      "helmet 4", new String[] {
+          "⠀⠀⠀⠀⠀⡀⣀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⣐⣚⢸⡗⣛⢂⠀⠀⠀",
+          "⠀⠀⠀⠭⢍⢸⡇⣩⠭⠅⠀⠀",
+          "⠀⠀⠀⣏⣋⣸⡇⣊⣹⠃⠀⠀",
+          "⠀⠀⠀⢣⣤⡌⡇⣤⡼⠀⠀⠀",
+          "⠀⠀⠀⠈⠀⠁⠈⠁⠀⠀⠀⠀",
+      },
+      "helmet 5", new String[] {
+          "⠀⠀⠀⣀⣐⡐⢀⣂⡀⠀⠀",
+          "⠀⠀⠀⣿⣏⣲⢖⣽⡇⠀⠀",
+          "⠀⠀⠀⠉⠉⢹⠈⠉⠁⠀⠀",
+          "⠀⠀⠀⣶⢺⣼⢨⣶⣶⠀⠀",
+          "⠀⠀⠀⢾⢽⣿⢸⡯⡿⠀⠀",
+          "⠀⠀⠀⠈⠙⠋⠘⠉⠀⠀⠀",
+      },
+      "helmet 6", new String[] {
+          "⠀⠀⠀⠀⠀⣤⢀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⣼⣿⣿⣾⡷⠀⠀",
+          "⠀⠀⠀⠀⣿⣿⡿⠋⠀⠀⠀",
+          "⠀⠀⠀⠀⠘⡟⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⣠⣶⣶⣄⠀⠀⠀⠀",
+          "⠀⠀⢰⣿⢱⡆⣿⣆⠀⠀⠀",
+          "⠀⠀⢘⠛⠚⠓⠛⢛⠀⠀⠀",
+          "⠀⠀⡖⠲⢼⡇⠖⢲⠀⠀⠀",
+          "⠀⠀⠃⠀⢸⡇⠀⠘⠀⠀⠀",
+          "⠀⠀⠀⠀⠈⠃⠀⠀⠀⠀⠀",
+      },
+      "helmet 7", new String[] {
+          "⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠚⠛⠍⠛⠓⡀⠀⠀",
+          "⠀⠀⠀⡏⡉⠁⣉⠈⣉⣻⠀⠀",
+          "⠀⠀⠀⢹⣟⣿⣘⣿⣿⡏⠀⠀",
+          "⠀⠀⠀⠸⣷⣶⣿⣶⣿⠃⠀⠀",
+      },
+      "armor 1", new String[] {
+        "⠀⠀⠀⠀⠀⠀⣠⣄⣀⣀⣠⣄⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⢀⣴⣺⠯⣛⠿⣿⣿⠿⣚⠽⣗⣦⡀⠀⠀",
+        "⠀⠀⡺⣿⣿⣻⣸⡿⣧⣼⢿⣇⣟⣿⣿⢗⠀⠀",
+        "⠀⢠⣿⣮⢷⢟⣾⣿⢷⡾⣿⣷⡻⡾⣵⣿⡄⠀",
+        "⠀⣴⣽⣻⠉⢭⣗⣪⣵⣮⣕⡺⡭⠀⣚⣯⣦⠀",
+        "⠀⡿⣿⠟⠀⢻⣿⣿⡟⣿⣿⣏⡟⠀⢿⣷⣷⠀",
+        "⠀⡚⠵⠇⠰⢕⣻⠭⠭⠭⠭⣟⡪⠆⠸⠮⢓⠀",
+        "⠀⣿⣿⡏⣌⡔⣸⠍⠭⠭⠩⣇⢢⣡⢹⣿⣿⠀",
+        "⠀⢿⣍⠁⡿⣾⣿⣷⡟⢻⣾⣿⣷⢿⠈⣩⡿⠀",
+        "⠀⠈⠛⠀⡇⣿⡿⣫⡆⢰⣝⢿⣿⢸⠀⠛⠁⠀",
+        "⠀⠀⠀⠀⣿⡿⣽⣿⡇⢸⣿⣯⢿⣿⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⢩⣾⣷⡅⢨⣾⣷⡍⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⣽⣯⡆⢰⣭⣯⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⣿⢹⡇⢸⡏⣿⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⢹⠼⡃⢘⠧⡏⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠨⠭⠅⠨⠭⠅⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⢸⣿⡇⢸⣿⡇⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠈⠻⠃⠘⠟⠁⠀⠀⠀⠀⠀⠀",
+      },
+      "armor 2", new String[] {
+        "⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⣀⡴⣦⠺⡻⢷⣿⢿⠫⣡⡶⣀⡀⠀⠀⠀",
+        "⠀⠀⠀⠀⠸⣿⣿⣷⡶⠚⣬⣭⡌⡒⣴⣿⣿⡿⠀⠀⠀",
+        "⠀⠀⠀⠀⣯⣮⠟⢿⣓⣻⣿⢸⣷⠲⣿⠿⢫⣾⡆⠀⠀",
+        "⠀⠀⠀⢰⣝⡿⠎⣖⣴⣿⣿⢸⣿⣧⣞⡆⡿⣗⣥⠀⠀",
+        "⠀⠀⠀⢿⣿⣿⠀⢿⣿⣿⣿⢸⣿⣿⣿⠃⢸⣿⣿⠆⠀",
+        "⠀⠀⠀⠘⢋⣃⠀⣳⠽⣟⣛⣛⣛⠯⢕⡆⢐⣛⠟⠀⠀",
+        "⠀⠀⠀⣿⣶⡦⢈⣺⡩⣟⣒⣒⠚⡏⣁⣦⢠⣶⣿⠇⠀",
+        "⠀⠀⠀⢨⣿⠁⣼⣿⣾⣯⣶⢰⣦⣿⣾⣿⠀⢻⣧⠀⠀",
+        "⠀⠀⠀⠈⠿⠃⣿⣿⣿⢟⣵⢰⣝⢿⣿⣿⠀⠻⠋⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⣿⣿⢣⡽⣿⢸⡟⣩⢿⣿⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠈⢑⣽⣾⡅⠀⣽⣾⣕⠉⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠈⣟⣛⡅⠀⣟⣛⡅⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⣿⢹⡇⠀⣿⣿⠇⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⣘⣾⣅⢠⢹⢟⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⢈⣒⡒⢐⣛⡊⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⡇⢰⣿⣷⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡇⠈⡿⠃⠀⠀⠀⠀⠀⠀⠀",
+      },
+      "armor 3", new String[] {
+        "⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⡀⡀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⢀⡀⣿⣾⣽⣟⣛⣚⣻⣵⣾⡇⣀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⢿⡇⣿⣿⣿⣿⠛⢻⣿⣿⣿⡇⣿⠇⠀⠀⠀⠀",
+        "⠀⠀⢰⣷⡕⢿⣿⡏⠉⠀⠈⠉⢹⣿⠇⣵⣽⠀⠀⠀⠀",
+        "⠀⠀⣬⣺⢿⠸⣿⣿⣿⠀⢸⣿⣿⣿⠰⢿⣫⡆⠀⠀⠀",
+        "⠀⠰⣿⣿⡇⢸⣿⣿⣿⠀⢸⣿⣿⣿⡀⣿⣿⡿⠀⠀⠀",
+        "⠀⠀⠻⣛⡂⢻⣿⣿⣿⣤⣼⣿⣿⣿⡇⣘⡙⠃⠀⠀⠀",
+        "⠀⠸⣿⣶⡄⣒⣚⣛⣛⡱⣛⣛⣛⣓⡂⢴⣶⣿⠀⠀⠀",
+        "⠀⠀⣼⡟⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠈⣿⡅⠀⠀⠀",
+        "⠀⠀⠙⠟⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠘⠿⠁⠀⠀⠀",
+        "⠀⠀⠀⠀⠘⣛⡛⣛⢛⡛⣛⢛⡛⣛⣛⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠉⣪⣷⣯⠀⢨⣷⣯⡊⠁⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⢨⣛⣫⠀⢨⣛⣻⠁⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠸⣿⣿⠀⢸⡇⣿⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⡻⡏⡄⣨⣷⣃⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⢑⣛⡂⢒⣒⡀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⣾⣿⡆⢸⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠘⢿⠁⢸⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+      }
+    );
+
+
+    private static final Map<String, String[]> weaponBank = Map.of(
+        "longsword", new String[] {
+            "⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢀⣿⣇⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⠁⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⠁⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⡏⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⡇⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⡇⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⡇⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⢸⣤⣀⣸⣇⣿⣀⣠⣼⠀⠀⠀",
+            "⠀⠀⠉⠉⠙⣿⡟⠉⠉⠉⠀⠀⠀",
+            "⠀⠀⠀⠀⢀⣿⣏⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⣿⡧⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢠⡿⢧⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠘⠲⠛⠀⠀⠀⠀⠀⠀"
+        },
+        "sword", new String[] {
+            "⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢨⣿⣧⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⡏⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⡇⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⡇⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⡇⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⡇⢿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⠂⣻⡇⠀⠀⠀⠀",
+            "⠀⣀⣤⣤⣿⣿⣿⣧⣤⣀⡄⠀",
+            "⠀⠘⠋⠉⢉⣿⡭⠉⠉⠛⠀⠀",
+            "⠀⠀⠀⠀⠀⣿⡧⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠈⣿⣇⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣼⣿⣷⡀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠈⠛⠉⠀⠀⠀⠀⠀"
+        },
+        "broadsword", new String[] {
+            "⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢀⣿⡆⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⣼⣿⣿⡀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢰⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⣿⣿⠄⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣹⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⣿⣏⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⣿⢹⡇⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠨⣗⢺⢹⡇⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⣇⢺⢸⡇⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⢀⣂⣤⣷⣾⣼⣧⣄⡀⠀⠀⠀⠀",
+            "⠀⠰⡟⠋⠁⢸⣿⡧⠀⠉⠻⡦⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠘⣿⡇⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠈⣿⡇⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢠⣿⣇⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠈⢿⠃⠀⠀⠀⠀⠀⠀⠀"
+        },
+        "woodensword", new String[] {
+            "⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢠⣿⣇⠀⠀⠀⠀",
+            "⠀⠀⠀⢠⣿⣿⣿⡆⠀⠀⠀",
+            "⠀⠀⠀⠰⣿⣿⣿⡇⠀⠀⠀",
+            "⠀⠀⠀⠐⣿⣿⣿⡇⠀⠀⠀",
+            "⠀⠀⠀⠈⣿⣿⣿⡇⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀",
+            "⠀⢀⣀⡀⣿⣿⣿⡇⣀⡀⠀",
+            "⠀⠘⠛⠿⣿⣿⣿⠿⠛⠃⠀",
+            "⠀⠀⠀⠀⢸⣿⡿⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢈⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣾⣿⣷⡄⠀⠀⠀",
+            "⠀⠀⠀⠀⠻⢿⠿⠃⠀⠀⠀"
+        },
+        "sheild", new String[] {
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣷⣀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠤⣤⣤⣬⣴⣾⣿⣿⣿⣿⣿⣿⣿⣷⣶⣤⣤⣤⡤⠀⠀",
+            "⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀",
+            "⠀⠀⠀⠀⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣨⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+        },
+        "staff", new String[] {
+            "⠀⠀⠀⠀⠀⡄⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢰⣿⡄⠀⠀⠀⠀",
+            "⠀⠀⠀⢀⣿⣿⠇⠀⠀⠀⠀",
+            "⠀⠀⠀⣼⣿⠋⣼⡆⠀⠀⠀",
+            "⠀⠀⠀⠹⢃⣼⣿⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣾⣿⡇⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠸⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢘⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢘⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢘⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢘⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢨⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠰⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢘⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢸⣿⠆⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠸⣿⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⡏⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+        },
+        "battleaxe", new String[] {
+            "⠀⠀⠀⢀⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⣰⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⢰⣿⣿⣿⣿⣷⣤⣄⣀⣀⣠⣿⣿⣷⠀⠀⠀⠀⠀",
+            "⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⠀⠀",
+            "⠀⣿⣿⣿⣿⣿⣿⣿⠿⠛⠛⢿⣿⣿⣿⠉⠁⠀⠀⠀",
+            "⠀⢻⣿⣿⣿⣿⠋⠀⠀⠀⠀⢼⣿⡿⠀⠀⠀⠀⠀⠀",
+            "⠀⠘⣿⣿⣿⠁⠀⠀⠀⠀⣴⣿⡟⠁⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠙⣿⡇⠀⠀⠀⠀⣸⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠈⠃⠀⠀⠀⠀⢽⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⡄⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⡗⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠈⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+        },
+        "mace", new String[] {
+            "⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⢘⣆⣿⣆⣞⠀⠀⠀⠀⠀",
+            "⠀⠀⢀⣠⣼⣿⣿⣿⣷⣄⡀⠀⠀⠀",
+            "⠀⠀⠚⠉⣹⣿⣿⣿⣿⠉⠛⠀⠀⠀",
+            "⠀⠀⠀⠀⠏⠘⣿⡏⠘⠅⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢴⣿⣷⠄⠀⠀⠀⠀⠀",
+            "⠀⢠⣀⠀⠀⢸⣿⣿⠀⠀⣀⡄⠀⠀",
+            "⠀⠀⣿⣿⣷⣾⣿⣿⣶⣿⣿⠇⠀⠀",
+            "⠀⠀⠈⠉⠀⢹⣿⣿⠁⠈⠉⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⠀⠀⠹⠁⠀⠀⠀⠀⠀⠀"
+        },
+        "bow", new String[] {
+            "⠀⠀⠀⢄⣴⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⣿⡏⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠀⠀⢻⣷⡄⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠀⠀⠀⣿⣿⡀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠀⠀⢠⣿⣿⠇⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠀⠀⣿⣿⠇⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⢀⣇⠀⠀⠀⠈⣿⣿⣀⣀⣀⣀⠀⠀⠀",
+            "⠀⠈⠛⡟⠛⠛⠛⠛⣿⣿⠻⠟⠿⠛⠁⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠀⠀⣿⣿⡄⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠀⠀⠹⣿⣷⡄⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠀⠀⠀⣿⣿⠃⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⠀⠀⢠⣿⠏⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⠀⢀⣲⡿⠋⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⡇⠀⣴⡿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⣧⣾⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠹⣿⣶⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        }
+    );
 
 
     /**
@@ -314,52 +779,36 @@ public class ArtManager {
      * Formats raw ASCII art to fit within specified width and height, centering the art.
      * When art is too wide, cuts equally from both sides to preserve the center.
      */
-    private static String[] formatArt(String[] rawArt, int width, int height) {
+    public final static String[] formatArt(String[] rawArt, int width, int height) {
         try {
             // If no art found, return empty array
             if (rawArt.length == 0) {
-                String[] result = new String[height];
-                for (int i = 0; i < height; i++) {
-                    result[i] = " ".repeat(width);
+                throw new CustomException("No Art Found");
+            }
+
+            for (String line : rawArt) {
+                if (line.length() != rawArt[0].length()) {
+                  throw new CustomException("Inconsistent line lengths in art");
                 }
-                return result;
             }
 
             String[] result = new String[height];
-            Arrays.fill(result, " ".repeat(width));
-            int paddingTop, paddingBottom, paddingLeft = rawArt[0].length(), paddingRight;
-
-            for (String line : rawArt) {
-                if (line.length() != paddingLeft) {
-                    return new String[0];
-                }
-            }
-
+            int paddingTop = (int) ((float) (height - rawArt.length) / 2);
+            int paddingBottom = height - paddingTop;
+            
             // Calculate padding to center the art
-            paddingTop = (int) ((float) (height - rawArt.length) / 2);
-            paddingLeft = (int) ((float) (width - rawArt[0].length()) / 2);
-            paddingBottom = height - paddingTop;
-            paddingRight = width - paddingLeft;
-
             for (int i = 0, j = 0; i < height; i++) {
-                if (i < paddingTop || i >= paddingBottom) {
+                if (i < paddingTop || i >= paddingBottom || j>= rawArt.length) {
                     // Pad top and bottom
                     result[i] = " ".repeat(width);
                     continue;
                 }
-                String line = rawArt[j++];
-                if (paddingLeft > 0) {
-                    // Pad left
-                    line = Utils.center(line, width);
-                } else {
-                    // Trim left
-                    line = line.substring(-paddingLeft, paddingRight);
-                }
-                result[i] = line;
+                result[i] = Utils.center(rawArt[j++], width);
             }
 
             return result;
-        } catch (Exception e) {
+        } catch (CustomException e) {
+            e.renderException();
             String[] art = new String[height];
             Arrays.fill(art, " ".repeat(width));
             return art;
@@ -370,7 +819,7 @@ public class ArtManager {
      * Formats raw ASCII art to fit within specified width and height, cutting from the right side when too wide.
      * Favors preserving the left side of the art.
      */
-    private static String[] formatArtLeftAlign(String[] rawArt, int width, int height) {
+    public final static String[] formatArtLeftAlign(String[] rawArt, int width, int height) {
         try {
             // If no art found, return empty array
             if (rawArt.length == 0) {
@@ -390,7 +839,7 @@ public class ArtManager {
             
             String[] result = new String[height];
             for (int i = 0, j = 0; i < height; i++) {
-                if (i < paddingTop || i >= paddingBottom) {
+                if (i < paddingTop || i >= paddingBottom || j>= rawArt.length) {
                     // Pad top and bottom
                     result[i] = " ".repeat(width);
                     continue;
@@ -410,7 +859,7 @@ public class ArtManager {
      * Formats raw ASCII art to fit within specified width and height, cutting from the left side when too wide.
      * Favors preserving the right side of the art.
      */
-    private static String[] formatArtRightAlign(String[] rawArt, int width, int height) {
+    public final static String[] formatArtRightAlign(String[] rawArt, int width, int height) {
         try {
             // If no art found, return empty array
             if (rawArt.length == 0) {
@@ -430,7 +879,7 @@ public class ArtManager {
             
             String[] result = new String[height];
             for (int i = 0, j = 0; i < height; i++) {
-                if (i < paddingTop || i >= paddingBottom) {
+                if (i < paddingTop || i >= paddingBottom || j>= rawArt.length) {
                     // Pad top and bottom
                     result[i] = " ".repeat(width);
                     continue;
@@ -447,7 +896,7 @@ public class ArtManager {
     }
 
     /**
-     * Gets formatted ASCII art by name with center alignment (default behavior).
+     * Gets formatted ASCII art by name with center alignment
      * When art is too wide, cuts equally from both sides to preserve the center.
      * Available arts: "Wardkeeper's Refuge", "Aindrajalika Gate", "cleric", "summoner", "rogue", "archer", "healer", "tank", "warrior", "mage", "warlock"
      * @param name Name of the art
@@ -503,22 +952,61 @@ public class ArtManager {
         }
     }
 
-    static public ArrayList<String[]> getAllFormattedArt(String type, int width, int height) {
+
+    /**
+     * Gets all formatted ASCII art of a specific type with center alignment.
+     * @param type Available types: "characters", "armor", "accessories", "weapons"
+     * @param width
+     * @param height
+     */
+    static public String[][] getAllFormattedArt(String type, int width, int height) {
         ArrayList<String[]> list = new ArrayList<>();
         for (String[] art : switch(type.toLowerCase()) {
-            case "items" -> itemBank.values();
+            case "characters" -> characterBank.values();
+            case "armor" -> armorBank.values();
+            case "accessories" -> accessoryBank.values();
+            case "weapons" -> weaponBank.values();
             default -> characterBank.values();
         }) {
-          list.add(formatArtLeftAlign(art, width, height));
+          list.add(formatArt(art, width, height));
         }
-        return list;
+        return list.toArray(String[][]::new);
+    }
+
+    /**
+     * !TODO
+     * @param type Available types: "characters", "armor", "accessories", "weapons"
+     * @param width
+     * @param height
+     */
+    static public String[][] getFormattedPullingArt(String type, int width, int height) {
+        ArrayList<String[]> list = new ArrayList<>();
+        for (String[] art : switch(type.toLowerCase()) {
+            case "characters" -> characterBank.values();
+            case "armor" -> armorBank.values();
+            case "accessories" -> accessoryBank.values();
+            case "weapons" -> weaponBank.values();
+            default -> characterBank.values();
+        }) {
+          list.add(formatArt(art, width, height));
+        }
+        return list.toArray(String[][]::new);
     }
     
+    /**
+     * Gets all formatted ASCII art of a specific type with left alignment.
+     * @param type Available types: "characters", "armor", "accessories", "weapons"
+     * @param width
+     * @param height
+     */
     static public ArrayList<String[]> getAllLeftAlignedArt(String type, int width, int height) {
         ArrayList<String[]> list = new ArrayList<>();
         
         for (String[] art : switch(type.toLowerCase()) {
-            case "items" -> itemBank.values();
+            case "characters" -> characterBank.values();
+            case "armor" -> armorBank.values();
+            case "accessories" -> accessoryBank.values();
+            case "weapons" -> weaponBank.values();
             default -> characterBank.values();
         }) {
           list.add(formatArtLeftAlign(art, width, height));
@@ -526,13 +1014,22 @@ public class ArtManager {
         return list;
     }
     
+    /**
+     * Gets all formatted ASCII art of a specific type with right alignment.
+     * @param type Available types: "characters", "armor", "accessories", "weapons"
+     * @param width
+     * @param height
+     */
     static public ArrayList<String[]> getAllRightAlignedArt(String type, int width, int height) {
         ArrayList<String[]> list = new ArrayList<>();
         for (String[] art : switch(type.toLowerCase()) {
-            case "items" -> itemBank.values();
+            case "characters" -> characterBank.values();
+            case "armor" -> armorBank.values();
+            case "accessories" -> accessoryBank.values();
+            case "weapons" -> weaponBank.values();
             default -> characterBank.values();
         }) {
-          list.add(formatArtLeftAlign(art, width, height));
+          list.add(formatArtRightAlign(art, width, height));
         }
         return list;
     }
@@ -540,12 +1037,135 @@ public class ArtManager {
 
 
     /**
-     * Gets ASCII art by name. Available arts: "Wardkeeper's Refuge",
-     * "Aindrajalika Gate", "cleric", "summoner", "rogue", "archer", "healer",
-     * "tank", "warrior", "mage", "warlock"
+     * Gets rawe ASCII character art by name. 
+     * @param name Available arts: "summoner", "rogue", "archer", "healer", "tank", "warrior", "mage", "warlock"
      */
     static public String[] getCharacterArt(String name) {
         return characterBank.get(name.toLowerCase());
+    }
+
+
+    /**
+     * Gets raw ASCII weapon art by name.
+     * @param name
+     * @return
+     */
+    static public String[] getWeaponArt(String name) {
+      if (!weaponBank.containsKey(name.toLowerCase())) {
+          return new String[0];
+      }
+        return weaponBank.get(name.toLowerCase());
+    }
+
+    /**
+     * Gets raw ASCII armor art by name.
+     * @param name
+     * @return
+     */
+    static public String[] getArmorArt(String name) {
+        return armorBank.get(name.toLowerCase());
+    }
+
+    /**
+     * Gets raw ASCII accessory art by name.
+     * @param name
+     * @return
+     */
+    static public String[] getAccessoryArt(String name) {
+        return accessoryBank.get(name.toLowerCase());
+    }
+
+    /**
+     * Gets all raw ASCII character arts.
+     * @return
+     */
+    static public String[][] getAllRawCharacterArt() {
+        String[][] arts = new String[characterBank.size()][];
+        int i = 0;
+        for (String[] art : characterBank.values()) {
+            arts[i++] = art;
+        }
+        return arts;
+    }
+
+    /**
+     * Gets all raw ASCII character arts.
+     * @return
+     */
+    static public String[][] getAllRawWeaponArt() {
+        String[][] arts = new String[weaponBank.size()][];
+        int i = 0;
+        for (String[] art : weaponBank.values()) {
+            arts[i++] = art;
+        }
+        return arts;
+    }
+
+    /**
+     * Gets all raw ASCII armor arts.
+     * @return
+     */
+    static public String[][] getAllRawArmorArt() {
+        String[][] arts = new String[armorBank.size()][];
+        int i = 0;
+        for (String[] art : armorBank.values()) {
+            arts[i++] = art;
+        }
+        return arts;
+    }
+
+    /**
+     * Gets all raw ASCII accessory arts.
+     * @return
+     */
+    static public String[][] getAllRawAccessoryArt() {
+        String[][] arts = new String[accessoryBank.size()][];
+        int i = 0;
+        for (String[] art : accessoryBank.values()) {
+            arts[i++] = art;
+        }
+        return arts;
+    }
+
+    /**
+     * Gets all raw ASCII arts by type.
+     * @param type Available types: "weapon", "armor", "accessory", "character"
+     * @return
+     */
+    static public String[][] getArtByType(String type) {
+        return switch(type.toLowerCase()) {
+            case "weapon" -> getAllRawWeaponArt();
+            case "armor" -> getAllRawArmorArt();
+            case "accessory" -> getAllRawAccessoryArt();
+            default -> getAllRawCharacterArt();
+        };
+    }
+
+    static public String[] getArtByNameAndType(String name, String type, int width, int height) {
+        return switch(type.toLowerCase()) {
+            case "weapon" -> getArtOrRandom(weaponBank, name.toLowerCase(), width, height);
+            case "armor" -> getArtOrRandom(armorBank, name.toLowerCase(), width, height);
+            case "accessory" -> getArtOrRandom(accessoryBank, name.toLowerCase(), width, height);
+            default -> getCharacterArt(name);
+        };
+    }
+
+    private static String[] getArtOrRandom(Map<String, String[]> artBank, String key, int width, int height) {
+        if (artBank.containsKey(key)) {
+            return formatArt(artBank.get(key), width, height);
+        } else if (!artBank.isEmpty()) {
+            // Pick a random entry
+            int idx = new java.util.Random().nextInt(artBank.size());
+            return formatArt(artBank.values().toArray(new String[0][])[idx], width, height);
+        } else {
+            return new String[]{""};
+        }
+    }
+
+    public static String[] getBlankArt(int width, int height) {
+        String[] art = new String[height];
+        Arrays.fill(art, " ".repeat(width));
+        return art;
     }
 }
 
