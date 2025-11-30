@@ -3,66 +3,73 @@ package com.infinityfortress.items.consumables;
 import com.infinityfortress.items.ItemRarity;
 
 public class Restoratives {
-    public Consumables createMinorHealthPotion() {
-        return new Consumables("Minor Health Potion", "Restorative", "Any", 5, 0, 25, 0, 0, 0, 0, 0, 0, 0,
-                "Restores 25 HP instantly.",
-                "A crimson liquid that warms the throat and mends minor wounds.",
-                ItemRarity.FORGED, ConsumableTier.LESSER);
+    public Consumables createLesserVitalDraught() {
+        return new Consumables("Lesser Vital Draught", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 5 HP + 6% MAX HP",
+                "A simple blend of herbs and energized water, brewed by novice healers. It restores just enough life to keep you on your feet.",
+                ItemRarity.FORGED);
     }
 
-    public Consumables createHealthPotion() {
-        return new Consumables("Health Potion", "Restorative", "Any", 10, 0, 50, 0, 0, 0, 0, 0, 0, 0,
-                "Restores 50 HP instantly.",
-                "A ruby-red elixir that courses through veins like liquid vitality.",
-                ItemRarity.FORGED, ConsumableTier.STANDARD);
+    public Consumables createVitalDraught() {
+        return new Consumables("Vital Draught", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 10 HP + 12% MAX HP",
+                "A refined healing mixture favored by traveling adventurers. Its warmth spreads instantly through the body.",
+                ItemRarity.ENCHANTED);
     }
 
-    public Consumables createGreaterHealthPotion() {
-        return new Consumables("Greater Health Potion", "Restorative", "Any", 20, 0, 100, 0, 0, 0, 0, 0, 0, 0,
-                "Restores 100 HP instantly.",
-                "A deep scarlet brew that pulses with life-giving energy.",
-                ItemRarity.ENCHANTED, ConsumableTier.GREATER);
+    public Consumables createGreaterVitalDraught() {
+        return new Consumables("Greater Vital Draught", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 16 HP + 19% MAX HP",
+                "A potent restorative crafted by skilled mystics. Its radiant essence mends wounds with remarkable speed.",
+                ItemRarity.MYSTIC);
     }
 
-    public Consumables createMinorManaPotion() {
-        return new Consumables("Minor Mana Potion", "Restorative", "Any", 5, 0, 0, 25, 0, 0, 0, 0, 0, 0,
-                "Restores 25 Mana instantly.",
-                "A shimmering blue liquid that sparkles with arcane essence.",
-                ItemRarity.FORGED, ConsumableTier.LESSER);
+    public Consumables createLesserMindTonic() {
+        return new Consumables("Lesser Mind Tonic", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 10 MP + 7% MAX MP",
+                "A light, soothing brew that clears the fog of fatigue and rekindles mental focus.",
+                ItemRarity.FORGED);
     }
 
-    public Consumables createManaPotion() {
-        return new Consumables("Mana Potion", "Restorative", "Any", 10, 0, 0, 50, 0, 0, 0, 0, 0, 0,
-                "Restores 50 Mana instantly.",
-                "An azure elixir that hums with mystical power.",
-                ItemRarity.FORGED, ConsumableTier.STANDARD);
+    public Consumables createMindTonic() {
+        return new Consumables("Mind Tonic", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 20 MP + 15% MAX MP",
+                "Trusted by scholars and spellcasters, this tonic sharpens concentration and restores inner clarity.",
+                ItemRarity.ENCHANTED);
     }
-
-    public Consumables createGreaterManaPotion() {
-        return new Consumables("Greater Mana Potion", "Restorative", "Any", 20, 0, 0, 100, 0, 0, 0, 0, 0, 0,
-                "Restores 100 Mana instantly.",
-                "A brilliant sapphire potion that crackles with arcane lightning.",
-                ItemRarity.ENCHANTED, ConsumableTier.GREATER);
+    
+    public Consumables createGreaterMindTonic() {
+        return new Consumables("Greater Mind Tonic", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 32 MP + 24% MAX MP",
+                "An advanced infusion imbued with arcane resonance, revitalizing one\'s mental reserves almost instantly.",
+                ItemRarity.MYSTIC);
     }
-
-    public Consumables createDualElixir() {
-        return new Consumables("Dual Elixir", "Restorative", "Any", 35, 0, 75, 75, 0, 0, 0, 0, 0, 0,
-                "Restores 75 HP and 75 Mana instantly.",
-                "A swirling mixture of crimson and azure that dances between life and magic.",
-                ItemRarity.MYSTIC, ConsumableTier.UNIQUE);
+    
+    public Consumables createLesserSpiritElixir() {
+        return new Consumables("Lesser Spirit Elixir", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 6 HP + 7% MAX HP and 7 MP + 7% MAX MP",
+                "An advanced infusion imbued with arcane resonance, revitalizing one\'s mental reserves almost instantly.",
+                ItemRarity.FORGED);
     }
-
-    public Consumables createPhoenixTears() {
-        return new Consumables("Phoenix Tears", "Restorative", "Any", 50, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                "Fully restores HP and removes all debuffs.",
-                "Golden droplets that shimmer with the rebirth essence of the mythical firebird.",
-                ItemRarity.ETHEREAL, ConsumableTier.UNIQUE);
+    
+    public Consumables createSpiritElixir() {
+        return new Consumables("Spirit Elixir", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 13 HP + 14% MAX HP and 15 MP + 14% MAX MP",
+                "Favored in long journeys, this elixir nourishes the body and reawakens the spirit in equal measure.",
+                ItemRarity.ENCHANTED);
     }
-
-    public Consumables createElixirOfEternalRenewal() {
-        return new Consumables("Elixir of Eternal Renewal", "Restorative", "Any", 100, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                "Fully restores HP and Mana, grants temporary invulnerability.",
-                "A transcendent potion that seems to contain the very essence of life itself, glowing with divine radiance.",
-                ItemRarity.ASC, ConsumableTier.ASC);
+    
+    public Consumables createGreaterSpiritElixir() {
+        return new Consumables("Greater Spirit Elixir", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Recover 21 HP + 22% MAX HP. 24 MP + 22% MAX MP",
+                "A finely tuned concoction that renews both health and mana with elegant efficiency.",
+                ItemRarity.MYSTIC);
+    }
+    
+    public Consumables createVitalisAscCore() {
+        return new Consumables("Greater Spirit Elixir", "Restorative", "Any", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                "Restores team's HP and MP to max.",
+                "A rare ascendant relic that releases pure restorative energy, revitalizing the entire party to perfect form.",
+                ItemRarity.ETHEREAL);
     }
 }

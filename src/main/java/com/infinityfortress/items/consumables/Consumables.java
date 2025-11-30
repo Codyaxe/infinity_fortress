@@ -27,7 +27,6 @@ public class Consumables implements Items {
     private String description;
     private String flavorText;
     private ItemRarity rarity;
-    private ConsumableTier tier;
 
     private boolean isConsumed;
 
@@ -47,7 +46,6 @@ public class Consumables implements Items {
         this.description = "";
         this.flavorText = "";
         this.rarity = ItemRarity.NONE;
-        this.tier = ConsumableTier.STANDARD;
         this.isConsumed = false;
     }
 
@@ -55,7 +53,7 @@ public class Consumables implements Items {
             int strength,
             int critChance,
             int critStrength, int luck, int speed,
-            String description, String flavorText, ItemRarity rarity, ConsumableTier tier) {
+            String description, String flavorText, ItemRarity rarity) {
         this.name = name;
         this.type = type;
         this.role = role;
@@ -72,7 +70,6 @@ public class Consumables implements Items {
         this.description = description;
         this.flavorText = flavorText;
         this.rarity = rarity;
-        this.tier = tier;
         this.isConsumed = false;
     }
 
@@ -154,10 +151,6 @@ public class Consumables implements Items {
     @Override
     public ItemRarity getRarity() {
         return rarity;
-    }
-
-    public ConsumableTier getTier() {
-        return tier;
     }
 
     public boolean getIsConsumed() {
