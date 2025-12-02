@@ -6,9 +6,9 @@ import com.infinityfortress.utils.InputHandler;
 
 public class MainPathSystem {
 
-    public void start() {
+    public int start(int a, int b) {
         int choice = -1;
-        PathUI mainPathUI = new PathUI();
+        PathUI mainPathUI = new PathUI(a, b);
         boolean decisionComplete = false;
 
         while (!decisionComplete) {
@@ -29,13 +29,16 @@ public class MainPathSystem {
                 Animate.flashBlock("Path-Flash",mainPathUI.getFrame(choice));
                 switch (choice) {
                   case 0 -> {
+                      return a;
                       // System.out.println("Taken Left");
                     }
                     case 1 -> {
+                      return b;
                       // System.out.println("Taken Right");
                     }
                   }
             }
         }
+        return -1;
     }
 }

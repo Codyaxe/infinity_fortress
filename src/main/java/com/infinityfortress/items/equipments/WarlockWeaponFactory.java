@@ -4,61 +4,61 @@ import com.infinityfortress.items.ItemRarity;
 
 public class WarlockWeaponFactory {
     public Equipment createAshenCursedScroll() {
-        return new Equipment("Ashen Cursed Scroll", "Weapon", "Warlock", 8, 4, 0, 2, 0, 0, 2,
+        return new Equipment("Ashen Cursed Scroll", "Weapon", "scroll", "Warlock", 8, 4, 0, 2, 0, 0, 2,
                 "Smolders with lingering ashes, each word sapping vitality from those foolish enough to read it.",
                 ItemRarity.FORGED);
     }
 
     public Equipment createShadowboundCursedScroll() {
-        return new Equipment("Shadowbound Cursed Scroll", "Weapon", "Warlock", 10, 4, 0, 3, 0, 0, 3,
+        return new Equipment("Shadowbound Cursed Scroll", "Weapon", "scroll", "Warlock", 10, 4, 0, 3, 0, 0, 3,
                 "Shadows coil around its pages, whispering forbidden secrets that bend the weak to the warlock’s will.",
                 ItemRarity.FORGED);
     }
 
     public Equipment createWitheredCursedScroll() {
-        return new Equipment("Withered Cursed Scroll", "Weapon", "Warlock", 13, 3, 0, 5, 0, 0, 5,
+        return new Equipment("Withered Cursed Scroll", "Weapon", "scroll", "Warlock", 13, 3, 0, 5, 0, 0, 5,
                 "Ancient and brittle, yet each line drains life with an unwavering hunger for souls.",
                 ItemRarity.FORGED);
     }
 
     public Equipment createNightfallCodex() {
-        return new Equipment("Nightfall Codex", "Weapon", "Warlock", 16, 5, 0, 7, 0, 0, 4,
+        return new Equipment("Nightfall Codex", "Weapon", "spellbook", "Warlock", 16, 5, 0, 7, 0, 0, 4,
                 "Darkness seeps from its cover, commanding the unseen and calling forth ephemeral dread.",
                 ItemRarity.ENCHANTED);
     }
 
     public Equipment createPhantomCodex() {
-        return new Equipment("Phantom Codex", "Weapon", "Warlock", 19, 6, 0, 7, 0, 0, 6,
+        return new Equipment("Phantom Codex", "Weapon", "spellbook", "Warlock", 19, 6, 0, 7, 0, 0, 6,
                 "Ghostly ink etches fates unknown, summoning spirits to haunt and serve the cunning warlock.",
                 ItemRarity.ENCHANTED);
     }
 
     public Equipment createObsiviousCodex() {
-        return new Equipment("Obsivious Codex", "Weapon", "Warlock", 21, 9, 0, 5, 0, 0, 7,
+        return new Equipment("Obsivious Codex", "Weapon", "spellbook", "Warlock", 21, 9, 0, 5, 0, 0, 7,
                 "Its cursed scripts ensnare minds, guiding unfortunate souls into unseen perils.",
                 ItemRarity.ENCHANTED);
     }
 
     public Equipment createEbonflareStaff() {
-        return new Equipment("Ebonflare Staff", "Weapon", "Warlock", 24, 8, 0, 8, 0, 0, 8,
+        return new Equipment("Ebonflare Staff", "Weapon", "staff", "Warlock", 24, 8, 0, 8, 0, 0, 8,
                 "Dark flames surge along its shaft, burning with power to dominate the battlefield.",
                 ItemRarity.MYSTIC);
     }
 
     public Equipment createSoulrenderStaff() {
-        return new Equipment("Soulrender Staff", "Weapon", "Warlock", 27, 9, 0, 6, 0, 0, 12,
+        return new Equipment("Soulrender Staff", "Weapon", "staff", "Warlock", 27, 9, 0, 6, 0, 0, 12,
                 "Pulses with tormented energy, tearing essence from the living and feeding the warlock’s might.",
                 ItemRarity.MYSTIC);
     }
 
     public Equipment createDoombringerSigil() {
-        return new Equipment("Doombringer Sigil", "Weapon", "Warlock", 30, 8, 0, 7, 0, 0, 15,
+        return new Equipment("Doombringer Sigil", "Weapon", "sigil", "Warlock", 30, 8, 0, 7, 0, 0, 15,
                 "An emblem of annihilation, it bends reality itself to summon devastation upon enemies.",
                 ItemRarity.ETHEREAL);
     }
 
     public Equipment createAscWrynnorTome() {
-        return new Equipment("Asc Wrynnor Tome", "Weapon", "Warlock", 35, 10, 0, 15, 0, 0, 10,
+        return new Equipment("Asc Wrynnor Tome", "Weapon", "spellbook", "Warlock", 35, 10, 0, 15, 0, 0, 10,
                 "Inked in the blood of fallen constellations, its words shimmer and shift, whispering promises from the end of all things.",
                 ItemRarity.ASC);
     }

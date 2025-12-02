@@ -5,15 +5,13 @@ import java.util.Random;
 
 import com.infinityfortress.Player;
 import com.infinityfortress.characters.NCharacter;
-import com.infinityfortress.characters.NCharacterFactory;
-import com.infinityfortress.characters.NCharacterType;
-import com.infinityfortress.items.Items;
 import com.infinityfortress.items.equipments.Equipment;
 import com.infinityfortress.pools.MainPool;
 import com.infinityfortress.ui.GachaMenu.PopUpMenu;
 import com.infinityfortress.utils.Animate;
 import com.infinityfortress.utils.ArtManager;
 import com.infinityfortress.utils.InputHandler;
+import com.infinityfortress.pools.CharacterPool;
 
 public class PullingSystem {
 
@@ -26,7 +24,7 @@ public class PullingSystem {
 
     public void pullCharacter(int pullNum) {
 
-        ArrayList<Items> pulledItems = new ArrayList<>();
+        ArrayList<Equipment> pulledItems = new ArrayList<>();
         ArrayList<NCharacter> pulledCharacters = new ArrayList<>();
         for (int i = 0; i < pullNum; i++) {
             float rate = rand.nextFloat();
@@ -35,14 +33,30 @@ public class PullingSystem {
             } else if (rate <= 0.20) { // Enchanted Equipment
                 pulledItems.add(MainPool.getRandomEnchantedEquipment());
             } else  if (rate <= 0.35) {// Specialized Character
-              // pulledCharacters.add(CharacterPool.getRandomSpecializedCharacter());
+              pulledCharacters.add(CharacterPool.getRandomSpecializedCharacters());
             } else if (rate <= 0.70) { // Non Specialized Character
-              // pulledCharacters.add(CharacterPool.getRandomCharacter());
+              pulledCharacters.add(CharacterPool.getRandomNonSpecializedCharacters());
             }
         }
 
+        Animate.gachaBlock("pulling", ArtManager.getFormattedPullingArt(
+          "character", 45, 18
+          ), 
+          pulledCharacters.isEmpty()?
+            pulledItems.isEmpty()?
+              ArtManager.getBlankArt(45, 18):
+            ArtManager.getArtByNameAndType(pulledItems.get(0).getImageType(),pulledItems.get(0).getType(), 45, 18):
+          ArtManager.getArtByNameAndType(pulledCharacters.get(0).getRole().getName(), "character", 45, 18),
+          38, 
+          8
+        );
+
         for (NCharacter character : pulledCharacters) {
           int choice=0;
+          if (player.getCharacters().size() < 5) {
+            player.getCharacters().add(character);
+            continue;
+          }
           while (true) {
               // Print something
               InputHandler.waitForInput();
@@ -56,12 +70,10 @@ public class PullingSystem {
               }
               if (InputHandler.enter.get()) {
                   if (player.getCharacters().get(choice) == null) {
-                      NCharacterFactory factory = new NCharacterFactory();
-                      player.getCharacters().set(choice, factory.createRandomCharacter(NCharacterType.ALLY));
+                      player.getCharacters().set(choice, character);
                   } else {
                       // Handle case where slot is already filled
                   }
-
                   InputHandler.enter.set(false);
                   break;
               }
@@ -106,24 +118,24 @@ public class PullingSystem {
               );
             }
         }
-        Animate.gachaBlock("pulling", ArtManager.getAllFormattedArt(
+        Animate.gachaBlock("pulling", ArtManager.getFormattedPullingArt(
             switch (bannerIndex) {
               case 1 -> "weapon";
               case 2 -> "armor";
               case 3 -> "accessory";
               default -> "character";
             }, 45, 18
-            
           ), 
           pulledItems.isEmpty()?
             ArtManager.getBlankArt(45, 18) :
-            ArtManager.getArtByNameAndType(pulledItems.get(0).getName(),pulledItems.get(0).getType(), 45, 18),
+            ArtManager.getArtByNameAndType(pulledItems.get(0).getImageType(),pulledItems.get(0).getType(), 45, 18),
           38, 
           8
         );
-        InputHandler.waitForInput();
         for (Equipment item : pulledItems) {
           PopUpMenu popUpMenu = new PopUpMenu(item);
+          popUpMenu.equipmentPopUp();
+          InputHandler.waitForInput();
           // Tease
         }
         player.inventory.addAll(pulledItems);

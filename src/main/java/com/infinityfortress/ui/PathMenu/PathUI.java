@@ -1,7 +1,9 @@
 package com.infinityfortress.ui.PathMenu;
 
-import com.infinityfortress.utils.Utils;
+import java.util.ArrayList;
+
 import com.infinityfortress.utils.ArtManager;
+import com.infinityfortress.utils.Utils;
 
 class Path {
   String name;
@@ -36,11 +38,14 @@ class Path {
 public class PathUI {
   private final Path[] paths;
   
-  public PathUI() {
-    Path pathA = new Path("Aindrajalika Gate", "A foreboding passage marked by ancient markings. Beyond this gate, enemies are fiercer but the spoils of victory are much greater.", new int[] {7, 20});
-    Path pathB = new Path("Wardkeeper's Refuge", "A tranquil alcove bathed in warm light where weary travelers can rest, recover their strength, and ready themselves for the road ahead.", new int[] {7, 63});
-
-    this.paths = new Path[] {pathA, pathB};
+  public PathUI(int a, int b) {
+    ArrayList<Path> pathList = new ArrayList<>();
+    pathList.add(new Path("Aindrajalika Gate", "A foreboding passage marked by ancient markings. Beyond this gate, enemies are fiercer but the spoils of victory are much greater.", new int[] {7, 20}));
+    pathList.add(new Path("Wardkeeper's Refuge", "A tranquil alcove bathed in warm light where weary travelers can rest, recover their strength, and ready themselves for the road ahead.", new int[] {7, 63}));
+    pathList.add(new Path("The Hollow Signpost", "An abandoned, shifting shopfront crafted from impossible stillness and splintered wood.", new int[] {7, 63}));
+    
+    // Pick random 2 paths
+    this.paths = new Path[] { pathList.get(a), pathList.get(b) };
 
     // Initialize UI
     StringBuilder frame = new StringBuilder();

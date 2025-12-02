@@ -13,7 +13,7 @@ public class PopUpMenu {
     this.equipment = equipment;
   }
 
-  public StringBuilder equipmentPopUp() {
+  public void equipmentPopUp() {
     StringBuilder frame = new StringBuilder();
     int startX = this.x-1, startY = this.y, width = 91, height = 20;
     frame.append("\033[").append(startY).append(";").append(startX).append("H┌").append("─".repeat(width)).append("┐");
@@ -36,14 +36,15 @@ public class PopUpMenu {
     .append(Utils.rightAlign(continueMsg, width));
     
     frame.append("\033[0m");
-    return frame;
+    System.out.print(frame.toString());
+    // return frame;
   }
   
   private StringBuilder equipmentArt() {
     StringBuilder frame = new StringBuilder();
     int startX = this.x+1, startY = this.y+1, width = 45, height = 18;
     frame.append("\033[").append(startY).append(";").append(startX).append("H┌").append("─".repeat(width)).append("┐");
-    String[] art = ArtManager.getFormattedArt("solarium silks", width, height);
+    String[] art = ArtManager.getArtByNameAndType(equipment.getImageType(), equipment.getType(),width, height);
     for (int i=0; i<height; i++) {
       frame.append("\033[").append(startY+1+i).append(";").append(startX).append("H│")
           .append(art[i]).append("│");

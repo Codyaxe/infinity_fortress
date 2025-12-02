@@ -13,6 +13,7 @@ public class Equipment implements Items {
 
     private String name;
     private String type;
+    private String ImageType;
     private String role;
     private int value;
     private int health;
@@ -29,9 +30,14 @@ public class Equipment implements Items {
 
     boolean isUsed;
 
+    public String getImageType() {
+        return ImageType;
+    }
+
     Equipment() {
         this.name = "";
         this.type = "";
+        this.ImageType = "";
         this.role = "";
         this.value = 0;
         this.health = 0;
@@ -48,11 +54,12 @@ public class Equipment implements Items {
         this.isUsed = false;
     }
 
-    Equipment(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
+    Equipment(String name, String type, String iType, String role, int value, int mana, int defense, int strength, int critChance,
             int critStrength, int luck,
             String description, String flavorText, ItemRarity rarity) {
         this.name = name;
         this.type = type;
+        this.ImageType = iType;
         this.role = role;
         this.value = value;
         this.health = 0;
@@ -69,11 +76,12 @@ public class Equipment implements Items {
         this.isUsed = false;
     }
 
-    Equipment(String name, String type, String role, int value, int health, int mana, int defense, int strength,
+    Equipment(String name, String type, String iType, String role, int value, int health, int mana, int defense, int strength,
             int critChance, int critStrength, int luck,
             String description, String flavorText, ItemRarity rarity) {
         this.name = name;
         this.type = type;
+        this.ImageType = iType;
         this.role = role;
         this.value = value;
         this.health = health;
@@ -90,11 +98,12 @@ public class Equipment implements Items {
         this.isUsed = false;
     }
 
-    Equipment(String name, String type, String role, int value, int health, int mana, int defense, int strength,
+    Equipment(String name, String type, String iType, String role, int value, int health, int mana, int defense, int strength,
             int speed, int critChance, int critStrength, int luck,
             String description, String flavorText, ItemRarity rarity) {
         this.name = name;
         this.type = type;
+        this.ImageType = iType;
         this.role = role;
         this.value = value;
         this.health = health;
@@ -111,11 +120,12 @@ public class Equipment implements Items {
         this.isUsed = false;
     }
 
-    Equipment(String name, String type, String role, int value, int mana, int defense, int strength, int critChance,
+    Equipment(String name, String type, String iType, String role, int value, int mana, int defense, int strength, int critChance,
             int critStrength, int luck,
             String description, ItemRarity rarity) {
         this.name = name;
         this.type = type;
+        this.ImageType = iType;
         this.role = role;
         this.value = value;
         this.health = 0;

@@ -182,26 +182,26 @@ public class ArtManager {
         "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀  ",
     },
     "warrior", new String[] {
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡮⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⡯⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣹⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⢠⡗⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⢽⣻⣄⣄⣤⣤⢼⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⣯⣟⣖⠨⡾⡞⣯⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣲⣲⣤⡈⣶⣞⡾⡄⠛⢒⣷⣻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⣰⢿⣽⣳⡯⡧⣷⢯⣟⡗⣈⣶⣻⠂⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠠⣿⢽⠞⡇⠁⠀⠉⣟⣾⡳⠟⡚⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⢘⢷⣤⣠⣷⣻⡎⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣟⣾⣳⣟⣞⣷⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣞⣷⣻⣞⣷⣻⣞⣷⣻⣞⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠺⣗⣟⡾⡾⡎⠀⠈⠺⣳⣻⢾⣵⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣮⢿⣽⡻⠀⠀⠀⠀⠀⠙⠽⣾⢽⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⢿⡽⡾⠁⠀⠀⠀⠀⠀⠀⠀⣹⣟⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⠀⢀⣴⣟⡯⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢟⣾⡂⠀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⠀⠀⣠⢾⡳⠏⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢺⢷⡀⠀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⢀⣴⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣇⡀⠀⠀⠀⠀⠀⠀",
-        "⠀⠀⠀⠀⣟⣾⡁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠫⠻⠱⠢⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡮⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⡯⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣹⠆⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⠁⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⢠⡗⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⢽⣻⣄⣄⣤⣤⢼⡂⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⣯⣟⣖⠨⡾⡞⣯⠁⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⢠⣲⣲⣤⡈⣶⣞⡾⡄⠛⢒⣷⣻⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⣰⢿⣽⣳⡯⡧⣷⢯⣟⡗⣈⣶⣻⠂⠆⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠠⣿⢽⠞⡇⠁⠀⠉⣟⣾⡳⠟⡚⠓⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠁⠀⢘⢷⣤⣠⣷⣻⡎⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⣰⣟⣾⣳⣟⣞⣷⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⢀⣞⣷⣻⣞⣷⣻⣞⣷⣻⣞⣷⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠺⣗⣟⡾⡾⡎⠀⠈⠺⣳⣻⢾⣵⡀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⣮⢿⣽⡻⠀⠀⠀⠀⠀⠙⠽⣾⢽⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⣠⢿⡽⡾⠁⠀⠀⠀⠀⠀⠀⠀⣹⣟⣧⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⢀⣴⣟⡯⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢟⣾⡂⠀⠀⠀⠀",
+        "⠀⠀⣠⢾⡳⠏⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢺⢷⡀⠀⠀⠀",
+        "⢀⣴⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣇⡀⠀⠀",
+        "⣟⣾⡁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠫⠻⠱⠢",
     }
 );
 
@@ -239,6 +239,23 @@ public class ArtManager {
             "⠀⠀⠴⠾⠉⣷⠶⡟⠋⠤⢍⣤⣽⣛⠻⣅⡈⣀⣈⣻⣳⣌⠈⠠⠊⢻⣿⣿⣿⣿⣿⡟⣛⣿⡿⢿⠿⠛⠻⠛⠛⠀",
             "⠀⠀⠀⠀⠀⠀⠀⠛⠒⣺⡿⠛⠻⠵⣦⠬⠿⠿⠿⠿⠿⠿⠿⠿⠿⢛⡻⠟⠟⠃⠁⠩⠿⠉⠈⠀⠀⠀⠀⠀⠀⠀",
             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        },
+        "shop", new String[] {
+          "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⢀⡀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⢀⣴⣿⣿⣷⡀⠀⠀⠙⢆⠀⠀⠀⠈⠄⠀⠀⠀⠈⢢⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⣾⣿⣿⣿⣿⣷⠀⠀⣀⣀⣀⣀⣀⣀⣖⣶⠲⠀⢀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⣾⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠘⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠋⠉⠙⠛⠿⠿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⢆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠙⠻⠟⢻⣿⠋⠘⠳⣾⣏⠀⠀⠀⠠⠀⣀⠀⠀⠈⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⠐⢿⣟⢿⡶⣐⡶⠦⠉⠉⠀⠐⠀⡀⠀⠀⢒⡀⠀⠀⠀⡄⣤⡄⢀⣶⢰⡄⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣷⣿⣿⣟⡇⣆⢰⣄⣺⡟⢄⣵⣾⡗⢾⡆⢀⣿⣿⡄⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⠀⢹⣿⣏⣬⢿⣿⣿⡶⣎⢸⣿⣿⣿⢼⣿⣿⣿⣿⠇⣼⣿⣿⠁⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⠀⢸⣿⣟⠛⣸⣿⣿⡇⠧⢸⣿⣿⣿⢠⣿⣿⣟⣿⣴⣿⣿⣿⠀⣹⣿⡇⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⡇⠀⢸⣿⣿⣷⠀⣿⣿⣿⠛⢻⣿⣿⣿⠀⢾⣿⠟⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⢀⣀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣦⢸⣿⣿⡏⡉⠿⠿⠛⠂⠀⠉⠉⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+          "⠀⠀⠀⠀⠀⠉⠀⣤⣤⡈⠙⠻⠿⣿⡟⡁⢲⣏⠉⠀⢰⣶⠉⠂⢠⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
         }
     );
 
@@ -642,7 +659,7 @@ public class ArtManager {
             }
         );
         accessoryBank.put(
-            "acatalyst", new String[] {
+            "catalyst", new String[] {
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
                 "⠀⠀⠀⠀⠀⠀⢀⢀⠀⠀⠀⢀⢢⣺⢨⢂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
                 "⠀⠀⠀⠀⠀⠀⢰⡕⡔⢄⣐⢔⣗⡧⡣⡣⡂⡀⠀⠀⢀⠀⠀⡀⡂⠀⠀⠀⠀⠀",
@@ -823,7 +840,7 @@ public class ArtManager {
             }
         );
         weaponBank.put(
-            "pavise", new String[] {
+            "pavise1", new String[] {
                 "⠀⠀⠀⣼⡀⠀⠀⠀⠀⢀⡀⠀⣿⣄⠀⠀⠀⣠⣴⣾⣿⣦⣄⠀⠀⠀⢀⣿⠇⢀⡀⠀⠀⠀⠀⢀⣷⠀⠀⠀",
                 "⠀⠀⠀⢻⣿⣦⣄⣀⠴⣪⣄⠑⢿⣯⠋⣷⣾⣿⣿⣿⢿⣿⣿⣿⣶⠉⣯⣿⠀⣡⣌⡢⢄⣀⣤⣾⡿⠀⠀⠀",
                 "⠀⠀⠀⠈⢿⣿⡄⢶⣿⠟⠹⣷⠈⢿⡄⢻⣿⣿⣿⡿⢸⣿⣿⣿⡿⢀⣿⠁⣴⠟⡙⣿⣷⢂⣽⡿⠇⠀⠀⠀",
@@ -846,7 +863,6 @@ public class ArtManager {
         );
         weaponBank.put(
             "shield", new String[] {
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
                 "⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣴⢞⡫⢝⡻⣦⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀",
                 "⠀⠀⠀⠀⣸⡿⠿⣶⣶⣶⣶⣶⣶⠾⣟⣛⣭⣶⡿⠃⠘⢿⣶⣭⣛⣻⠷⣶⣶⣶⣶⣶⣶⠿⢿⣇⠀⠀⠀⠀",
                 "⠀⠀⠀⠀⣿⢣⣃⣽⣿⣿⡟⢹⣿⣿⣿⠦⠚⠉⣠⡄⣤⣄⠉⠓⠷⣿⣿⣿⡏⢽⣿⣿⣏⣘⡼⣿⠀⠀⠀⠀",
@@ -1148,7 +1164,7 @@ public class ArtManager {
             }
         );
         weaponBank.put(
-            "waraxe", new String[] {
+            "polearm", new String[] {
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠀",
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⠏⠀⠀",
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣀⡀⢠⣴⡟⠁⠀⠀⠀",
@@ -1361,6 +1377,15 @@ public class ArtManager {
         );
     }
 
+    static {
+
+      Map<String, String[]> bank = new HashMap<>();
+      bank.putAll(weaponBank);
+      bank.putAll(armorBank);
+    bank.putAll(characterBank);
+    bank.putAll(accessoryBank);
+  };
+
     /**
      * Formats raw ASCII art to fit within specified width and height, centering the art.
      * When art is too wide, cuts equally from both sides to preserve the center.
@@ -1571,14 +1596,19 @@ public class ArtManager {
      */
     static public String[][] getFormattedPullingArt(String type, int width, int height) {
         ArrayList<String[]> list = new ArrayList<>();
-        for (String[] art : switch(type.toLowerCase()) {
-            case "characters" -> characterBank.values();
-            case "armor" -> armorBank.values();
-            case "accessories" -> accessoryBank.values();
-            case "weapons" -> weaponBank.values();
-            default -> characterBank.values();
-        }) {
+        for (String[] art : weaponBank.values()) {
             list.add(formatArt(art, width, height));
+        }
+        for (String[] art : armorBank.values()) {
+            list.add(formatArt(art, width, height));
+        }
+        for (String[] art : accessoryBank.values()) {
+            list.add(formatArt(art, width, height));
+        }
+        if (type.equalsIgnoreCase("character")) {
+            for (String[] art : characterBank.values()) {
+                list.add(formatArt(art, width, height));
+            }
         }
         return list.toArray(String[][]::new);
     }
@@ -1736,7 +1766,7 @@ public class ArtManager {
             case "weapon" -> getArtOrRandom(weaponBank, name.toLowerCase(), width, height);
             case "armor" -> getArtOrRandom(armorBank, name.toLowerCase(), width, height);
             case "accessory" -> getArtOrRandom(accessoryBank, name.toLowerCase(), width, height);
-            default -> getCharacterArt(name);
+            default -> getArtOrRandom(characterBank, name.toLowerCase(), width, height);
         };
     }
 

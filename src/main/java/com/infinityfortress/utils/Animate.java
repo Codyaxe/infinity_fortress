@@ -215,7 +215,7 @@ public class Animate {
             activeAnimations.put(id, new AnimationData(null, null, new AtomicBoolean(true)));
             InputHandler.disableListener();
 
-            int duration = 5000, cycles = 5, height = asciiArts[0].length;
+            int duration = 5000, cycles = 2, height = asciiArts[0].length;
             final long startTime = System.currentTimeMillis();
 
             ArrayList<String[]> baseArts = new ArrayList<>();
@@ -264,7 +264,8 @@ public class Animate {
                     break;
                 }
                 Thread.sleep(16); // ~60fps
-            }
+              }
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             CustomException ce = new CustomException(e);
             ce.renderException();

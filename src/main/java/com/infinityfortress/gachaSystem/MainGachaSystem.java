@@ -64,11 +64,8 @@ public class MainGachaSystem {
             } else {
               pullingSystem.pullEquipment(Math.max(1,choice*10), currentBannerIndex);
             }
-            
-            // Animate.flashBlock("Gacha-Flash",gachaUI.getFrame(choice));
-            
-            InputHandler.waitForInput();
             InputHandler.enter.set(false);
+            return true;
         }
         if (InputHandler.back.get()) {
             InputHandler.back.set(false);

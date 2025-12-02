@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import com.infinityfortress.characters.NCharacter;
 import com.infinityfortress.characters.NCharacterFactory;
 import com.infinityfortress.characters.NCharacterType;
-
+import java.util.Random;
 //! Most of these Utility methods won't be used, but they're here juse in case
 
 public class CharacterPool {
@@ -118,4 +118,39 @@ public class CharacterPool {
         
         return characters;
     }
-}
+
+    /**
+     * Creates a random character
+     * @param type The character type (ALLY, ENEMY)
+     * @return A randomly generated NCharacter
+     */
+    public static NCharacter createRandomCharacter(NCharacterType type) {
+        ArrayList<NCharacter> allChars = getAllCharacters();
+        if (allChars.isEmpty()) {
+            System.out.println("No characters available in pool.");
+            return null;
+        }
+        Random random = new Random();
+        return allChars.get(random.nextInt(allChars.size()));
+    }
+
+    public static ArrayList<NCharacter> getSpecializedCharacters() {
+      return new ArrayList<>(getAllCharacters().stream().filter(c -> c.isSpecialized()).toList());
+    }
+    
+    public static ArrayList<NCharacter> getNonSpecializedCharacters() {
+        return new ArrayList<>(getAllCharacters().stream().filter(c -> !c.isSpecialized()).toList());
+    }
+
+    public static NCharacter getRandomSpecializedCharacters() {
+        ArrayList<NCharacter> allChars = getSpecializedCharacters();
+        Random random = new Random();
+        return allChars.get(random.nextInt(allChars.size()));
+    }
+
+    public static NCharacter getRandomNonSpecializedCharacters() {
+        ArrayList<NCharacter> allChars = getNonSpecializedCharacters();
+        Random random = new Random();
+        return allChars.get(random.nextInt(allChars.size()));
+    }
+  }

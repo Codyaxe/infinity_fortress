@@ -15,6 +15,7 @@ import com.infinityfortress.roles.Role;
 public class NCharacter {
     private String name;
     private NCharacterType type;
+    private boolean isSpecialized;
     private int maxHealth;
     private int health;
     private int maxMana;
@@ -49,6 +50,7 @@ public class NCharacter {
     public NCharacter(Role c, Race r) {
         this.name = r.getName() + " " + c.getName();
         this.type = NCharacterType.ALLY;
+        this.isSpecialized = false;
         this.health = 10;
         this.mana = 10;
         this.exp = 0;
@@ -70,11 +72,12 @@ public class NCharacter {
 
     }
 
-    public NCharacter(NCharacterType type, int health, int mana, int exp, int defense,
+    public NCharacter(NCharacterType type, boolean isSpecial, int health, int mana, int exp, int defense,
             int strength, int speed, int critStrength, int critChance,
             int luck, Role role, Race race) {
         this.name = race.getName() + " " + role.getName();
         this.type = type;
+        this.isSpecialized = isSpecial;
         this.maxHealth = health;
         this.health = health;
         this.maxMana = mana;
@@ -100,6 +103,10 @@ public class NCharacter {
     // Getters
     public String getName() {
         return name;
+    }
+
+    public boolean isSpecialized() {
+        return isSpecialized;
     }
 
     public NCharacterType getType() {
